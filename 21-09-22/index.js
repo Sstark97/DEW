@@ -1,18 +1,29 @@
-const isBinary = (number) => !number.includes(23456789);
+const isBinary = (number) => /[0-1]/.test(number) && number.length === 1
+
+const isDigit = (number) => /[0-9]/.test(number)
 
 const generateMinesMap = () => {
   const rows = prompt("Diga el número de Filas");
   const colums = prompt("Diga el número de Columnas");
 
+  if(!isDigit(rows) || !isDigit(colums)) {
+    alert("Las filas y columnas deben ser digitos")
+  }
+
   let row = [];
   let mineMap = [];
+  let stop = false;
 
   for (let i = 0; i < parseInt(rows); i++) {
+    if (stop) {
+      break;
+    }
     for (let j = 0; j < parseInt(colums); j++) {
       let rowString = prompt("Introduce un valor");
       if (isBinary(rowString)) {
         row.push(parseInt(rowString));
       } else {
+        stop = true
         alert("Los números deben ser binarios");
         break;
       }
@@ -24,7 +35,6 @@ const generateMinesMap = () => {
 
   return mineMap;
 
-  // alert("Las filas y columnas deben ser números")
 };
 
 const mineTest = [
@@ -34,7 +44,8 @@ const mineTest = [
   [1, 0, 0, 0],
 ];
 
-const countMines = (mapMines) => {
+const countMines = () => {
+  const mapMines = generateMinesMap()
   let mapWithCountMines = [];
   let rowMines = [];
   const mapMinesLength = mapMines.length;
@@ -87,3 +98,4 @@ const countMines = (mapMines) => {
 };
 
 console.log(countMines(mineTest))
+
