@@ -99,3 +99,6 @@ const countMines = () => {
 
 console.log(countMines(mineTest))
 
+// Debugger
+// https://googlechrome.github.io/devtools-samples/debug-js/get-started
+
