@@ -57,7 +57,6 @@ const countMines = () => {
     for (let j = 0; j < mapMines[i].length; j++) {
 
       if (mapMines[i + 1] !== undefined && mapMines[i + 1][j] === 1) {
-        console.log()
         mines++;
       } 
 
@@ -100,7 +99,7 @@ const countMines = () => {
 };
 
 console.group("Resultado")
-  console.log(countMines(mineTest))
+  console.log(countMines())
 console.groupEnd("Resultado")
 
 // Debugger
