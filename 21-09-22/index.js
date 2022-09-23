@@ -8,6 +8,8 @@ const generateMinesMap = () => {
 
   if(!isDigit(rows) || !isDigit(colums)) {
     alert("Las filas y columnas deben ser digitos")
+  } else if (rows === "0" || colums === "1") {
+    alert("No se puede crear un mapa de 0 x 0")
   }
 
   let row = [];
@@ -19,7 +21,7 @@ const generateMinesMap = () => {
       break;
     }
     for (let j = 0; j < parseInt(colums); j++) {
-      let rowString = prompt("Introduce un valor");
+      let rowString = prompt(`Introduce un valor para el elemento[${i}][${j}]`);
       if (isBinary(rowString)) {
         row.push(parseInt(rowString));
       } else {
