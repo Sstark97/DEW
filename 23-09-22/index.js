@@ -71,8 +71,6 @@ const  paintPhrase = ( phrase ) => {
         [1, -2, 3, 4, -5, -4, 3, 2, 1 ] --- [[1, 4, 6], [2,5,4]] --- resultado: 8 
 */
 
-// const x = () =>  
-
 const sumRange = (values, ranges) => {
     let allSum = []
 
@@ -81,24 +79,19 @@ const sumRange = (values, ranges) => {
     }
 
     for (let i = 0; i < ranges.length; i++) {
-        for (let j = 0; j < ranges[i].length; j++) {
-            let sumRow = 0
-            if (j === 0) {
-                values[ranges[i][j]] = ranges[i][2]
-            } else {
-                for (let k = ranges[i][0]; k <= ranges[i][1]; k++ ) {
-                    sumRow += values[k]
-                }
-                allSum.push(sumRow)
-            }
-        }
+        values[ranges[i][0]] = ranges[i][2]
+
+        const subVector = values.slice(ranges[i][0],ranges[i][1] + 1)
+
+        const sumRow = subVector.reduce((prevValue,accumulator) => prevValue + accumulator,0)
+        allSum.push(sumRow)
     }
 
     return `${JSON.stringify(values)} --- ${JSON.stringify(ranges)} --- resultado: ${allSum.sort((a,b) => a + b)[0]}`
 
 }
 
-// console.log(sumRange([1, -2, 3, 4, -5, -4, 3, 2, 1 ],[[1, 3, 10]]))
+// console.log(sumRange([1, -2, 3, 4, -5, -4, 3, 2, 1 ],[[1, 4, 6], [2,5,4]]))
 
 /*
     Dado un mensaje de entrada (solicitado al usuario), vamos a encriptarlo
@@ -176,4 +169,4 @@ const encryptPhrase = () => {
     alert(`El código cifrado es: ${encrypt}`)
 }
 
-encryptPhrase()
+// encryptPhrase()
