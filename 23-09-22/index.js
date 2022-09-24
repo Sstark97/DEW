@@ -72,7 +72,7 @@ const  paintPhrase = ( phrase ) => {
 */
 
 const sumRange = (values, ranges) => {
-    let allSum = []
+    const allSum = []
 
     if(values.length < 5) {
         return "El vector de valores no puede ser menor a 5"
@@ -91,7 +91,7 @@ const sumRange = (values, ranges) => {
 
 }
 
-// console.log(sumRange([1, -2, 3, 4, -5, -4, 3, 2, 1 ],[[1, 4, 6], [2,5,4]]))
+console.log(sumRange([1, -2, 3, 4, -5, -4, 3, 2, 1 ],[[1, 4, 6], [2,5,4]]))
 
 /*
     Dado un mensaje de entrada (solicitado al usuario), vamos a encriptarlo
