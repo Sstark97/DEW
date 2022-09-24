@@ -39,13 +39,6 @@ const generateMinesMap = () => {
 
 };
 
-// const mineTest = [
-//   [0, 1, 0, 0],
-//   [0, 0, 1, 0],
-//   [0, 0, 0, 0],
-//   [1, 0, 0, 0],
-// ];
-
 const countMines = () => {
   const mapMines = generateMinesMap()
   let mapWithCountMines = [];
@@ -101,7 +94,3 @@ const countMines = () => {
 console.group("Resultado")
   console.log(countMines())
 console.groupEnd("Resultado")
-
-// Debugger
-// https://googlechrome.github.io/devtools-samples/debug-js/get-started
-
