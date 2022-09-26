@@ -79,9 +79,11 @@ const sumRange = (values, ranges) => {
     }
 
     for (let i = 0; i < ranges.length; i++) {
-        values[ranges[i][0]] = ranges[i][2]
+        const [start, end, value] = ranges[i]
+        
+        values[start] = value
 
-        const subVector = values.slice(ranges[i][0],ranges[i][1] + 1)
+        const subVector = values.slice(start,end + 1)
 
         const sumRow = subVector.reduce((prevValue,accumulator) => prevValue + accumulator,0)
         allSum.push(sumRow)
