@@ -35,11 +35,11 @@ const  paintPhrase = ( phrase ) => {
     const size = phrase.length + 2
     let square = `${"-".repeat(size + 2)}\n`
 
-    for(let i = 0; i < 7; i++) {
+    for(let i = 0; i < 5; i++) {
         if (i !== 0) {
             square += `|${" ".repeat(size)}|\n`
         }
-        if (i === 3) {
+        if (i === 2) {
             square += `| ${phrase} |\n`
         }
     }
@@ -81,7 +81,7 @@ const sumRange = (values, ranges) => {
 
 }
 
-// console.log(sumRange([1, -2, 3, 4, -5, -4, 3, 2, 1 ],[[1, 4, 6], [2,5,4]]))
+console.log(sumRange([1, -2, 3, 4, -5, -4, 3, 2, 1 ],[[1, 4, 6], [2,5,4]]))
 
 /*
     Dado un mensaje de entrada (solicitado al usuario), vamos a encriptarlo
