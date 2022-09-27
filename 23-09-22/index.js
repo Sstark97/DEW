@@ -12,24 +12,12 @@ const countVowels = (chain) => {
         u:0
     } 
 
-    for(let letter = 0; letter < chain.length; letter++) {
-        if (chain[letter] === "a") {
-            vowels.a ++
-        } else if (chain[letter] === "e") {
-            vowels.e ++
-        } else if (chain[letter] === "i") {
-            vowels.i ++
-        } else if (chain[letter] === "o") {
-            vowels.o ++
-        } else if (chain[letter] === "u") {
-            vowels.u ++
-        }
-    }
+    chain.split("").forEach(letter => vowels[letter] !== undefined && vowels[letter] ++)
 
     return `El número de vocales es:\n ${JSON.stringify(vowels)}`
 } 
 
-// console.log(countVowels("Probando el contador de vocales"))
+console.log(countVowels("Probando el contador de vocales"))
 
 // ----------------------------------------------------------------------------------
 
@@ -93,7 +81,7 @@ const sumRange = (values, ranges) => {
 
 }
 
-console.log(sumRange([1, -2, 3, 4, -5, -4, 3, 2, 1 ],[[1, 4, 6], [2,5,4]]))
+// console.log(sumRange([1, -2, 3, 4, -5, -4, 3, 2, 1 ],[[1, 4, 6], [2,5,4]]))
 
 /*
     Dado un mensaje de entrada (solicitado al usuario), vamos a encriptarlo
