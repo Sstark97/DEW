@@ -17,7 +17,7 @@ const countVowels = (chain) => {
     return `El número de vocales es:\n ${JSON.stringify(vowels)}`
 } 
 
-console.log(countVowels("Probando el contador de vocales"))
+// console.log(countVowels("Probando el contador de vocales"))
 
 // ----------------------------------------------------------------------------------
 
@@ -29,7 +29,7 @@ console.log(countVowels("Probando el contador de vocales"))
     Nota: no te olvides de dibujar un pequeño marco representando el mismo…
 */
 
-const reversePhrase = ( phrase ) => phrase.split("").reverse().join("")
+const reversePhrase = phrase  => phrase.split("").reverse().join("")
 
 const  paintPhrase = ( phrase ) => {
     const size = phrase.length + 2
