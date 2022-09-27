@@ -12,7 +12,7 @@ const countVowels = (chain) => {
         u:0
     } 
 
-    chain.split("").forEach(letter => vowels[letter] !== undefined && vowels[letter] ++)
+    chain.split("").forEach(letter => vowels[letter.toLowerCase()] !== undefined && vowels[letter] ++)
 
     return `El número de vocales es:\n ${JSON.stringify(vowels)}`
 } 
