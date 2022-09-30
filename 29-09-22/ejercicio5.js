@@ -16,17 +16,60 @@
 
 const pow = () => {
     const base = parseInt(prompt("Diga la base"))
+    const exponent = parseInt(prompt("Diga el exponente"))
+
+    alert(`El resultado de la Potencia es: ${base ** exponent}`)
+}
+
+const sqrt = () => {
+    const number = parseInt(prompt("Diga un número positivo"))
+
+    alert(number > 0 ? `El resultado de la raíz es: ${Math.sqrt(number)}` : `El ${number} es un número negativo`)
+}
+
+const rounded = () => {
+    const number = parseFloat(prompt("Diga un número con decimales"))
+
+    const numberHigh = Math.round(number)
+
+    alert(`El número redondeado es: ${numberHigh}`)
+}
+
+const toAngle = parameter => parameter * (Math.PI / 180)
+
+const trigonometry = () => {
+    const angle = parseFloat(prompt("Diga un angulo entre 0 y 360"))
+
+    if(angle >= 0 || angle < 361) {
+        const sen = Math.sin(toAngle(angle))
+        const cos = Math.cos(toAngle(angle))
+        const tang = Math.tan(toAngle(angle))
+    
+        alert(`El seno es: ${sen}º\nEl coseno es: ${cos}º\n La tangente es: ${tang}º`)
+        return
+    }
+
+    alert(`El ángulo ${angle} no está entre 0 y 360`)
+    
 }
 
 const options = {
-
+    1: () => pow(),
+    2: () => sqrt(),
+    3: () => rounded(),
+    4: () => trigonometry()
 }
 
 const mathCalculator = () => {
-    let stop = false;
 
-    while(!stop) {
-        const option = parseInt(prompt("Seleccione una opción de Calculo: \n1) Potencia\n2)Raíz\n3)Redondeo\n4)Trigonometría\n5)Salir"));
+    const option = parseInt(prompt("Seleccione una opción de Calculo: \n1) Potencia\n2)Raíz\n3)Redondeo\n4)Trigonometría\n"));
 
+    if(option && options[option]) {
+        options[option]()
+        return
     }
+    
+    alert("Esa opción no existe")
 }
+
+mathCalculator()
