@@ -19,22 +19,9 @@ const thirdCase = pass => /[a-z]+/.test(pass)
 
 const fourthCase = pass => /[0-9]+/.test(pass)
 
-const fiveCase = pass => {
-    const arrayPass = pass.split("")
-    let comprobe = false
-
-    for(let pos = 0; pos < arrayPass.length; pos ++) {
-        if(comprobe) {
-            break
-        }
-        comprobe = ["-","_","@","#","$","%","&"].includes(arrayPass[pos])
-    }
-    
-    return comprobe
-}
+const fiveCase = pass => /[-_$@#%&]+/.test(pass)
 
 const comprobeAllCases = pass => firstCase(pass) && secondCase(pass) && thirdCase(pass) && fourthCase(pass) && fiveCase(pass) ? "La contraseña es segura" : "La constraseña es insegura"
-
 
 const userNamePassword = () => {
     const password = prompt("Diga su contraseña")
