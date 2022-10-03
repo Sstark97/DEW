@@ -1,16 +1,37 @@
-import {
-  len,
-  show,
-  reverse,
-  sortAlphebetic,
-  showIntervalArray,
-  remove,
-  removeToEnd,
-  addElement,
-  addToEnd,
-  showElement,
-  showElementPos,
-} from "./arrays.js";
+// Operaciones de Arrays
+
+//  Mostrar el número de elementos del array.
+const len = arr => arr.length
+
+// Muestra todos los elementos del array
+const show = arr => arr
+
+// Muestra los elementos del array en sentido inverso.
+const reverse = arr => [...arr].reverse()
+
+// Muestra los elementos del array ordenados alfabéticamente (pero no los ordena)
+const sortAlphebetic = arr => [...arr].sort((a, b) => a - b)
+
+// Añadir un elemento al principio del array.
+const addElement = (arr, elem) => arr.unshift(elem)
+
+// Añadir un elemento al final del array
+const addToEnd = (arr, elem) => arr.push(elem)
+
+// Borrar un elemento al principio del array (y decir cuál se ha borrado).
+const remove = arr => arr.shift()
+
+//  Borrar un elemento al final del array (y decir cuál se ha borrado)
+const removeToEnd = arr => arr.pop()
+
+// Muestra el elemento que se encuentra en una posición que el usuario indica.
+const showElement = (arr, pos) => arr.at(pos)
+
+// Muestra la posición en la que se encuentra un elemento que le indica el usuario.
+const showElementPos = (arr, elem) => arr.indexOf(elem)
+
+// Muestra los elementos que se encuentran en un intervalo que indique el usuario
+const showIntervalArray = (arr,start,end) => arr.slice(start, end + 1)
 
 /*
     El array base será una variable global y que se pasará por parámetro en todas las funciones. Crea
@@ -60,7 +81,7 @@ const showOptions = {
 };
 
 // • Mostrar número de países.
-const showNumberOfCountries = () => len(countries);
+const showNumberOfCountries = () => alert(`El número de países es: ${len(countries)}`);
 
 /*
     • Mostrar listado de países (y le preguntará si quiere mostrarlos en el orden que
@@ -80,9 +101,9 @@ const showCountriesInterval = () => {
   const start = parseInt(prompt("Digame la posición de inicio"));
   const end = parseInt(prompt("Digame la posición de fin"));
 
-  const subArray = showIntervalArray(start, end);
-  const startElement = remove(...subArray);
-  const endElement = removeToEnd(...subArray);
+  const subArray = showIntervalArray(countries, start, end);
+  const startElement = remove([...subArray]);
+  const endElement = removeToEnd([...subArray]);
 
   alert(
     `Los países listados son: ${subArray}\nElemento Inicial: ${startElement}\nElemento Final: ${endElement}`
@@ -102,6 +123,7 @@ const addCountry = () => {
 
   if (addOptions[addForm] !== undefined) {
     addOptions[addForm](countries, elem);
+    console.log(countries)
     alert("El elemento ha sido añadido con éxito");
     return;
   }
@@ -118,10 +140,10 @@ const removeCountry = () => {
       "Como quiere borrar el elemento (Escriba un número):\n1) Borrar al principio\n2) Borrar al final"
     )
   );
-  const elem = prompt("Digame un país a añadir");
 
   if (removeOptions[addForm] !== undefined) {
     removeOptions[addForm](countries);
+    console.log(countries)
     alert("El elemento ha sido borrado con éxito");
     return;
   }
@@ -135,7 +157,15 @@ const removeCountry = () => {
 const showACountry = () => {
     const toShow = parseInt(prompt("Como quieres consultar el país? (Selecciona un número):\n1) Por posición\n2) Por nombre"))
 
-    alert(showOptions[toShow] !== undefined ? `Lista de países: ${showOptions[toShow]()}`: "Opción no válida");
+    if(showOptions[toShow] === undefined) {
+        alert("Opción no valida")
+        return
+    }
+    
+    const otherOption = prompt(toShow === 1 ? "Escriba la posición" : "Escriba el nombre")
+    const message = toShow === 1 ? "El país es: " : "La posición es: "
+
+    alert(`${message} ${showOptions[toShow](countries,otherOption)}`);
 };
 
 /*
