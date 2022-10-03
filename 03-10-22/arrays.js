@@ -7,7 +7,7 @@
 const len = arr => arr.length
 
 // Muestra todos los elementos del array
-const show = arr => arr
+const show = arr => arr.join(", ")
 
 // Muestra los elementos del array en sentido inverso.
 const reverse = arr => [...arr].reverse()
