@@ -78,9 +78,15 @@ const addCountry = () => {
   );
 
   if (addOptions[addForm] !== undefined) {
-    const elem = prompt("Digame un país a añadir");
-    addOptions[addForm](countries, elem);
-    alert("El elemento ha sido añadido con éxito");
+    const country = prompt("Digame un país a añadir");
+
+    if (!countries.includes(country)) {
+      addOptions[addForm](countries, country);
+      alert("El elemento ha sido añadido con éxito");
+      return;
+    }
+
+    alert(`${country} ya está en la lista de países`);
     return;
   }
 
@@ -127,9 +133,13 @@ const showACountry = () => {
   const otherOption = prompt(
     toShow === 1 ? "Escriba la posición" : "Escriba el nombre"
   );
-  const message = toShow === 1 ? "El país es: " : "La posición es: ";
 
-  alert(`${message} ${showOptions[toShow](countries, otherOption)}`);
+  const result = showOptions[toShow](countries, otherOption);
+  const notExist = result === -1 ? "(No existe)" : "";
+
+  const message = toShow !== 1 ? `El país es: ${result} ${notExist}` : `La posición es: ${result}`;
+
+  alert(message);
 };
 
 /*
