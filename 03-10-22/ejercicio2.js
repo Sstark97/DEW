@@ -6,6 +6,7 @@ import {
   addOptions,
   removeOptions,
   showOptions,
+  showMenuOptions
 } from "./const.js";
 
 /*
@@ -29,6 +30,7 @@ const showNumberOfCountries = () => {
 */
 const showCountries = () => {
   const appOption = appOptions.find((option) => option.includes("2"));
+
   const showOption = parseInt(
     prompt(
       `${appOption}\nComo quieres ordernarlos (Escriba un número):\n1) Orden original\n2) Orden inverso\n3) Alfabeticamente`
@@ -37,7 +39,7 @@ const showCountries = () => {
 
   alert(
     showAllOptions[showOption] !== undefined
-      ? `Lista de países: ${showAllOptions[showOption]()}`
+      ? `Lista de países (${showMenuOptions[showOption]}): ${showAllOptions[showOption]()}`
       : "Opción no válida"
   );
 };
@@ -105,9 +107,8 @@ const removeCountry = () => {
   );
 
   if (removeOptions[addForm] !== undefined) {
-    removeOptions[addForm](countries);
-    console.log(countries);
-    alert("El elemento ha sido borrado con éxito");
+    const removedElement = removeOptions[addForm](countries);
+    alert(`El elemento ${removedElement} ha sido borrado con éxito `);
     return;
   }
 

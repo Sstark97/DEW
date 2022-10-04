@@ -40,6 +40,12 @@ export const appOptions = [
   "7) Salir de la App",
 ];
 
+export const showMenuOptions = {
+  1: "Orden original",
+  2: "Orden inverso",
+  3: "Alfabeticamente",
+};
+
 export const showAllOptions = {
   1: () => show(countries),
   2: () => reverse(countries),
