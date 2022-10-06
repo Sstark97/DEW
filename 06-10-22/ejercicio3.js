@@ -72,7 +72,8 @@ const patient2 = new Patient("12346", "Paco", "Resfriado")
 const hospital = new Hospital("Negrin", "LPA", [patient1, patient2])
 
 console.log("Hospital antes")
-console.log(hospital.showPatients())
+hospital.showPatients()
+
 console.log("\nHospital después")
 hospital.removePatient("12345")
-console.log(hospital.showPatients())
+hospital.showPatients()
