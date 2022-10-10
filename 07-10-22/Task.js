@@ -7,7 +7,7 @@ class Task {
 
     constructor(day, hour, place, comments, type) {
         if (day <= 0 || day > 31) throw new Error("Los dias deben ser entre 1 - 31")
-        if(hour < 0 || hour > 24) throw new Error ("Las horas válidas son de 0 - 24")
+        if(hour < 0 || hour > 23) throw new Error ("Las horas válidas son de 0 - 23")
         if(!["reunion", "medico", "clases", "gestiones varias"].includes(type)) throw new Error("Los tipos válidos son reunion, medico, clases, gestiones varias")
  
         this.#day = day

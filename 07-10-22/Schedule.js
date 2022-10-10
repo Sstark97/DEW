@@ -1,7 +1,7 @@
 class Schedule {
     #tasks = []
 
-    get task (){
+    get tasks (){
         return this.#tasks
     }
 
@@ -12,10 +12,10 @@ class Schedule {
     addTask (newTask) {
         if(!this.#tasks.some(task => task.day === newTask.day && task.hour === newTask.hour)) {
             this.#tasks = [...this.#tasks,newTask]
-            console.log("Add a new Todo!")
+            return "Tarea añadida con éxito"
         }
 
-        return `You have a Task in ${newTask.day} at ${newTask.hour}h` 
+        return `Tiene una tarea el día ${newTask.day} at¡ las ${newTask.hour}h` 
     } 
 
     removeTask (day, hour) {
@@ -47,7 +47,7 @@ class Schedule {
             }
         })
 
-        this.showTask(inOrder)
+        return inOrder
     }
 }
 
