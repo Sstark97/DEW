@@ -29,9 +29,26 @@ const addTaskMenu = () => {
     }
 }
 
+const removeTaskMenu = () => {
+    const day = prompt("Digame un día (1-31)")
+    const hour = prompt("Digame una hora (0-23)")
+
+    const resRemove = schedule.removeTask(day, hour)
+
+    alert(resRemove)
+}
+
+const removeTaskPassMenu = () => {
+    const resRemoveAll = schedule.removeTaskPass()
+
+    alert(resRemoveAll)
+}
+
 const menu = {
     1: () => showTasksMenu(),
-    2: () => addTaskMenu()
+    2: () => addTaskMenu(),
+    3: () => removeTaskMenu(),
+    4: () => removeTaskPassMenu()
 }
 
 const todo1 = addTaskMenu(23,2,"","","reunion")

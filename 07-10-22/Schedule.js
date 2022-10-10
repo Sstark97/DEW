@@ -15,27 +15,27 @@ class Schedule {
             return "Tarea añadida con éxito"
         }
 
-        return `Tiene una tarea el día ${newTask.day} at¡ las ${newTask.hour}h` 
+        return `Tiene una tarea el día ${newTask.day} a las ${newTask.hour}h` 
     } 
 
     removeTask (day, hour) {
         if(this.#tasks.some(task => task.day === day && task.hour === hour)) {
             this.#tasks = this.#tasks.filter(task => !(task.day === day && task.hour === hour))
-            console.log("Remove the Task succesfully")
+            return "Tarea eliminada con éxito!"
         }
 
-        return `You not have a Task in ${day} at ${hour}h` 
+        return `No tiene tareas el día ${newTask.day} a las ${newTask.hour}h` 
     }
 
     removeTaskPass () {
         const toDay = new Date()
         const hour = toDay.getHours()
         const day = toDay.getDate()
+        const taskLength = this.#tasks.length
 
         this.#tasks = this.#tasks.filter(task => task.day > day && task.hour < hour)
-        console.log("Remove old tasks succesfully")
 
-        return `You not have a Task before ${toDay}` 
+        return taskLength > this.#tasks.length ? `No tienes tareas antes del ${toDay}` : "Tareas antiguas borradas con éxito"
     }
 
     showTaskInOrder () {
