@@ -9,7 +9,7 @@ const dateToFinishCourse = () => {
 
     const days = ((dateToFinish.getTime() - dateToday.getTime()) / 86_400_000).toFixed()
 
-    return `Quedan ${days} de clase`
+    return `Quedan ${days} días de clase`
 }
 
 console.log(dateToFinishCourse())

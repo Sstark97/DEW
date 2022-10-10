@@ -19,4 +19,14 @@ const allSundayBirtDay = (month, day) => {
     return sundayYears
 }
 
-console.log(allSundayBirtDay(6,31))
+const printSundayBirthay = birthday => {
+    let res = "Mi cumpleaños cae domingo los años: "
+    birthday.forEach(year => res += `${year}, `)
+    res = res.substring(0, res.length -2)
+
+    return res
+}
+
+const birthday = allSundayBirtDay(6,31)
+
+console.log(printSundayBirthay(birthday))
