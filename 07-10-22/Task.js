@@ -33,6 +33,10 @@ class Task {
         this.#hour = newHour
     }
 
+    toString () {
+        return `Día: ${this.day} Hora: ${this.hour} Lugar: ${this.#place} Comentarios: ${this.#comments} Tipo: ${this.#type}`
+    }
+
 }
 
 export default Task

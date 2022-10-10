@@ -2,14 +2,18 @@ import Schedule from "./Schedule.js"
 import Task from "./Task.js"
 
 const schedule = new Schedule()
+schedule.addTask(new Task(2,3,"LPA","Nada", "reunion"))
+schedule.addTask(new Task(4,3,"LPA","Nada", "medico"))
+schedule.addTask(new Task(5,4,"LPA","Nada", "clases"))
+schedule.addTask(new Task(10,8,"LPA","Nada", "gestiones varias"))
 
 const showTasksMenu = () => {
     const tasks = schedule.tasks
-    const taskString = "Las tareas son: \n"
+    let taskString = tasks.length === 0 ? "No hay tareas" : "Las tareas son: \n"
 
-    tasks.forEach((task, id) => taskString += `Task ${id} day: ${task.day} hour: ${task.hour}\n`)
+    tasks.forEach((task, id) => taskString += `Tarea ${id} ${task.toString()}\n`)
 
-    return taskString
+    alert(taskString)
 }
 
 const addTaskMenu = () => {
@@ -30,8 +34,8 @@ const addTaskMenu = () => {
 }
 
 const removeTaskMenu = () => {
-    const day = prompt("Digame un día (1-31)")
-    const hour = prompt("Digame una hora (0-23)")
+    const day = parseInt(prompt("Digame un día (1-31)"))
+    const hour = parseInt(prompt("Digame una hora (0-23)"))
 
     const resRemove = schedule.removeTask(day, hour)
 
@@ -44,20 +48,46 @@ const removeTaskPassMenu = () => {
     alert(resRemoveAll)
 }
 
+const showTasksMenuInOrder = () => {
+    const tasks = schedule.showTaskInOrder()
+    let taskString = "Las tareas en orden son: \n"
+
+    tasks.forEach((task, id) => taskString += `Task ${id} day: ${task.day} hour: ${task.hour}\n`)
+
+    return taskString
+}
+
 const menu = {
     1: () => showTasksMenu(),
     2: () => addTaskMenu(),
     3: () => removeTaskMenu(),
-    4: () => removeTaskPassMenu()
+    4: () => removeTaskPassMenu(),
+    5: () => showTasksMenuInOrder()
 }
 
-const todo1 = addTaskMenu(23,2,"","","reunion")
-const todo2 = new Task(23,3,"","","reunion")
-const todo3 = new Task(23,4,"","","reunion")
+const appOptions = [
+    "Agenda",
+    "Seleccione la operación a realizar(Escriba un número)",
+    "1) Ver las tareas",
+    "2) Añadir Tarea",
+    "3) Eliminar Tareas",
+    "4) Eliminar Tareas Antiguas",
+    "5) Ver tareas ordenadas",
+    "6) Salir de la App",
+]
 
-// schedule.addTask(todo1)
-// schedule.addTask(todo2)
-// schedule.addTask(todo3)
+const scheduleManager = () => {
+    while (true) {
+        const option = parseInt(prompt(appOptions.join("\n")));
+    
+        if (option === 6) break;
+    
+        if (menu[option] !== undefined) {
+          menu[option]();
+        } else {
+          alert("La opción no es válida");
+        }
+      }
+}
 
-// schedule.removeTask(23,4)
-schedule.showTasks()
+scheduleManager()
