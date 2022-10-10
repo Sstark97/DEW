@@ -38,4 +38,4 @@ const getDateInFormat = format => {
     return today.toLocaleDateString(language,allOptions[format])
 }
 
-console.log(getDateInFormat(1))
+console.log(getDateInFormat(4))

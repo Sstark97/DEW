@@ -4,35 +4,47 @@
     Debe guardar todos ellos en un array y al finalizar el proceso imprimir dicho array.
 */
 
-const isPrime = num => {
-    let result = num > 1 && num % 1 === 0 && num % num === 0
+function* numGenerator() {
+  let indice = 0;
 
-    for(let i = num - 1; i > 1; i-- ){
-        if(num % i === 0 ) {
-            result = false
-        }
+  while (true) yield indice++;
+}
+
+const isPrime = (num) => {
+  let result = num > 1 && num % 1 === 0 && num % num === 0;
+
+  for (let i = num - 1; i > 1; i--) {
+    if (num % i === 0) {
+      result = false;
     }
+  }
 
-    return result
-}
+  return result;
+};
 
-const isPalyndrome = num => {
-    const reverseNum = num.toString().split("").reverse().join("")
+const isPalyndrome = (num) => {
+  const reverseNum = num.toString().split("").reverse().join("");
 
-    return num.toString() === reverseNum
-}
+  return num.toString() === reverseNum;
+};
 
-const palyndromeNumbers = () =>{
-    const result = []
+const palyndromeNumbers = () => {
+  const result = [];
+  const genNumbers = numGenerator()
 
-    for(let number = 0; number <= 10000; number++) {
-        if(isPrime(number) && isPalyndrome(number)) {
-            result.push(number)
-        }
+  console.time("Ejecución")
+  while (true) {
+    const number = genNumbers.next().value
+    if(number === 100_000) {
+        break
     }
+    if (isPrime(number) && isPalyndrome(number)) {
+      result.push(number);
+    }
+  }
+  console.timeEnd("Ejecución")
 
-    return result
-}
+  return result;
+};
 
-console.log(palyndromeNumbers())
-
+console.log(palyndromeNumbers());
