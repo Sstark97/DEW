@@ -11,6 +11,7 @@ class Schedule {
 
     addTask (newTask) {
         if(!this.#tasks.some(task => task.day === newTask.day && task.hour === newTask.hour)) {
+            console.log("CDsafdsfvswrgbteh")
             this.#tasks = [...this.#tasks,newTask]
             return "Tarea añadida con éxito"
         }
@@ -19,7 +20,6 @@ class Schedule {
     } 
 
     removeTask (day, hour) {
-        console.log(this.#tasks.some(task => task.day === day && task.hour === hour))
         if(this.#tasks.some(task => task.day === day && task.hour === hour)) {
             this.#tasks = this.#tasks.filter(task => !(task.day === day && task.hour === hour))
             return "Tarea eliminada con éxito!"

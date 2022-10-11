@@ -6,6 +6,7 @@ schedule.addTask(new Task(2,3,"LPA","Nada", "reunion"))
 schedule.addTask(new Task(4,3,"LPA","Nada", "medico"))
 schedule.addTask(new Task(5,4,"LPA","Nada", "clases"))
 schedule.addTask(new Task(10,8,"LPA","Nada", "gestiones varias"))
+schedule.addTask(new Task(2,3,"LPA","Nada", "reunion"))
 
 const showTasksMenu = () => {
     const tasks = schedule.tasks
@@ -17,8 +18,8 @@ const showTasksMenu = () => {
 }
 
 const addTaskMenu = () => {
-    const day = prompt("Digame un día (1-31)")
-    const hour = prompt("Digame una hora (0-23)")
+    const day = parseInt(prompt("Digame un día (1-31)"))
+    const hour = parseInt(prompt("Digame una hora (0-23)"))
     const place = prompt("Indiqueme el lugar")
     const comments = prompt("Escriba los comentarios de la tarea")
     const type = prompt("Indique el tipo de tarea (reunion, medico, clases, gestiones varias)")
@@ -54,7 +55,7 @@ const showTasksMenuInOrder = () => {
 
     tasks.forEach((task, id) => taskString += `Task ${id} day: ${task.day} hour: ${task.hour}\n`)
 
-    return taskString
+    alert(taskString)
 }
 
 const menu = {
