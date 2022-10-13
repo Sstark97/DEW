@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans&family=Poppins&family=Raleway&family=Roboto&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./index.css">
+    <title>DOM y Eventos</title>
+</head>
+<body>
+    <main>
+        <form id="table_form">
+            <div>
+                <label for="rows">Número de Filas: </label>
+                <input type="text" name="rows" id="rows"required >
+            </div>
+
+            <div>
+                <label for="cols">Número de Columnas: </label>
+                <input type="text" name="cols" id="cols"required >
+            </div>
+
+            <div>
+                <label for="colors">Color:</label>
+                <input type="color" value="#B73E3E" list="colors-list" id="colors" name="colors" required>
+            </div>
+            <datalist id="colors-list">
+                <option value="#EA047E">#EA047E</option>
+                <option value="#FF6D28">#FF6D28</option>
+                <option value="#FCE700">#FCE700</option>
+                <option value="#150050">#150050</option>
+                <option value="#3F0071">#3F0071</option>
+                <option value="#FB2576">#FB2576</option>
+                <option value="#DD5353">#DD5353</option>
+                <option value="#B73E3E">#B73E3E</option>
+            </datalist>
+
+            <div>
+                <label for="fonts">Fuente:</label>
+                <input list="fonts-list" id="fonts" name="fonts" required>
+            </div>
+            <datalist id="fonts-list">
+                <option value="Noto Sans">Noto Sans</option>
+                <option value="Poppins">Poppins</option>
+                <option value="Raleway">Raleway</option>
+                <option value="Roboto">Roboto</option>
+            </datalist>
+
+            <div>
+                <label for="font_size">Tamaño de la Fuente: </label>
+                <input type="text" name="font_size" id="font_size" required>
+            </div>
+
+            <div>
+                <button id="generate">Generar</button>
+                <button id="final">Finalizar</button>
+            </div>
+        </form>
+
+        <table id="generate_table"></table>
+    </main>
+    <script type="module" src="./index.js"></script>
+</body>
+</html>
