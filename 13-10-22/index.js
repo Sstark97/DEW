@@ -81,5 +81,4 @@ const generateTable = e => {
 }
 
 form.addEventListener("submit", e => generateTable(e))
-
 final.addEventListener("click", () => window.close())
