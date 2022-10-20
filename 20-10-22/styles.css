@@ -1,0 +1,33 @@
+.fontMemory {
+    font-size: 0.9rem;
+}
+
+.fontMemory div:hover {
+    cursor: pointer;
+}
+
+.col {
+    padding: 0;
+    gap: 0.3rem;
+}
+
+button {
+    border: 0.3px solid rgba(128, 128, 128, 0.295); 
+    background-color:rgba(85, 78, 78, 0.1);
+}
+
+button:hover {
+    background-color:rgba(85, 78, 78, 0.3);
+}
+
+#hover:hover {
+    background-color:rgba(85, 78, 78, 0.3) !important;
+}
+
+button.bg-primary {
+    opacity: 0.7;
+}
+
+button.bg-primary:hover {
+    opacity: 1;
+}
