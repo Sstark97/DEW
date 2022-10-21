@@ -18,7 +18,7 @@ class Calculator {
     }
 
     powToTwo(x) {
-        x ** 2
+        return x ** 2
     }
 
     sqrt(x) {
