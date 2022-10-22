@@ -1,12 +1,18 @@
 import { calculatorState } from "./const.js"
 
-const isNumber = (elementText, number) => /[0-9]$/.test(elementText) || elementText === "." && !number.includes(".")
+const isNumber = (elementText, number) => elementText.length === 1 && /^[0-9]/.test(elementText) || elementText === "." && !number.includes(".")
 
 const isOneElementOperation = operator => ["%", "x2", "2√x", "1/x", "+/-"].includes(operator)
 
+const haveOperator = textContent => {
+    const operator = textContent.split("")[1]
+
+    return ["+","-","/","*","^","%"].includes(operator)
+}
+
 const isOperator = operator => /[\+\-\/\*\^\%]/g.test(operator) || isOneElementOperation(operator)
 
-const resolveOperation = (firstNumber, operator, secondNumber, elementText) => firstNumber !== "" && operator !== "" && secondNumber !== "" && elementText === "="
+const resolveOperation = (firstNumber, operator, secondNumber, elementText) => firstNumber !== "" && operator !== "" && secondNumber !== "" && elementText === "=" 
 
 const updateCalculatorState = (first = "",operator = "",second = "") => {
     calculatorState.firstNumber = first
@@ -15,7 +21,6 @@ const updateCalculatorState = (first = "",operator = "",second = "") => {
 }
 
 const updateOutput = (output, value) => {
-    console.log(output.textContent.length)
     output.textContent = output.textContent.length < 12 ? value : output.textContent
 }
 
@@ -47,6 +52,7 @@ const deleteOperation = output => {
 export {
     isNumber,
     isOneElementOperation,
+    haveOperator,
     isOperator,
     resolveOperation,
     updateCalculatorState,

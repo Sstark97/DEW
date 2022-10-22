@@ -1,6 +1,7 @@
 import {
   isNumber,
   isOneElementOperation,
+  haveOperator,
   isOperator,
   resolveOperation,
   updateCalculatorState,
@@ -15,6 +16,7 @@ const output = document.querySelector("output")
 calculatorDOM.addEventListener("click", (e) => {
   const element = e.target
   let { firstNumber, operator, secondNumber } = calculatorState
+  let res = 0
 
   if (element.nodeName === "BUTTON") {
     const elementName = element.name
@@ -23,7 +25,7 @@ calculatorDOM.addEventListener("click", (e) => {
         firstNumber += elementText
     }
 
-    if (firstNumber !== "" && isOperator(elementText)) {
+    if (firstNumber !== "" && operator === "" && isOperator(elementText)) {
         operator = elementText
     }
 
@@ -31,28 +33,25 @@ calculatorDOM.addEventListener("click", (e) => {
         secondNumber += elementText
     }
 
-    if (firstNumber !== "" && isOneElementOperation(operator)) {
+    if (firstNumber !== "" && !haveOperator(output.textContent) && isOneElementOperation(operator)) {
         const firts = parseFloat(firstNumber)
-        const res = operations[operator](firts).toFixed(2)
-
-        updateOutput(output, res)
-        firstNumber = res
-        secondNumber = ""
-        operator = ""
+        res = operations[operator](firts).toFixed(2)
     }
 
     if (resolveOperation(firstNumber, operator, secondNumber, elementText)) {
         const firts = parseFloat(firstNumber)
         const second = parseFloat(secondNumber)
-        const res = operations[operator](firts, second).toFixed(2)
+        res = operations[operator](firts, second).toFixed(2)
+    }
 
-        updateOutput(output, res)
+    if(res !== 0) {
         firstNumber = res
         secondNumber = ""
         operator = ""
+        updateOutput(output, res)
+    } else {
+        updateOutput(output, `${firstNumber}${operator}${secondNumber}`)
     }
-
-    updateOutput(output, `${firstNumber}${operator}${secondNumber}`)
     updateCalculatorState(firstNumber, operator, secondNumber)
 
     if (deleteOps[elementName]) {
