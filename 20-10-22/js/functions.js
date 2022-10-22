@@ -2,6 +2,8 @@ import { calculatorState } from "./const.js"
 
 const isNumber = (elementText, number) => elementText.length === 1 && /^[0-9]/.test(elementText) || elementText === "." && !number.includes(".")
 
+const isFirstNumber = (elementText, number) => elementText === "0" && number.length === 0
+
 const isOneElementOperation = operator => ["%", "x2", "2√x", "1/x", "+/-"].includes(operator)
 
 const haveOperator = textContent => {
@@ -51,6 +53,7 @@ const deleteOperation = output => {
 
 export {
     isNumber,
+    isFirstNumber,
     isOneElementOperation,
     haveOperator,
     isOperator,
@@ -59,5 +62,5 @@ export {
     updateOutput,
     ceOperation,
     cOperation,
-    deleteOperation
+    deleteOperation,
 }

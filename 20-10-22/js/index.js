@@ -1,11 +1,12 @@
 import {
   isNumber,
+  isFirstNumber,
   isOneElementOperation,
   haveOperator,
   isOperator,
   resolveOperation,
   updateCalculatorState,
-  updateOutput,
+  updateOutput
 } from "./functions.js"
 
 import { operations, deleteOps, memoryOptions, calculatorState } from "./const.js"
@@ -26,7 +27,7 @@ calculatorDOM.addEventListener("click", (e) => {
   if (element.nodeName === "BUTTON") {
     const elementName = element.name
     const elementText = element.textContent
-    if (operator === "" && isNumber(elementText, firstNumber)) {
+    if (operator === "" && isNumber(elementText, firstNumber) && !isFirstNumber(elementText,firstNumber)) {
         firstNumber += elementText
     }
 
@@ -68,14 +69,12 @@ calculatorDOM.addEventListener("click", (e) => {
 
 memory.addEventListener("click", e => {
     const element = e.target
-    let res = 0
   
     if (element.nodeName === "BUTTON") {
         const elementText = element.textContent
 
         if(memoryOptions[elementText]) {
             const [ number ] = output.textContent.split(" ")
-            console.log(number)
 
             memoryOptions[elementText](parseFloat(number))
             updateOutput(memoryOutput, memoryOptions["MR"]())
