@@ -49,9 +49,10 @@ calculatorDOM.addEventListener("click", (e) => {
         secondNumber = ""
         operator = ""
         updateOutput(output, res)
-    } else {
+    } else if(firstNumber) {
         updateOutput(output, `${firstNumber}${operator}${secondNumber}`)
     }
+
     updateCalculatorState(firstNumber, operator, secondNumber)
 
     if (deleteOps[elementName]) {
