@@ -19,12 +19,26 @@
                 </div>
             </div>
             <div class="row bg-light fontMemory border border-dark text-center">
-                <div class="col">MC</div>
-                <div class="col">MR</div>
-                <div class="col">M+</div>
-                <div class="col">M-</div>
-                <div class="col">MS</div>
-                <div class="col">M^</div>
+                <div class="col"><button class="memoryButton w-100 h-100" disabled>MC</button></div>
+                <div class="col"><button class="memoryButton w-100 h-100" disabled>MR</button></div>
+                <div class="col"><button class="memoryButton w-100 h-100">M+</button></div>
+                <div class="col"><button class="memoryButton w-100 h-100">M-</button></div>
+                <div class="col"><button class="memoryButton w-100 h-100">MS</button></div>
+                <div class="col">
+                    <button class="memoryButton w-100 h-100" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom" disabled>
+                        M^
+                    </button>
+                </div>
+            </div>
+
+            <div class="h-50 offcanvas offcanvas-bottom posMemory" tabindex="-1" id="offcanvasBottom" aria-labelledby="offcanvasBottomLabel">
+                <div class="offcanvas-header">
+                  <h5 class="offcanvas-title" id="offcanvasBottomLabel">Memoria</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body small">
+                  <p class="text-end fs-4 fw-bold">0</p>
+                </div>
             </div>
 
             <div class="row">

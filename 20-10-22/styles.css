@@ -1,3 +1,7 @@
+/* * {
+    overflow-y: hidden;
+} */
+
 .fontMemory {
     font-size: 0.9rem;
 }
@@ -9,6 +13,18 @@
 .col {
     padding: 0;
     gap: 0.3rem;
+}
+
+.memoryButton {
+    padding: 0;
+}
+
+.posMemory {
+    width: 21%;
+    height: 100%;
+    position: absolute;
+    top: 36.5%;
+    left: 39% !important;
 }
 
 button {
