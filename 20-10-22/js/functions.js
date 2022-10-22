@@ -15,7 +15,8 @@ const updateCalculatorState = (first = "",operator = "",second = "") => {
 }
 
 const updateOutput = (output, value) => {
-    output.textContent = value
+    console.log(output.textContent.length)
+    output.textContent = output.textContent.length < 12 ? value : output.textContent
 }
 
 const cOperation = output => {
