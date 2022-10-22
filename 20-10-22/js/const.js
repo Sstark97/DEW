@@ -21,6 +21,14 @@ const deleteOps = {
     "delete": output => deleteOperation(output)
 }
 
+const memoryOptions = {
+    "MC": () => calculator.memoryClear(),
+    "MR": () => calculator.memory,
+    "M+": x => calculator.memorySum(parseFloat(x)),
+    "M-": x => calculator.memorySum(parseFloat(-x)),
+    "MS": number => calculator.memory = number,
+}
+
 const calculatorState = {
     firstNumber: "",
     operator: "",
@@ -30,5 +38,6 @@ const calculatorState = {
 export {
     operations,
     calculatorState,
-    deleteOps
+    deleteOps,
+    memoryOptions
 }

@@ -1,5 +1,5 @@
 class Calculator {
-    #memory
+    #memory = 0
 
     sum(x, y) {
         return x + y
@@ -46,7 +46,7 @@ class Calculator {
     }
 
     memoryClear() {
-        this.#memory = undefined
+        this.#memory = 0
     }
 
     memorySum(x) {
