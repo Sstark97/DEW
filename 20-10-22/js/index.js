@@ -20,6 +20,31 @@ const updateCalculatorState = (first = "",operator = "",second = "") => {
     calculatorState.secondNumber = second
 }
 
+const cOperation = () => {
+    output.textContent = "0"
+    updateCalculatorState("", "", "")
+}
+
+const ceOperation = (firstNumber, operator) => {
+    if(operator !== "") {
+        updateCalculatorState(firstNumber, operator, "")
+        updateOutput(`${firstNumber}${operator}`)
+    } else {
+        cOperation()
+        updateCalculatorState("","", "")
+    }
+}
+
+const deleteOperation = () => {
+    if(output.textContent !== 0) {
+        const deleteStr = output.textContent.substring(0, output.textContent.length - 1)
+        const [first, operator, second] = deleteStr.split(" ")
+
+        updateOutput(deleteStr !== "" ? deleteStr : "0")
+        updateCalculatorState(first, operator ?? "", second ?? "")
+    }
+}
+
 const operations = {
     "+": (x,y) => calculator.sum(x,y),
     "-": (x,y) => calculator.minus(x,y),
@@ -32,46 +57,38 @@ const operations = {
     "+/-": x => calculator.toNegative(x)
 } 
 
-const cOperation = () => {
-    output.textContent = "0"
+const deleteOps = {
+    "C": () => cOperation(),
+    "CE": (firstNumber, operator) => ceOperation(firstNumber, operator),
+    "delete": () => deleteOperation()
 }
+
+const isNumber = (elementText, number) => /[0-9]$/.test(elementText) || elementText === "." && !number.includes(".")
+
+const isOperator = elementText => /[\+\-\/\*\^\%]/g.test(elementText) || ["%", "x2", "2√x", "1/x", "+/-"].includes(elementText)
 
 calculatorDOM.addEventListener("click", e => {
     const element = e.target
     let { firstNumber, operator, secondNumber } = calculatorState
 
     if(element.nodeName === "BUTTON" && output.textContent.length < 12) {
-        if(element.textContent === "C") {
-            cOperation()
-            updateCalculatorState("", "", "")
-        } else if(element.textContent === "CE") {
-            if(operator !== "") {
-                updateCalculatorState(firstNumber, operator, "")
-                updateOutput(`${firstNumber}${operator}`)
-            } else {
-                cOperation()
-                updateCalculatorState("","", "")
-            }
-        } else if(element.name === "delete" && output.textContent !== 0) {
-            const deleteStr = output.textContent.substring(0, output.textContent.length - 1)
-            const [first, operator, second] = deleteStr.split(" ")
+        const elementName = element.name
+        const elementText = element.textContent
 
-            updateOutput(deleteStr !== "" ? deleteStr : "0")
-            updateCalculatorState(first, operator ?? "", second ?? "")
-        }
-        
-        else {
+        if(deleteOps[elementName]) {
+            elementName === "CE" ? deleteOps[elementName](firstNumber,operator) : deleteOps[elementName]() 
+        } else {
 
-            if(operator === "" && (/[0-9]$/.test(element.textContent) || element.textContent === "." && !firstNumber.includes(".")) ) {
-                firstNumber += element.textContent
+            if(operator === "" && isNumber(elementText, firstNumber)) {
+                firstNumber += elementText
             }
             
-            if(firstNumber !== "" && operator === ""  && (/[\+\-\/\*\^\%]/g.test(element.textContent) || ["%", "x2", "2√x", "1/x", "+/-"].includes(element.textContent))) {
-                operator = element.textContent
+            if(firstNumber !== ""  && isOperator(elementText)) {
+                operator = elementText
             }
             
-            if(operator !== "" && (/[0-9]$/.test(element.textContent) || element.textContent === ".") && !secondNumber.includes(".")){
-                secondNumber += element.textContent
+            if(operator !== "" && isNumber(elementText, secondNumber)){
+                secondNumber += elementText
             }
 
             if(firstNumber !== "" && ["%", "x2", "2√x", "1/x", "+/-"].includes(operator)) {
@@ -84,7 +101,7 @@ calculatorDOM.addEventListener("click", e => {
                 operator = ""
             }
 
-            if(firstNumber !== "" && operator !== "" && secondNumber !== "" && element.textContent === "=" ) {
+            if(firstNumber !== "" && operator !== "" && secondNumber !== "" && elementText === "=" ) {
                 const firts = parseFloat(firstNumber)
                 const second = parseFloat(secondNumber)
                 const res = operations[operator](firts, second).toFixed(2)
