@@ -20,11 +20,11 @@
 }
 
 .posMemory {
-    width: 21%;
-    height: 100%;
+    width: 16.8vw;
+    height: 39.5vh !important;
     position: absolute;
-    top: 36.5%;
-    left: 39% !important;
+    top: 27.95%;
+    left: 41.2% !important;
 }
 
 button {
