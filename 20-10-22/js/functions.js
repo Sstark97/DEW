@@ -26,14 +26,7 @@ const updateOutput = (output, value) => {
     output.textContent = output.textContent.length < 12 ? value : output.textContent
 }
 
-const createBtnContainers = () => {
-    
-}
-
-const addNewElementInMemory = (number, pos) => {
-    const memory = document.querySelector(".offcanvas-body")
-    const newMemory = document.createElement("div")
-    const memoryValue = document.createElement("p")
+const createBtnContainer = () => {
     const btnContainers = document.createElement("div")
     const mc = document.createElement("button")
     const mPlus = document.createElement("button")
@@ -45,19 +38,27 @@ const addNewElementInMemory = (number, pos) => {
     mPlus.textContent = "M+"
     mMinus.classList = "memoryButton w-100 h-100"
     mMinus.textContent = "M-"
+    btnContainers.classList = "d-flex w-50"
+
+    btnContainers.append(mc,mPlus,mMinus)
+
+    return btnContainers
+}
+
+const addNewElementInMemory = (number, pos) => {
+    const memory = document.querySelector(".offcanvas-body")
+    const newMemory = document.createElement("div")
+    const memoryValue = document.createElement("p")
+    const btnContainers = createBtnContainer()
+
+    newMemory.classList = "mt-5"
 
     memoryValue.textContent = number
     memoryValue.classList = "fs-4 fw-bold"
     memoryValue.id = pos
 
-    newMemory.classList = "mt-5"
-
-    btnContainers.classList = "d-flex w-50"
-
-    btnContainers.append(mc,mPlus,mMinus)
     newMemory.append(memoryValue,btnContainers)
     memory.append(newMemory)
-
 }
 
 const cOperation = output => {
