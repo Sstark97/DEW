@@ -26,6 +26,25 @@ const updateOutput = (output, value) => {
     output.textContent = output.textContent.length < 12 ? value : output.textContent
 }
 
+const getCalculatorNumber = (element, output) => {
+    const [ number ] = output.textContent.split(" ")
+    const toFloat = parseFloat(number)
+
+    return [element.textContent, toFloat]
+}
+
+const changeButtonsState = (cond,md,mc,mr) => {
+    md.disabled = undefined
+    mc.disabled = undefined
+    mr.disabled = undefined
+
+    if(cond) {
+        md.disabled = true
+        mc.disabled = true
+        mr.disabled = true
+    } 
+}
+
 const createBtnContainer = () => {
     const btnContainers = document.createElement("div")
     const mc = document.createElement("button")
@@ -98,5 +117,7 @@ export {
     ceOperation,
     cOperation,
     deleteOperation,
-    addNewElementInMemory
+    addNewElementInMemory,
+    changeButtonsState,
+    getCalculatorNumber
 }

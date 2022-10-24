@@ -34,6 +34,7 @@ class Calculator {
     }
 
     toNegative(x) {
+        console.log(-x)
         return -x
     }
 
@@ -49,12 +50,12 @@ class Calculator {
         this.#memory = []
     }
 
-    memorySum(pos, x) {
-        return this.#memory[pos] + x
+    memorySum(x,pos) {
+        return this.#memory[pos] ? this.#memory[pos] + x : x
     }
 
-    memoryLess(pos,x) {
-        return this.#memory[pos] - x
+    memoryLess(x,pos) {
+        return this.#memory[pos] ? x - this.#memory[pos] : -x
     }
 }
 

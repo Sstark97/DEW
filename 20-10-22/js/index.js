@@ -7,7 +7,9 @@ import {
   resolveOperation,
   updateCalculatorState,
   updateOutput,
-  addNewElementInMemory
+  addNewElementInMemory,
+  changeButtonsState,
+  getCalculatorNumber
 } from "./functions.js"
 
 import { operations, deleteOps, memoryOptions, calculatorState } from "./const.js"
@@ -41,8 +43,8 @@ calculatorDOM.addEventListener("click", (e) => {
     }
 
     if (firstNumber !== "" && !haveOperator(output.textContent) && isOneElementOperation(operator)) {
-        const firts = parseFloat(firstNumber)
-        res = operations[operator](firts).toFixed(2)
+        const first = parseFloat(firstNumber)
+        res = operator !== "2√x" ? operations[operator](first).toFixed(2) : first
     }
 
     if (resolveOperation(firstNumber, operator, secondNumber, elementText)) {
@@ -68,49 +70,31 @@ calculatorDOM.addEventListener("click", (e) => {
   }
 })
 
-let memoryPos = 0
+let pos = 0
 memory.addEventListener("click", e => {
     const element = e.target
   
     if (element.nodeName === "BUTTON") {
-        const elementText = element.textContent
+        const [elementText, toFloat]= getCalculatorNumber(element, output)
+        let res
 
-        if(elementText === "MS") {
-            const [ number ] = output.textContent.split(" ")
-            const toFloat = parseFloat(number)
-            memoryOptions["MS"](toFloat)
-
-            addNewElementInMemory(toFloat, memoryPos)
-            memoryPos ++
-            md.disabled = undefined
-            mc.disabled = undefined
-            mr.disabled = undefined
-        } else if(elementText === "MC") {
+        if(elementText === "MC") {
             memoryOptions["MC"](memoryOutput)
-            const [ number ] = output.textContent.split(" ")
-            updateOutput(output,number)
-            updateCalculatorState(number,"","")
+            pos = 0
         } else if(memoryOptions[elementText]) {
-            const [ number ] = output.textContent.split(" ")
-
-            const res = memoryOptions[elementText](0,parseFloat(number))
-            updateOutput(output, res)
-            md.disabled = undefined
-            mc.disabled = undefined
-            mr.disabled = undefined
-
-        }else if(elementText === "MR") {
-            const number = memoryOptions["MR"](0)
-            updateOutput(output,number)
-            updateCalculatorState(number,"","")
+            res = elementText !== "MS" ? memoryOptions[elementText](toFloat,0) : memoryOptions[elementText](toFloat)
+        } else if(elementText === "MR") {
+            res = memoryOptions["MR"](0)
         }
 
-        if(memoryOutput.textContent === "") {
-            md.disabled = true
-            mc.disabled = true
-            mr.disabled = true
-        }   
-        
+        if(elementText === "MS") {
+            addNewElementInMemory(res, pos)
+            pos++
+        }
+
+        updateOutput(output,res ?? toFloat)
+        updateCalculatorState(res ?? toFloat,"","")
+        changeButtonsState(memoryOutput.textContent === "",md,mc,mr)   
     }
 })
 
@@ -118,27 +102,20 @@ memoryOutput.addEventListener("click", e => {
     const element = e.target
   
     if (element.nodeName === "BUTTON") {
-        const elementText = element.textContent
-        const pos = element.parentElement.previousElementSibling
+        const [elementText, toFloat]= getCalculatorNumber(element, output)
+        const { previousElementSibling: pos } = element.parentElement
 
         if(elementText === "MC") {
             element.parentElement.parentElement.remove()
-            console.log(memoryOutput.innerHTML.length)
-            console.log(memoryOutput)
         }
         
         if(elementText === "M+" || elementText === "M-") {
-            const [ number ] = output.textContent.split(" ")
+            const res = memoryOptions[elementText](toFloat,parseInt(pos.id))
 
-            const res = memoryOptions[elementText](parseInt(pos.id),parseFloat(number))
             updateOutput(output, res)
+            updateCalculatorState(res === 0 ? "" : res, "", "")
         }
 
-        if(memoryOutput.textContent.length === 17) {
-            md.disabled = true
-            mc.disabled = true
-            mr.disabled = true
-        } 
-
+        changeButtonsState(memoryOutput.textContent.length === 17,md,mc,mr)   
     }
 }) 

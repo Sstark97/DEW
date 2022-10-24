@@ -27,8 +27,8 @@ const memoryOptions = {
         memory.innerHTML = ""
     },
     "MR": (pos) => calculator.getMemory(pos),
-    "M+": (pos,x) => calculator.memorySum(pos,parseFloat(x)),
-    "M-": (pos,x) => calculator.memoryLess(pos,parseFloat(x)),
+    "M+": (x,pos) => calculator.memorySum(parseFloat(x),pos),
+    "M-": (x, pos) => calculator.memoryLess(parseFloat(x),pos),
     "MS": number => calculator.memory = number,
 }
 
