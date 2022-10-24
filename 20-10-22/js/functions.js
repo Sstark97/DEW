@@ -26,6 +26,40 @@ const updateOutput = (output, value) => {
     output.textContent = output.textContent.length < 12 ? value : output.textContent
 }
 
+const createBtnContainers = () => {
+    
+}
+
+const addNewElementInMemory = (number, pos) => {
+    const memory = document.querySelector(".offcanvas-body")
+    const newMemory = document.createElement("div")
+    const memoryValue = document.createElement("p")
+    const btnContainers = document.createElement("div")
+    const mc = document.createElement("button")
+    const mPlus = document.createElement("button")
+    const mMinus = document.createElement("button")
+
+    mc.classList = "memoryButton w-100 h-100"
+    mc.textContent = "MC"
+    mPlus.classList = "memoryButton w-100 h-100"
+    mPlus.textContent = "M+"
+    mMinus.classList = "memoryButton w-100 h-100"
+    mMinus.textContent = "M-"
+
+    memoryValue.textContent = number
+    memoryValue.classList = "fs-4 fw-bold"
+    memoryValue.id = pos
+
+    newMemory.classList = "mt-5"
+
+    btnContainers.classList = "d-flex w-50"
+
+    btnContainers.append(mc,mPlus,mMinus)
+    newMemory.append(memoryValue,btnContainers)
+    memory.append(newMemory)
+
+}
+
 const cOperation = output => {
     output.textContent = "0"
     updateCalculatorState("", "", "")
@@ -63,4 +97,5 @@ export {
     ceOperation,
     cOperation,
     deleteOperation,
+    addNewElementInMemory
 }

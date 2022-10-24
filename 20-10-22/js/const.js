@@ -22,10 +22,13 @@ const deleteOps = {
 }
 
 const memoryOptions = {
-    "MC": () => calculator.memoryClear(),
-    "MR": () => calculator.memory,
-    "M+": x => calculator.memorySum(parseFloat(x)),
-    "M-": x => calculator.memorySum(parseFloat(-x)),
+    "MC": memory => {
+        calculator.memoryClear()
+        memory.innerHTML = ""
+    },
+    "MR": (pos) => calculator.getMemory(pos),
+    "M+": (pos,x) => calculator.memorySum(pos,parseFloat(x)),
+    "M-": (pos,x) => calculator.memoryLess(pos,parseFloat(x)),
     "MS": number => calculator.memory = number,
 }
 

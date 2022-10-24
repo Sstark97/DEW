@@ -1,5 +1,5 @@
 class Calculator {
-    #memory = 0
+    #memory = []
 
     sum(x, y) {
         return x + y
@@ -37,24 +37,24 @@ class Calculator {
         return -x
     }
 
-    get memory () {
-        return this.#memory
+    getMemory (pos) {
+        return this.#memory[0]
     }
 
     set memory (x) {
-        this.#memory = x
+        this.#memory.push(x)
     }
 
     memoryClear() {
-        this.#memory = 0
+        this.#memory = []
     }
 
-    memorySum(x) {
-        this.#memory += x
+    memorySum(pos, x) {
+        return this.#memory[pos] + x
     }
 
-    memoryLess(x) {
-        this.#memory -= x
+    memoryLess(pos,x) {
+        return this.#memory[pos] - x
     }
 }
 

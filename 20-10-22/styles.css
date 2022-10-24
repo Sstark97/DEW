@@ -47,3 +47,7 @@ button.bg-primary {
 button.bg-primary:hover {
     opacity: 1;
 }
+
+.hidden {
+    display: none;
+}
