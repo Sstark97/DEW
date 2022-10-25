@@ -93,7 +93,7 @@ memory.addEventListener("click", e => {
         }
 
         updateOutput(output,res ?? toFloat)
-        updateCalculatorState(res ?? toFloat,"","")
+        updateCalculatorState(res === 0 ? "" : res,"","")
         changeButtonsState(memoryOutput.textContent === "",md,mc,mr)   
     }
 })
@@ -102,18 +102,25 @@ memoryOutput.addEventListener("click", e => {
     const element = e.target
   
     if (element.nodeName === "BUTTON") {
-        const [elementText, toFloat]= getCalculatorNumber(element, output)
-        const { previousElementSibling: pos } = element.parentElement
+        const elementText = element.textContent
+        const { previousElementSibling: number } = element.parentElement
+        const pos = memoryOptions["MEMORY_POS"](number.textContent)
+        // const numberParent = number.parentElement
+        // const { previousElementSibling: prev, nextElementSibling: next } = numberParent
+
+        // console.log(prev, next
 
         if(elementText === "MC") {
             element.parentElement.parentElement.remove()
         }
         
         if(elementText === "M+" || elementText === "M-") {
-            const res = memoryOptions[elementText](toFloat,parseInt(pos.id))
+            const toFloat = parseFloat(number)
+            const res = memoryOptions[elementText](toFloat,pos)
 
-            updateOutput(output, res)
-            updateCalculatorState(res === 0 ? "" : res, "", "")
+            console.log(pos, toFloat)
+
+            number.textContent = res
         }
 
         changeButtonsState(memoryOutput.textContent.length === 17,md,mc,mr)   

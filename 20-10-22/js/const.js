@@ -30,6 +30,7 @@ const memoryOptions = {
     "M+": (x,pos) => calculator.memorySum(parseFloat(x),pos),
     "M-": (x, pos) => calculator.memoryLess(parseFloat(x),pos),
     "MS": number => calculator.memory = number,
+    "MEMORY_POS": number => calculator.getMemoryPos(number)
 }
 
 const calculatorState = {

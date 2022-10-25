@@ -34,16 +34,24 @@ class Calculator {
     }
 
     toNegative(x) {
-        console.log(-x)
         return -x
     }
 
     getMemory (pos) {
-        return this.#memory[0]
+        return this.#memory[pos]
+    }
+
+    getMemoryPos (number) {
+        return this.#memory.indexOf(parseFloat(number))
+    }
+
+    get memory () {
+        return this.#memory
     }
 
     set memory (x) {
         this.#memory.push(x)
+        console.log(this.#memory)
     }
 
     memoryClear() {
