@@ -44,7 +44,7 @@ calculatorDOM.addEventListener("click", (e) => {
 
     if (firstNumber !== "" && !haveOperator(output.textContent) && isOneElementOperation(operator)) {
         const first = parseFloat(firstNumber)
-        res = operator !== "2√x" ? operations[operator](first).toFixed(2) : first
+        res = operations[operator](first).toFixed(2)
     }
 
     if (resolveOperation(firstNumber, operator, secondNumber, elementText)) {
