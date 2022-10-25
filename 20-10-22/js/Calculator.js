@@ -45,13 +45,21 @@ class Calculator {
         return this.#memory.indexOf(parseFloat(number))
     }
 
+    updateMemory (number,pos) {
+        this.#memory[pos] = number
+    }
+
+    removeElementInMemory (pos) {
+        this.#memory.splice(pos,1)
+        console.log(this.#memory)
+    }
+
     get memory () {
         return this.#memory
     }
 
     set memory (x) {
         this.#memory.push(x)
-        console.log(this.#memory)
     }
 
     memoryClear() {
@@ -62,8 +70,10 @@ class Calculator {
         return this.#memory[pos] ? this.#memory[pos] + x : x
     }
 
-    memoryLess(x,pos) {
-        return this.#memory[pos] ? x - this.#memory[pos] : -x
+    memoryLess(x,pos, inside = false) {
+        const number = this.#memory[pos] ?? 0
+        console.log(inside ? x - number: number - x)
+        return !inside ? x - number: number - x
     }
 }
 

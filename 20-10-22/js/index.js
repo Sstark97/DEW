@@ -75,25 +75,31 @@ memory.addEventListener("click", e => {
     const element = e.target
   
     if (element.nodeName === "BUTTON") {
-        const [elementText, toFloat]= getCalculatorNumber(element, output)
+        const [ elementText, n]= getCalculatorNumber(element, output)
+        const memory0 = document.querySelector(".offcanvas-body .mt-5 p")
+        const toFloat = memory0 !== null ? parseFloat(memory0.textContent) : n
         let res
 
         if(elementText === "MC") {
             memoryOptions["MC"](memoryOutput)
             pos = 0
-        } else if(memoryOptions[elementText]) {
-            res = elementText !== "MS" ? memoryOptions[elementText](toFloat,0) : memoryOptions[elementText](toFloat)
-        } else if(elementText === "MR") {
-            res = memoryOptions["MR"](0)
+        } 
+
+        if(elementText === "M+" || elementText === "M-") {
+            res = memoryOptions[elementText](n,0,true)
+            memoryOptions["UPDATE_MEMORY"](res,0)
         }
 
         if(elementText === "MS") {
-            addNewElementInMemory(res, pos)
+            memoryOptions["MS"](res ?? n)
+            addNewElementInMemory(res ?? n, pos)
             pos++
         }
+        
+        if(memory0) {
+            memory0.textContent = res ?? toFloat
+        }
 
-        updateOutput(output,res ?? toFloat)
-        updateCalculatorState(res === 0 ? "" : res,"","")
         changeButtonsState(memoryOutput.textContent === "",md,mc,mr)   
     }
 })
@@ -105,20 +111,17 @@ memoryOutput.addEventListener("click", e => {
         const elementText = element.textContent
         const { previousElementSibling: number } = element.parentElement
         const pos = memoryOptions["MEMORY_POS"](number.textContent)
-        // const numberParent = number.parentElement
-        // const { previousElementSibling: prev, nextElementSibling: next } = numberParent
-
-        // console.log(prev, next
 
         if(elementText === "MC") {
             element.parentElement.parentElement.remove()
+            memoryOptions["REMOVE_MEMORY"](parseFloat(number.textContent))
         }
         
         if(elementText === "M+" || elementText === "M-") {
-            const toFloat = parseFloat(number)
-            const res = memoryOptions[elementText](toFloat,pos)
+            const toFloat = parseFloat(output.textContent)
+            const res = memoryOptions[elementText](toFloat,pos,true)
 
-            console.log(pos, toFloat)
+            memoryOptions["UPDATE_MEMORY"](res,pos)
 
             number.textContent = res
         }

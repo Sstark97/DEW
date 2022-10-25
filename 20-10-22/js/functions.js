@@ -78,6 +78,8 @@ const addNewElementInMemory = (number, pos) => {
 
     newMemory.append(memoryValue,btnContainers)
     memory.append(newMemory)
+
+    return memoryValue
 }
 
 const cOperation = output => {
