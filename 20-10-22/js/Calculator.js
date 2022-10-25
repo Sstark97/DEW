@@ -51,7 +51,6 @@ class Calculator {
 
     removeElementInMemory (pos) {
         this.#memory.splice(pos,1)
-        console.log(this.#memory)
     }
 
     get memory () {

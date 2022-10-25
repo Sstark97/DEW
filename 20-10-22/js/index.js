@@ -114,7 +114,7 @@ memoryOutput.addEventListener("click", e => {
 
         if(elementText === "MC") {
             element.parentElement.parentElement.remove()
-            memoryOptions["REMOVE_MEMORY"](parseFloat(number.textContent))
+            memoryOptions["REMOVE_MEMORY"](pos)
         }
         
         if(elementText === "M+" || elementText === "M-") {
