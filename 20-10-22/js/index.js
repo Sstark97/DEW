@@ -33,7 +33,7 @@ calculatorDOM.addEventListener("click", (e) => {
     const elementName = element.name
     const elementText = element.textContent
     if (operator === "" && isNumber(elementText, firstNumber) && !isFirstNumber(elementText,firstNumber) || firstNumber.length === 0 && elementText === "-") {
-        firstNumber += elementText
+        firstNumber += elementText.replace(".","0.")
     }
 
     if (firstNumber !== "" && firstNumber !== "-" && operator === "" && isOperator(elementText)) {
@@ -56,6 +56,7 @@ calculatorDOM.addEventListener("click", (e) => {
     }
 
     if(res !== 0) {
+        res = res === "Infinity" ? "NaN" : res
         const formatedRes = formatRes(res)
         firstNumber = formatedRes !== 0 ? formatedRes : ""
         secondNumber = ""
@@ -133,3 +134,4 @@ memoryOutput.addEventListener("click", e => {
         changeButtonsState(memoryOutput.textContent.length === 17,md,mc,mr)   
     }
 }) 
+

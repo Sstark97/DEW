@@ -20,9 +20,6 @@ const updateCalculatorState = (first = "",operator = "",second = "") => {
     calculatorState.firstNumber = first
     calculatorState.operator = operator
     calculatorState.secondNumber = second
-
-    console.log(calculatorState)
-
 }
 
 const updateOutput = (output, value) => {
@@ -115,10 +112,10 @@ const deleteOperation = (output, operator) => {
     if(output.textContent !== 0) {
         const deleteStr = output.textContent.slice(0, - 1)
         const [first, second] = deleteStr.split(operator)
-        const isLast = deleteStr.length === 1
+        const isOperator = deleteStr.includes(operator)
 
         updateOutput(output,deleteStr === "" ? "0" : deleteStr)
-        updateCalculatorState(first, second === "" ? "" : operator, second ?? "")
+        updateCalculatorState(first ?? "", !isOperator ? "" : operator, second ?? "")
     }
 }
 
