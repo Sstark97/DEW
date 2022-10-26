@@ -47,3 +47,15 @@ button.bg-primary {
 button.bg-primary:hover {
     opacity: 1;
 }
+
+.hidden {
+    display: none;
+}
+
+.mt-2 div {
+    opacity: 0;
+}
+
+.mt-2:hover > div {
+    opacity: 1;
+}

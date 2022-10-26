@@ -6,7 +6,12 @@ import {
   isOperator,
   resolveOperation,
   updateCalculatorState,
-  updateOutput
+  updateOutput,
+  addNewElementInMemory,
+  changeButtonsState,
+  getCalculatorNumber,
+  firstElementInMemory,
+  formatRes
 } from "./functions.js"
 
 import { operations, deleteOps, memoryOptions, calculatorState } from "./const.js"
@@ -14,7 +19,7 @@ import { operations, deleteOps, memoryOptions, calculatorState } from "./const.j
 const calculatorDOM = document.querySelector("#calculator")
 const output = document.querySelector("output")
 const memory = document.querySelector("#memory")
-const memoryOutput = document.querySelector("#memoryOutput")
+const memoryOutput = document.querySelector(".offcanvas-body")
 const mc = document.querySelector("#mc")
 const mr = document.querySelector("#mr")
 const md = document.querySelector("#md")
@@ -27,11 +32,11 @@ calculatorDOM.addEventListener("click", (e) => {
   if (element.nodeName === "BUTTON") {
     const elementName = element.name
     const elementText = element.textContent
-    if (operator === "" && isNumber(elementText, firstNumber) && !isFirstNumber(elementText,firstNumber)) {
-        firstNumber += elementText
+    if (operator === "" && isNumber(elementText, firstNumber) && !isFirstNumber(elementText,firstNumber) || firstNumber.length === 0 && elementText === "-") {
+        firstNumber += elementText.replace(".","0.")
     }
 
-    if (firstNumber !== "" && operator === "" && isOperator(elementText)) {
+    if (firstNumber !== "" && firstNumber !== "-" && operator === "" && isOperator(elementText)) {
         operator = elementText
     }
 
@@ -40,8 +45,8 @@ calculatorDOM.addEventListener("click", (e) => {
     }
 
     if (firstNumber !== "" && !haveOperator(output.textContent) && isOneElementOperation(operator)) {
-        const firts = parseFloat(firstNumber)
-        res = operations[operator](firts).toFixed(2)
+        const first = parseFloat(firstNumber)
+        res = operations[operator](first).toFixed(2)
     }
 
     if (resolveOperation(firstNumber, operator, secondNumber, elementText)) {
@@ -51,10 +56,12 @@ calculatorDOM.addEventListener("click", (e) => {
     }
 
     if(res !== 0) {
-        firstNumber = res
+        res = res === "Infinity" ? "NaN" : res
+        const formatedRes = formatRes(res)
+        firstNumber = formatedRes !== 0 ? formatedRes : ""
         secondNumber = ""
         operator = ""
-        updateOutput(output, res)
+        updateOutput(output, formatedRes)
     } else if(firstNumber) {
         updateOutput(output, `${firstNumber}${operator}${secondNumber}`)
     }
@@ -62,37 +69,69 @@ calculatorDOM.addEventListener("click", (e) => {
     updateCalculatorState(firstNumber, operator, secondNumber)
 
     if (deleteOps[elementName]) {
-        elementName === "CE" ? deleteOps[elementName](output, firstNumber, operator) : deleteOps[elementName](output)
+        elementName !== "C" ? deleteOps[elementName](output, operator, firstNumber) : deleteOps[elementName](output)
     }
   }
 })
 
+let pos = 0
 memory.addEventListener("click", e => {
     const element = e.target
   
     if (element.nodeName === "BUTTON") {
-        const elementText = element.textContent
+        const [ elementText, outputNumber]= getCalculatorNumber(element, output)
+        const [ memory0, toFloat ] = firstElementInMemory(outputNumber)
+        let res
 
-        if(memoryOptions[elementText]) {
-            const [ number ] = output.textContent.split(" ")
-
-            memoryOptions[elementText](parseFloat(number))
-            updateOutput(memoryOutput, memoryOptions["MR"]())
-            md.disabled = undefined
-            mc.disabled = undefined
-            mr.disabled = undefined
-        }
+        if(elementText === "MC") {
+            memoryOptions["MC"](memoryOutput)
+            pos = 0
+        } 
 
         if(elementText === "MR") {
-            const number = memoryOptions["MR"]()
-            updateOutput(output,number)
-            updateCalculatorState(number,"","")
+            res = memoryOptions["MR"](0)
+            updateOutput(output, res)
+            updateCalculatorState(res, "", "")
         }
 
-        if(memoryOutput.textContent === "0") {
-            md.disabled = true
-            mc.disabled = true
-            mr.disabled = true
-        }   
+        if(elementText === "M+" || elementText === "M-") {
+            res = formatRes(memoryOptions[elementText](outputNumber,0,true))
+            memoryOptions["UPDATE_MEMORY"](res,0)
+        }
+
+        if(elementText === "MS") {
+            memoryOptions["MS"](res ?? outputNumber)
+            addNewElementInMemory(res ?? outputNumber, pos)
+            pos++
+        }
+    
+        updateOutput(memory0, res ?? toFloat)
+        changeButtonsState(memoryOutput.textContent === "",md,mc,mr)   
     }
 })
+
+memoryOutput.addEventListener("click", e => {
+    const element = e.target
+  
+    if (element.nodeName === "BUTTON") {
+        const elementText = element.textContent
+        const { previousElementSibling: number } = element.parentElement
+        const pos = memoryOptions["MEMORY_POS"](number.textContent)
+
+        if(elementText === "MC") {
+            element.parentElement.parentElement.remove()
+            memoryOptions["REMOVE_MEMORY"](pos)
+        }
+        
+        if(elementText === "M+" || elementText === "M-") {
+            const toFloat = parseFloat(output.textContent)
+            const res = formatRes(memoryOptions[elementText](toFloat,pos,true))
+
+            memoryOptions["UPDATE_MEMORY"](res,pos)
+            number.textContent = res
+        }
+
+        changeButtonsState(memoryOutput.textContent.length === 17,md,mc,mr)   
+    }
+}) 
+

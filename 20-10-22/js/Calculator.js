@@ -1,5 +1,5 @@
 class Calculator {
-    #memory = 0
+    #memory = []
 
     sum(x, y) {
         return x + y
@@ -37,24 +37,42 @@ class Calculator {
         return -x
     }
 
+    getMemory (pos) {
+        return this.#memory[pos]
+    }
+
+    getMemoryPos (number) {
+        return this.#memory.indexOf(parseFloat(number))
+    }
+
+    updateMemory (number,pos) {
+        this.#memory[pos] = number
+    }
+
+    removeElementInMemory (pos) {
+        this.#memory.splice(pos,1)
+    }
+
     get memory () {
         return this.#memory
     }
 
     set memory (x) {
-        this.#memory = x
+        this.#memory.push(x)
     }
 
     memoryClear() {
-        this.#memory = 0
+        this.#memory = []
     }
 
-    memorySum(x) {
-        this.#memory += x
+    memorySum(x,pos) {
+        return this.#memory[pos] ? this.#memory[pos] + x : x
     }
 
-    memoryLess(x) {
-        this.#memory -= x
+    memoryLess(x,pos, inside = false) {
+        const number = this.#memory[pos] ?? 0
+
+        return !inside ? x - number: number - x
     }
 }
 

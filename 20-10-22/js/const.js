@@ -17,16 +17,22 @@ const operations = {
 
 const deleteOps = {
     "C": output => cOperation(output),
-    "CE": (output, firstNumber, operator) => ceOperation(output, firstNumber, operator),
-    "delete": output => deleteOperation(output)
+    "CE": (output, operator, firstNumber) => ceOperation(output, firstNumber, operator),
+    "delete": (output, operator) => deleteOperation(output, operator)
 }
 
 const memoryOptions = {
-    "MC": () => calculator.memoryClear(),
-    "MR": () => calculator.memory,
-    "M+": x => calculator.memorySum(parseFloat(x)),
-    "M-": x => calculator.memorySum(parseFloat(-x)),
+    "MC": memory => {
+        calculator.memoryClear()
+        memory.innerHTML = ""
+    },
+    "MR": (pos) => calculator.getMemory(pos),
+    "M+": (x,pos) => calculator.memorySum(parseFloat(x),pos),
+    "M-": (x, pos, cond) => calculator.memoryLess(parseFloat(x),pos,cond),
     "MS": number => calculator.memory = number,
+    "MEMORY_POS": number => calculator.getMemoryPos(number),
+    "UPDATE_MEMORY": (number, pos) => calculator.updateMemory(number,pos),
+    "REMOVE_MEMORY": pos => calculator.removeElementInMemory(pos)
 }
 
 const calculatorState = {
