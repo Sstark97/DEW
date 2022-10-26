@@ -71,7 +71,7 @@ class Calculator {
 
     memoryLess(x,pos, inside = false) {
         const number = this.#memory[pos] ?? 0
-        console.log(inside ? x - number: number - x)
+
         return !inside ? x - number: number - x
     }
 }

@@ -20,17 +20,31 @@ const updateCalculatorState = (first = "",operator = "",second = "") => {
     calculatorState.firstNumber = first
     calculatorState.operator = operator
     calculatorState.secondNumber = second
+
+    console.log(calculatorState)
+
 }
 
 const updateOutput = (output, value) => {
-    output.textContent = output.textContent.length < 12 ? value : output.textContent
+    if(output) {
+        output.textContent = output.textContent.length < 12 ? value : output.textContent
+    }
 }
+
+const formatRes = res => res.toString().includes(".00") ? Math.round(res) : res
 
 const getCalculatorNumber = (element, output) => {
     const [ number ] = output.textContent.split(" ")
     const toFloat = parseFloat(number)
 
     return [element.textContent, toFloat]
+}
+
+const firstElementInMemory = outputNumber => {
+    const memory0 = document.querySelector(".offcanvas-body .mt-5 p")
+    const toFloat = memory0 !== null ? parseFloat(memory0.textContent) : outputNumber
+
+    return [memory0, toFloat]
 }
 
 const changeButtonsState = (cond,md,mc,mr) => {
@@ -97,13 +111,14 @@ const ceOperation = (output, firstNumber, operator) => {
     }
 }
 
-const deleteOperation = output => {
+const deleteOperation = (output, operator) => {
     if(output.textContent !== 0) {
-        const deleteStr = output.textContent.substring(0, output.textContent.length - 1)
-        const [first, operator, second] = deleteStr.split(" ")
+        const deleteStr = output.textContent.slice(0, - 1)
+        const [first, second] = deleteStr.split(operator)
+        const isLast = deleteStr.length === 1
 
-        updateOutput(output,deleteStr !== "" ? deleteStr : "0")
-        updateCalculatorState(first, operator ?? "", second ?? "")
+        updateOutput(output,deleteStr === "" ? "0" : deleteStr)
+        updateCalculatorState(first, second === "" ? "" : operator, second ?? "")
     }
 }
 
@@ -121,5 +136,7 @@ export {
     deleteOperation,
     addNewElementInMemory,
     changeButtonsState,
-    getCalculatorNumber
+    getCalculatorNumber,
+    firstElementInMemory,
+    formatRes
 }

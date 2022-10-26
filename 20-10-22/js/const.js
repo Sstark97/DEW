@@ -17,8 +17,8 @@ const operations = {
 
 const deleteOps = {
     "C": output => cOperation(output),
-    "CE": (output, firstNumber, operator) => ceOperation(output, firstNumber, operator),
-    "delete": output => deleteOperation(output)
+    "CE": (output, operator, firstNumber) => ceOperation(output, firstNumber, operator),
+    "delete": (output, operator) => deleteOperation(output, operator)
 }
 
 const memoryOptions = {
