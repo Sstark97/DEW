@@ -51,3 +51,11 @@ button.bg-primary:hover {
 .hidden {
     display: none;
 }
+
+.mt-2 div {
+    opacity: 0;
+}
+
+.mt-2:hover > div {
+    opacity: 1;
+}

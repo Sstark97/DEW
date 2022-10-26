@@ -38,7 +38,7 @@ const getCalculatorNumber = (element, output) => {
 }
 
 const firstElementInMemory = outputNumber => {
-    const memory0 = document.querySelector(".offcanvas-body .mt-5 p")
+    const memory0 = document.querySelector(".offcanvas-body .mt-2 p")
     const toFloat = memory0 !== null ? parseFloat(memory0.textContent) : outputNumber
 
     return [memory0, toFloat]
@@ -62,13 +62,13 @@ const createBtnContainer = () => {
     const mPlus = document.createElement("button")
     const mMinus = document.createElement("button")
 
-    mc.classList = "memoryButton w-100 h-100"
+    mc.classList = "memoryButton w-25 h-100 me-1"
     mc.textContent = "MC"
-    mPlus.classList = "memoryButton w-100 h-100"
+    mPlus.classList = "memoryButton w-25 h-100 me-1"
     mPlus.textContent = "M+"
-    mMinus.classList = "memoryButton w-100 h-100"
+    mMinus.classList = "memoryButton w-25 h-100"
     mMinus.textContent = "M-"
-    btnContainers.classList = "d-flex w-50"
+    btnContainers.classList = "d-flex w-75"
 
     btnContainers.append(mc,mPlus,mMinus)
 
@@ -81,7 +81,7 @@ const addNewElementInMemory = (number, pos) => {
     const memoryValue = document.createElement("p")
     const btnContainers = createBtnContainer()
 
-    newMemory.classList = "mt-5"
+    newMemory.classList = "mt-2"
 
     memoryValue.textContent = number
     memoryValue.classList = "fs-4 fw-bold"
