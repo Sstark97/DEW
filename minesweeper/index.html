@@ -4,11 +4,19 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="./style/style.css">
     <title>Buscaminas</title>
 </head>
-<body>
+<body class="min-h-screen">
     
+    <h1 class="font-bold text-3xl text-center my-8">Selecciona el nivel de Dificultad</h1>
+    <div id="btn_container" class="flex flex-col justify-between items-center mx-auto w-1/4 h-36">
+        <button class="w-1/4 bg-green-500 p-2 rounded-md" value="easy">Principiante</button>
+        <button class="w-1/4 bg-amber-500 p-2 rounded-md" value="medium">Intermedio</button>
+        <button class="w-1/4 bg-red-500 p-2 rounded-md" value="hard">Avanzado</button>
+    </div>
+    <div id="gameboard" class="hidden"></div>
     <script src="./js/index.js" type="module"></script>
 </body>
 </html>
