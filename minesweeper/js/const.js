@@ -21,7 +21,19 @@ const symbols = {
     flag: '🚩'
 }
 
+const mapHeight = {
+    Fácil: 'h-14',
+    Intermedio: 'h-12',
+    Díficil: 'h-8'
+}
+
+const gameState = {
+    map: []
+}
+
 export {
     levelSelect,
-    symbols
+    symbols,
+    mapHeight,
+    gameState
 }

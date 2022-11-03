@@ -1,5 +1,5 @@
-import { levelSelect, symbols } from './const.js'
-import { createGame, fillMap } from './functions.js'
+import { levelSelect, symbols, gameState } from './const.js'
+import { createGame } from './functions.js'
 
 const btnContainer = document.querySelector('#btn_container')
 const gameBoard = document.querySelector('#gameboard')
@@ -14,12 +14,24 @@ btnContainer.addEventListener('click', e => {
     element.parentElement.style.display = 'none'
     gameText.textContent = `Nivel ${gameOptions.level}`
     body.append(gameBoard)
-    console.log(fillMap(gameOptions, ''))
+})
+
+gameBoard.addEventListener('click', e => {
+    const element = e.target
+    const { map } = gameState
+
+    const [x, y] = element.id.split('-')
+    const row = parseInt(x)
+    const col = parseInt(y)
+
+    const mapValue = map[row][col] === '-' ? '' : map[row][col]
+
+    element.textContent = mapValue
 })
 
 gameBoard.addEventListener('contextmenu', e => {
     const element = e.target
 
     e.preventDefault()
-    element.textContent = symbols.flag
+    element.textContent = element.textContent !== symbols.flag ? symbols.flag : ''
 }, false)
