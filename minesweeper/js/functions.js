@@ -79,6 +79,25 @@ const generateMap = (options, mineSymbol) => {
     return countMines(mapFilled, mineSymbol)
 }
 
+const createPlayerOptions = () => {
+    const optionsContainer = document.createElement('div')
+    optionsContainer.className = 'flex items-center w-full h-24'
+
+    const reset = document.createElement('button')
+    reset.textContent = 'Resetear'
+    reset.className = 'w-1/8 bg-amber-500 p-2 mr-3 rounded-md'
+    reset.id = 'reset'
+
+    const resolve = document.createElement('button')
+    resolve.textContent = 'Resolver'
+    resolve.classList = 'w-1/8 bg-red-500 p-2 rounded-md'
+    resolve.id = 'resolve'
+
+    optionsContainer.append(reset, resolve)
+
+    return optionsContainer
+}
+
 const createGame = (gameBoard, options) => {
     const rows = []
     let cols = []
@@ -100,7 +119,7 @@ const createGame = (gameBoard, options) => {
     }
 
     gameBoard.className = 'w-2/5 mx-auto'
-    gameBoard.append(...rows)
+    gameBoard.append(...rows, createPlayerOptions())
     return gameBoard
 }
 
