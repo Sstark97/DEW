@@ -1,4 +1,4 @@
-import { symbols, mapHeight, gameState } from './const.js'
+import { symbols, mapHeight, numberColors, gameState } from './const.js'
 
 const fillMap = size => {
     const map = []
@@ -129,8 +129,33 @@ const createGame = (gameBoard, options, mineSymbol) => {
     return gameBoard
 }
 
+const liberateSquares = (map, element, mineSymbol) => {
+    const [x, y] = element.id.split('-')
+    const rowValue = parseInt(x)
+    const colValue = parseInt(y)
+    let initialRowLoop = rowValue !== 0 ? rowValue - 1 : rowValue
+    let initialColLoop = colValue !== 0 ? colValue - 1 : colValue
+
+    for (let row = 0; row < 3; row++) {
+        for (let col = 0; col < 3; col++) {
+            console.log(initialRowLoop, initialColLoop)
+            const currentElement = document.getElementById(`${initialRowLoop}-${initialColLoop}`)
+
+            if (currentElement && map[initialRowLoop] && map[initialColLoop] && map[initialRowLoop][initialColLoop] !== mineSymbol) {
+                const mapValue = map[initialRowLoop][initialColLoop] === '-' ? '' : map[initialRowLoop][initialColLoop]
+                currentElement.textContent = mapValue
+                currentElement.className += ` bg-yellow-700 ${numberColors[mapValue] ?? ''}`
+            }
+            initialColLoop++
+        }
+        initialRowLoop++
+        initialColLoop = colValue !== 0 ? colValue - 1 : colValue
+    }
+}
+
 export {
     createGame,
     fillMap,
-    generateMap
+    generateMap,
+    liberateSquares
 }

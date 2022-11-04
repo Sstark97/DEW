@@ -1,5 +1,5 @@
 import { levelSelect, symbols, mapIds, numberColors, gameState } from './const.js'
-import { createGame } from './functions.js'
+import { createGame, liberateSquares } from './functions.js'
 
 const btnContainer = document.querySelector('#btn_container')
 const gameBoard = document.querySelector('#gameBoard')
@@ -29,14 +29,16 @@ gameBoard.addEventListener('click', e => {
 
     if (mapIds.includes(element.id[0])) {
         const [x, y] = element.id.split('-')
-        const row = parseInt(x)
-        const col = parseInt(y)
+        const rowValue = parseInt(x)
+        const colValue = parseInt(y)
+        const mapValue = map[rowValue][colValue]
 
-        const mapValue = map[row][col] === '-' ? '' : map[row][col]
-
-        element.textContent = mapValue
-        element.classList.add('bg-yellow-700')
-        element.classList.add(numberColors[mapValue] ?? '')
+        if (mapValue !== symbols.mine) {
+            liberateSquares(map, element, symbols.mine)
+        } else {
+            element.textContent = mapValue
+            element.className += ` bg-yellow-700 ${numberColors[mapValue] ?? ''}`
+        }
     }
 })
 
