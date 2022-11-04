@@ -29,6 +29,15 @@ const mapHeight = {
 
 const mapIds = '1234567890'
 
+const numberColors = {
+    1: 'text-blue-500',
+    2: 'text-lime-500',
+    3: 'text-red-500',
+    4: 'text-blue-900',
+    5: 'text-red-800',
+    6: 'text-teal-500'
+}
+
 const gameState = {
     map: []
 }
@@ -38,5 +47,6 @@ export {
     symbols,
     mapHeight,
     mapIds,
+    numberColors,
     gameState
 }

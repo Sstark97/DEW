@@ -1,4 +1,4 @@
-import { levelSelect, symbols, mapIds, gameState } from './const.js'
+import { levelSelect, symbols, mapIds, numberColors, gameState } from './const.js'
 import { createGame } from './functions.js'
 
 const btnContainer = document.querySelector('#btn_container')
@@ -36,6 +36,7 @@ gameBoard.addEventListener('click', e => {
 
         element.textContent = mapValue
         element.classList.add('bg-yellow-700')
+        element.classList.add(numberColors[mapValue] ?? '')
     }
 })
 
