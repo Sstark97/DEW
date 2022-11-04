@@ -20,8 +20,9 @@ btnContainer.addEventListener('click', e => {
 
 gameBoard.addEventListener('click', e => {
     const element = e.target
-    const { map, lose } = gameState
+    const { map, lose, level } = gameState
     const { mine } = symbols
+    const { mines } = levelSelect[level]
 
     if (element.id === 'reset') {
         gameBoard.innerHTML = ''
@@ -45,7 +46,7 @@ gameBoard.addEventListener('click', e => {
         gameState.lose = mapValue === mine
     }
 
-    resolveGame(gameBoard, gameState)
+    resolveGame(gameBoard, gameState, mines)
 })
 
 gameBoard.addEventListener('contextmenu', e => {

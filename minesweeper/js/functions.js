@@ -158,9 +158,11 @@ const resolveGame = (gameBoard, gameState, mines) => {
     const h2 = document.createElement('h2')
     const h2IfExist = document.querySelector('h2')
 
-    const emptySquares = document.querySelectorAll('.flex div').filter(text => text === '').length
+    const squares = [...document.querySelectorAll('.flex div')]
+    const totalSquares = squares.length
+    const emptySquares = squares.filter(text => text.className.includes('bg-yellow-700')).length
 
-    if (lose && !h2IfExist) {
+    if (lose) {
         res += 'Has perdido 😢!'
     }
 
@@ -168,10 +170,11 @@ const resolveGame = (gameBoard, gameState, mines) => {
         res += 'Has ganado 😊!'
     }
 
-    h2.textContent = res
-    h2.className = 'font-bold text-xl text-center py-8'
-
-    gameBoard.insertAdjacentElement('beforebegin', h2)
+    if ((!h2IfExist) && (lose || totalSquares - emptySquares === mines)) {
+        h2.textContent = res
+        h2.className = 'font-bold text-xl text-center py-8'
+        gameBoard.insertAdjacentElement('beforebegin', h2)
+    }
 }
 
 export {
