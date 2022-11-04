@@ -15,6 +15,7 @@ btnContainer.addEventListener('click', e => {
     gameText.textContent = `Nivel ${gameOptions.level}`
     game.append(gameBoard)
     game.className = ''
+    gameState.level = element.value
 })
 
 gameBoard.addEventListener('click', e => {
@@ -49,7 +50,18 @@ gameBoard.addEventListener('click', e => {
 
 gameBoard.addEventListener('contextmenu', e => {
     const element = e.target
+    const { flag } = symbols
+    const { level } = gameState
+    const { mines } = levelSelect[level]
+    const flags = [...document.querySelectorAll('.flex div')].filter(e => e.textContent === flag).length
 
     e.preventDefault()
-    element.textContent = element.textContent !== symbols.flag ? symbols.flag : ''
+
+    if (element.textContent === flag) {
+        element.textContent = ''
+    }
+
+    if (flags !== mines) {
+        element.textContent = flag
+    }
 }, false)

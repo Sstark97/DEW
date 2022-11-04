@@ -40,7 +40,9 @@ const numberColors = {
 
 const gameState = {
     map: [],
-    lose: false
+    lose: false,
+    moves: 0,
+    level: ''
 }
 
 export {
