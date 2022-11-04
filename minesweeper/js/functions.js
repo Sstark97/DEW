@@ -82,6 +82,7 @@ const generateMap = (options, mineSymbol) => {
 const createPlayerOptions = () => {
     const optionsContainer = document.createElement('div')
     optionsContainer.className = 'flex items-center w-full h-24'
+    optionsContainer.id = 'options'
 
     const reset = document.createElement('button')
     reset.textContent = 'Resetear'
@@ -98,10 +99,15 @@ const createPlayerOptions = () => {
     return optionsContainer
 }
 
-const createGame = (gameBoard, options) => {
+const createGame = (gameBoard, options, mineSymbol) => {
     const rows = []
     let cols = []
-    const { size, level } = options
+    const { size, mines, level } = options
+
+    const p = document.createElement('p')
+    p.textContent = `Número de minas (${mineSymbol}): ${mines}`
+    p.className = 'font-bold text-lg pt-2 pb-1'
+
     gameState.map = generateMap(options, symbols.mine)
 
     for (let row = 0; row < size; row++) {
@@ -109,7 +115,7 @@ const createGame = (gameBoard, options) => {
         rowDiv.className = 'flex'
         for (let col = 0; col < size; col++) {
             const square = document.createElement('div')
-            square.className = `w-1/5 ${mapHeight[level]} bg-green-500 border-solid border-2 border-gray-900 flex items-center justify-center`
+            square.className = `w-1/5 ${mapHeight[level]} bg-lime-400 border-solid border-2 border-gray-900 flex items-center justify-center text-lg font-medium`
             square.id = `${row}-${col}`
             cols.push(square)
         }
@@ -119,7 +125,7 @@ const createGame = (gameBoard, options) => {
     }
 
     gameBoard.className = 'w-2/5 mx-auto'
-    gameBoard.append(...rows, createPlayerOptions())
+    gameBoard.append(p, ...rows, createPlayerOptions())
     return gameBoard
 }
 

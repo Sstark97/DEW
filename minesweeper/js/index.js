@@ -1,4 +1,4 @@
-import { levelSelect, symbols, gameState } from './const.js'
+import { levelSelect, symbols, mapIds, gameState } from './const.js'
 import { createGame } from './functions.js'
 
 const btnContainer = document.querySelector('#btn_container')
@@ -10,7 +10,7 @@ btnContainer.addEventListener('click', e => {
     const element = e.target
     const gameOptions = levelSelect[element.value]
 
-    createGame(gameBoard, gameOptions)
+    createGame(gameBoard, gameOptions, symbols.mine)
     btnContainer.classList.add('hidden')
     gameText.textContent = `Nivel ${gameOptions.level}`
     game.append(gameBoard)
@@ -22,13 +22,12 @@ gameBoard.addEventListener('click', e => {
     const { map } = gameState
 
     if (element.id === 'reset') {
-        game.removeChild(gameBoard)
+        gameBoard.innerHTML = ''
         game.className = 'hidden'
         btnContainer.classList.remove('hidden')
-        console.log(element)
     }
 
-    if (element.nodeName === 'DIV') {
+    if (mapIds.includes(element.id[0])) {
         const [x, y] = element.id.split('-')
         const row = parseInt(x)
         const col = parseInt(y)
@@ -36,6 +35,7 @@ gameBoard.addEventListener('click', e => {
         const mapValue = map[row][col] === '-' ? '' : map[row][col]
 
         element.textContent = mapValue
+        element.classList.add('bg-yellow-700')
     }
 })
 

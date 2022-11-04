@@ -23,9 +23,11 @@ const symbols = {
 
 const mapHeight = {
     Fácil: 'h-14',
-    Intermedio: 'h-12',
+    Intermedio: 'h-10',
     Díficil: 'h-8'
 }
+
+const mapIds = '1234567890'
 
 const gameState = {
     map: []
@@ -35,5 +37,6 @@ export {
     levelSelect,
     symbols,
     mapHeight,
+    mapIds,
     gameState
 }
