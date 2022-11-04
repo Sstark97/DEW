@@ -109,6 +109,7 @@ const createGame = (gameBoard, options, mineSymbol) => {
     p.className = 'font-bold text-lg pt-2 pb-1'
 
     gameState.map = generateMap(options, symbols.mine)
+    console.log(gameState.map)
 
     for (let row = 0; row < size; row++) {
         const rowDiv = document.createElement('div')
@@ -166,11 +167,11 @@ const resolveGame = (gameBoard, gameState, mines) => {
         res += 'Has perdido 😢!'
     }
 
-    if (emptySquares === mines) {
+    if (totalSquares - emptySquares === mines) {
         res += 'Has ganado 😊!'
     }
 
-    if ((!h2IfExist) && (lose || totalSquares - emptySquares === mines)) {
+    if ((!h2IfExist) && res !== '') {
         h2.textContent = res
         h2.className = 'font-bold text-xl text-center py-8'
         gameBoard.insertAdjacentElement('beforebegin', h2)
