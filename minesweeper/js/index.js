@@ -54,6 +54,7 @@ gameBoard.addEventListener('contextmenu', e => {
     const { level } = gameState
     const { mines } = levelSelect[level]
     const flags = [...document.querySelectorAll('.flex div')].filter(e => e.textContent === flag).length
+    gameState.flags = flags
 
     e.preventDefault()
 

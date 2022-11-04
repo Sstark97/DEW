@@ -138,7 +138,6 @@ const liberateSquares = (map, element, mineSymbol) => {
 
     for (let row = 0; row < 3; row++) {
         for (let col = 0; col < 3; col++) {
-            console.log(initialRowLoop, initialColLoop)
             const currentElement = document.getElementById(`${initialRowLoop}-${initialColLoop}`)
 
             if (currentElement && map[initialRowLoop] && map[initialColLoop] && map[initialRowLoop][initialColLoop] !== mineSymbol) {
@@ -153,17 +152,26 @@ const liberateSquares = (map, element, mineSymbol) => {
     }
 }
 
-const resolveGame = (gameBoard, gameState) => {
+const resolveGame = (gameBoard, gameState, mines) => {
     const { lose } = gameState
+    let res = ''
     const h2 = document.createElement('h2')
     const h2IfExist = document.querySelector('h2')
 
-    if (lose && !h2IfExist) {
-        h2.textContent = lose ? 'Has perdido 😢!' : ''
-        h2.className = 'font-bold text-xl text-center py-8'
+    const emptySquares = document.querySelectorAll('.flex div').filter(text => text === '').length
 
-        gameBoard.insertAdjacentElement('beforebegin', h2)
+    if (lose && !h2IfExist) {
+        res += 'Has perdido 😢!'
     }
+
+    if (emptySquares === mines) {
+        res += 'Has ganado 😊!'
+    }
+
+    h2.textContent = res
+    h2.className = 'font-bold text-xl text-center py-8'
+
+    gameBoard.insertAdjacentElement('beforebegin', h2)
 }
 
 export {
