@@ -1,5 +1,5 @@
 import { levelSelect, symbols, mapIds, numberColors, gameState } from './const.js'
-import { createGame, liberateSquares } from './functions.js'
+import { createGame, liberateSquares, resolveGame } from './functions.js'
 
 const btnContainer = document.querySelector('#btn_container')
 const gameBoard = document.querySelector('#gameBoard')
@@ -19,7 +19,8 @@ btnContainer.addEventListener('click', e => {
 
 gameBoard.addEventListener('click', e => {
     const element = e.target
-    const { map } = gameState
+    const { map, lose } = gameState
+    const { mine } = symbols
 
     if (element.id === 'reset') {
         gameBoard.innerHTML = ''
@@ -27,19 +28,23 @@ gameBoard.addEventListener('click', e => {
         btnContainer.classList.remove('hidden')
     }
 
-    if (mapIds.includes(element.id[0])) {
+    if (mapIds.includes(element.id[0]) && !lose) {
         const [x, y] = element.id.split('-')
         const rowValue = parseInt(x)
         const colValue = parseInt(y)
         const mapValue = map[rowValue][colValue]
 
-        if (mapValue !== symbols.mine) {
-            liberateSquares(map, element, symbols.mine)
+        if (mapValue === '-') {
+            liberateSquares(map, element, mine)
         } else {
             element.textContent = mapValue
             element.className += ` bg-yellow-700 ${numberColors[mapValue] ?? ''}`
         }
+
+        gameState.lose = mapValue === mine
     }
+
+    resolveGame(gameBoard, gameState)
 })
 
 gameBoard.addEventListener('contextmenu', e => {

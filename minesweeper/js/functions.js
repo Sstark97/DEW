@@ -153,9 +153,23 @@ const liberateSquares = (map, element, mineSymbol) => {
     }
 }
 
+const resolveGame = (gameBoard, gameState) => {
+    const { lose } = gameState
+    const h2 = document.createElement('h2')
+    const h2IfExist = document.querySelector('h2')
+
+    if (lose && !h2IfExist) {
+        h2.textContent = lose ? 'Has perdido 😢!' : ''
+        h2.className = 'font-bold text-xl text-center py-8'
+
+        gameBoard.insertAdjacentElement('beforebegin', h2)
+    }
+}
+
 export {
     createGame,
     fillMap,
     generateMap,
-    liberateSquares
+    liberateSquares,
+    resolveGame
 }
