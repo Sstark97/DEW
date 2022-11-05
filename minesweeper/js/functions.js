@@ -158,6 +158,33 @@ const liberateSquares = (map, element, mineSymbol) => {
     }
 }
 
+const getMines = (map, mineSymbol) => {
+    const minesWithPos = []
+
+    map.forEach((element, rowIndex) => {
+        element.reduce((previous, current, colIndex) => {
+            if (current === mineSymbol) {
+                minesWithPos.push({ x: rowIndex, y: colIndex })
+            }
+            return previous
+        }, 0)
+    })
+
+    return minesWithPos
+}
+
+const showMines = (map, mineSymbol) => {
+    const minesWithPos = getMines(map, mineSymbol)
+
+    minesWithPos.forEach(element => {
+        const { x, y } = element
+
+        const currentElement = document.getElementById(`${x}-${y}`)
+        currentElement.textContent = mineSymbol
+        currentElement.className += ' bg-yellow-700'
+    })
+}
+
 const resolveGame = (gameBoard, gameState, mines) => {
     const { lose } = gameState
     let res = ''
@@ -189,5 +216,6 @@ export {
     fillMap,
     generateMap,
     liberateSquares,
+    showMines,
     resolveGame
 }

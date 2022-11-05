@@ -1,5 +1,5 @@
 import { levelSelect, symbols, mapIds, numberColors, gameState } from './const.js'
-import { createGame, liberateSquares, resolveGame, setState } from './functions.js'
+import { createGame, liberateSquares, resolveGame, setState, showMines } from './functions.js'
 
 const btnContainer = document.querySelector('#btn_container')
 const gameBoard = document.querySelector('#gameBoard')
@@ -52,6 +52,7 @@ gameBoard.addEventListener('click', e => {
 
         if (mapValue === mine) {
             setState(map, true, flags, level)
+            showMines(map, mine)
         }
     }
 
