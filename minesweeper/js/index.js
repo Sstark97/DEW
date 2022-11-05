@@ -11,12 +11,12 @@ btnContainer.addEventListener('click', e => {
     const gameOptions = levelSelect[element.value]
 
     const map = createGame(gameBoard, gameOptions, symbols.mine)
+    console.log(map)
     btnContainer.classList.add('hidden')
     gameText.textContent = `Nivel ${gameOptions.level}`
     game.append(gameBoard)
     game.className = ''
     setState(map, false, 0, element.value)
-    console.log(map)
 })
 
 gameBoard.addEventListener('click', e => {
@@ -24,10 +24,14 @@ gameBoard.addEventListener('click', e => {
     const { map, lose, level, flags } = gameState
     const { mine } = symbols
     const { mines } = levelSelect[level]
+    let resolve = false
 
     if (element.id === 'reset') {
         const finalMessage = document.querySelector('h2')
-        game.removeChild(finalMessage)
+        if (finalMessage) {
+            game.removeChild(finalMessage)
+        }
+
         gameBoard.innerHTML = ''
         game.className = 'hidden'
         btnContainer.classList.remove('hidden')
@@ -41,6 +45,7 @@ gameBoard.addEventListener('click', e => {
             setState(map, lose, flags, level)
         }
         showMines(map, mine)
+        resolve = true
     }
 
     if (mapIds.includes(element.id[0]) && !lose) {
@@ -62,28 +67,25 @@ gameBoard.addEventListener('click', e => {
         }
     }
 
-    resolveGame(gameBoard, gameState, mines)
+    resolveGame(gameBoard, gameState, mines, resolve)
 })
 
 gameBoard.addEventListener('contextmenu', e => {
     const element = e.target
     const { flag } = symbols
-    const { map, lose, level } = gameState
+    const { map, lose, level, flags } = gameState
     const { mines } = levelSelect[level]
-    const flags = [...document.querySelectorAll('.flex div')].filter(e => e.textContent === flag).length
     const btnResolve = document.querySelector('#resolve')
-    setState(map, lose, flags, level)
 
     e.preventDefault()
 
     if (element.textContent === flag) {
         element.textContent = ''
-        btnResolve.disabled = true
-    } else if (flags !== mines) {
+    } else if (flags < mines) {
         element.textContent = flag
     }
 
-    if (flags === mines - 1) {
-        btnResolve.disabled = undefined
-    }
+    const currentFlags = [...document.querySelectorAll('.flex div')].filter(e => e.textContent === flag).length
+    btnResolve.disabled = currentFlags === mines ? undefined : true
+    setState(map, lose, currentFlags, level)
 }, false)

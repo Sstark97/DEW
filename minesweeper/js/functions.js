@@ -203,7 +203,7 @@ const resolveByBtn = (gameState, symbols) => {
     return lose
 }
 
-const resolveGame = (gameBoard, gameState, mines) => {
+const resolveGame = (gameBoard, gameState, mines, resolve) => {
     const { lose, flags } = gameState
     let res = ''
     const h2 = document.createElement('h2')
@@ -215,7 +215,7 @@ const resolveGame = (gameBoard, gameState, mines) => {
 
     if (lose) {
         res += 'Has perdido 😢!'
-    } else if (totalSquares - emptySquares === mines || flags === mines - 1) {
+    } else if (totalSquares - emptySquares === mines || (flags === mines && resolve)) {
         res += 'Has ganado 😊!'
     }
 
