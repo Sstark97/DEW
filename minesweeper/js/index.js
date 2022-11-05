@@ -1,5 +1,5 @@
 import { levelSelect, symbols, mapIds, numberColors, gameState } from './const.js'
-import { createGame, liberateSquares, resolveGame } from './functions.js'
+import { createGame, liberateSquares, resolveGame, setState } from './functions.js'
 
 const btnContainer = document.querySelector('#btn_container')
 const gameBoard = document.querySelector('#gameBoard')
@@ -10,24 +10,31 @@ btnContainer.addEventListener('click', e => {
     const element = e.target
     const gameOptions = levelSelect[element.value]
 
-    createGame(gameBoard, gameOptions, symbols.mine)
+    const map = createGame(gameBoard, gameOptions, symbols.mine)
     btnContainer.classList.add('hidden')
     gameText.textContent = `Nivel ${gameOptions.level}`
     game.append(gameBoard)
     game.className = ''
-    gameState.level = element.value
+    setState(map, false, 0, element.value)
 })
 
 gameBoard.addEventListener('click', e => {
     const element = e.target
-    const { map, lose, level } = gameState
+    const { map, lose, level, flags } = gameState
     const { mine } = symbols
     const { mines } = levelSelect[level]
 
     if (element.id === 'reset') {
+        const finalMessage = document.querySelector('h2')
+        game.removeChild(finalMessage)
         gameBoard.innerHTML = ''
         game.className = 'hidden'
         btnContainer.classList.remove('hidden')
+        setState([], false, 0, '')
+    }
+
+    if (element.id === 'reset' && flags === mines) {
+        console.log()
     }
 
     if (mapIds.includes(element.id[0]) && !lose) {
@@ -43,7 +50,9 @@ gameBoard.addEventListener('click', e => {
             element.className += ` bg-yellow-700 ${numberColors[mapValue] ?? ''}`
         }
 
-        gameState.lose = mapValue === mine
+        if (mapValue === mine) {
+            setState(map, true, flags, level)
+        }
     }
 
     resolveGame(gameBoard, gameState, mines)
@@ -52,18 +61,16 @@ gameBoard.addEventListener('click', e => {
 gameBoard.addEventListener('contextmenu', e => {
     const element = e.target
     const { flag } = symbols
-    const { level } = gameState
+    const { map, lose, level } = gameState
     const { mines } = levelSelect[level]
     const flags = [...document.querySelectorAll('.flex div')].filter(e => e.textContent === flag).length
-    gameState.flags = flags
+    setState(map, lose, flags, level)
 
     e.preventDefault()
 
     if (element.textContent === flag) {
         element.textContent = ''
-    }
-
-    if (flags !== mines) {
+    } else if (flags !== mines) {
         element.textContent = flag
     }
 }, false)

@@ -1,4 +1,11 @@
-import { symbols, mapHeight, numberColors, gameState } from './const.js'
+import { mapHeight, numberColors, gameState } from './const.js'
+
+const setState = (map, lose, flags, level) => {
+    gameState.map = map
+    gameState.lose = lose
+    gameState.flags = flags
+    gameState.level = level
+}
 
 const fillMap = size => {
     const map = []
@@ -108,9 +115,6 @@ const createGame = (gameBoard, options, mineSymbol) => {
     p.textContent = `Número de minas (${mineSymbol}): ${mines}`
     p.className = 'font-bold text-lg pt-2 pb-1'
 
-    gameState.map = generateMap(options, symbols.mine)
-    console.log(gameState.map)
-
     for (let row = 0; row < size; row++) {
         const rowDiv = document.createElement('div')
         rowDiv.className = 'flex'
@@ -127,7 +131,8 @@ const createGame = (gameBoard, options, mineSymbol) => {
 
     gameBoard.className = 'w-2/5 mx-auto'
     gameBoard.append(p, ...rows, createPlayerOptions())
-    return gameBoard
+
+    return generateMap(options, mineSymbol)
 }
 
 const liberateSquares = (map, element, mineSymbol) => {
@@ -179,6 +184,7 @@ const resolveGame = (gameBoard, gameState, mines) => {
 }
 
 export {
+    setState,
     createGame,
     fillMap,
     generateMap,
