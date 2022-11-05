@@ -98,8 +98,9 @@ const createPlayerOptions = () => {
 
     const resolve = document.createElement('button')
     resolve.textContent = 'Resolver'
-    resolve.classList = 'w-1/8 bg-red-500 p-2 rounded-md'
+    resolve.classList = 'w-1/8 bg-red-500 p-2 rounded-md [&[disabled]]:bg-red-400'
     resolve.id = 'resolve'
+    resolve.disabled = true
 
     optionsContainer.append(reset, resolve)
 
@@ -185,8 +186,25 @@ const showMines = (map, mineSymbol) => {
     })
 }
 
+const resolveByBtn = (gameState, symbols) => {
+    const { map } = gameState
+    const { mine, flag } = symbols
+    const flagsList = [...document.querySelectorAll('.flex div')].filter(e => e.textContent === flag)
+    let lose = false
+
+    flagsList.forEach(element => {
+        const [x, y] = element.id.split('-')
+
+        if (map[x][y] !== mine) {
+            lose = true
+        }
+    })
+
+    return lose
+}
+
 const resolveGame = (gameBoard, gameState, mines) => {
-    const { lose } = gameState
+    const { lose, flags } = gameState
     let res = ''
     const h2 = document.createElement('h2')
     const h2IfExist = document.querySelector('h2')
@@ -197,9 +215,7 @@ const resolveGame = (gameBoard, gameState, mines) => {
 
     if (lose) {
         res += 'Has perdido 😢!'
-    }
-
-    if (totalSquares - emptySquares === mines) {
+    } else if (totalSquares - emptySquares === mines || flags === mines - 1) {
         res += 'Has ganado 😊!'
     }
 
@@ -217,5 +233,6 @@ export {
     generateMap,
     liberateSquares,
     showMines,
+    resolveByBtn,
     resolveGame
 }

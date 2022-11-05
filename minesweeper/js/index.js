@@ -1,5 +1,5 @@
 import { levelSelect, symbols, mapIds, numberColors, gameState } from './const.js'
-import { createGame, liberateSquares, resolveGame, setState, showMines } from './functions.js'
+import { createGame, liberateSquares, resolveByBtn, resolveGame, setState, showMines } from './functions.js'
 
 const btnContainer = document.querySelector('#btn_container')
 const gameBoard = document.querySelector('#gameBoard')
@@ -16,6 +16,7 @@ btnContainer.addEventListener('click', e => {
     game.append(gameBoard)
     game.className = ''
     setState(map, false, 0, element.value)
+    console.log(map)
 })
 
 gameBoard.addEventListener('click', e => {
@@ -33,8 +34,13 @@ gameBoard.addEventListener('click', e => {
         setState([], false, 0, '')
     }
 
-    if (element.id === 'reset' && flags === mines) {
-        console.log()
+    if (element.id === 'resolve' && !element.disabled) {
+        const lose = resolveByBtn(gameState, symbols)
+
+        if (lose) {
+            setState(map, lose, flags, level)
+        }
+        showMines(map, mine)
     }
 
     if (mapIds.includes(element.id[0]) && !lose) {
@@ -65,13 +71,19 @@ gameBoard.addEventListener('contextmenu', e => {
     const { map, lose, level } = gameState
     const { mines } = levelSelect[level]
     const flags = [...document.querySelectorAll('.flex div')].filter(e => e.textContent === flag).length
+    const btnResolve = document.querySelector('#resolve')
     setState(map, lose, flags, level)
 
     e.preventDefault()
 
     if (element.textContent === flag) {
         element.textContent = ''
+        btnResolve.disabled = true
     } else if (flags !== mines) {
         element.textContent = flag
+    }
+
+    if (flags === mines - 1) {
+        btnResolve.disabled = undefined
     }
 }, false)
