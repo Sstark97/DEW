@@ -79,13 +79,15 @@ gameBoard.addEventListener('contextmenu', e => {
 
     e.preventDefault()
 
-    if (element.textContent === flag) {
-        element.textContent = ''
-    } else if (flags < mines) {
-        element.textContent = flag
-    }
+    if (!lose) {
+        if (element.textContent === flag) {
+            element.textContent = ''
+        } else if (flags < mines) {
+            element.textContent = flag
+        }
 
-    const currentFlags = [...document.querySelectorAll('.flex div')].filter(e => e.textContent === flag).length
-    btnResolve.disabled = currentFlags === mines ? undefined : true
-    setState(map, lose, currentFlags, level)
+        const currentFlags = [...document.querySelectorAll('.flex div')].filter(e => e.textContent === flag).length
+        btnResolve.disabled = currentFlags === mines ? undefined : true
+        setState(map, lose, currentFlags, level)
+    }
 }, false)

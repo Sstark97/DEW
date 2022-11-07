@@ -121,7 +121,7 @@ const createGame = (gameBoard, options, mineSymbol) => {
         rowDiv.className = 'flex'
         for (let col = 0; col < size; col++) {
             const square = document.createElement('div')
-            square.className = `w-1/5 ${mapHeight[level]} bg-lime-400 border-solid border-2 border-gray-900 flex items-center justify-center text-lg font-bold`
+            square.className = `w-24 ${mapHeight[level]} bg-lime-400 border-solid border-2 border-gray-900 flex items-center justify-center text-lg font-bold`
             square.id = `${row}-${col}`
             cols.push(square)
         }
