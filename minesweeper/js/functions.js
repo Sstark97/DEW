@@ -7,6 +7,27 @@ const setState = (map, lose, flags, level) => {
     gameState.level = level
 }
 
+const setTime = element => {
+    let timer = '00:00'
+
+    setInterval(() => {
+        let [minutes, seconds] = timer.split(':')
+
+        const s = parseInt(seconds) + 1
+        if (s === 60) {
+            const m = parseInt(minutes) + 1
+            seconds = '00'
+            minutes = m >= 10 ? m : `${minutes.substring(0, 1)}${m}`
+        } else {
+            seconds = s >= 10 ? s : `${seconds.substring(0, 1)}${s}`
+        }
+
+        timer = `${minutes}:${seconds}`
+        element.textContent = `⌛ ${timer}`
+    }
+    , 1000)
+}
+
 const fillMap = size => {
     const map = []
 
@@ -112,9 +133,16 @@ const createGame = (gameBoard, options, mineSymbol) => {
     let cols = []
     const { size, mines, level } = options
 
-    const p = document.createElement('p')
-    p.textContent = `Número de minas (${mineSymbol}): ${mines}`
-    p.className = 'font-bold text-lg pt-2 pb-1'
+    const gameInfo = document.createElement('section')
+    gameInfo.className = 'flex justify-between font-bold text-lg pt-2 pb-1 px-4'
+
+    const pMines = document.createElement('p')
+    pMines.textContent = `Número de minas (${mineSymbol}): ${mines}`
+
+    const pTimer = document.createElement('p')
+    pTimer.textContent = '⌛ 00:00'
+
+    gameInfo.append(pMines, pTimer)
 
     for (let row = 0; row < size; row++) {
         const rowDiv = document.createElement('div')
@@ -131,7 +159,8 @@ const createGame = (gameBoard, options, mineSymbol) => {
     }
 
     gameBoard.className = 'w-2/5 mx-auto'
-    gameBoard.append(p, ...rows, createPlayerOptions())
+    gameBoard.append(gameInfo, ...rows, createPlayerOptions())
+    setTime(pTimer)
 
     return generateMap(options, mineSymbol)
 }
@@ -224,20 +253,6 @@ const resolveGame = (gameBoard, gameState, mines, resolve) => {
         h2.className = 'font-bold text-xl text-center py-8'
         gameBoard.insertAdjacentElement('beforebegin', h2)
     }
-}
-
-const timer = () => {
-    let timer = '00:00'
-
-    setInterval(() => {
-        let [minutes, seconds] = timer.split(':')
-
-        const n = parseInt(seconds) + 1
-        seconds = n >= 10 ? n : seconds.substring(0, 2) + n
-        timer = timer.substring(0, 1) + seconds
-        console.log(timer, minutes, n)
-    }
-    , 1000)
 }
 
 export {
