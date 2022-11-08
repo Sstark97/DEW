@@ -226,6 +226,20 @@ const resolveGame = (gameBoard, gameState, mines, resolve) => {
     }
 }
 
+const timer = () => {
+    let timer = '00:00'
+
+    setInterval(() => {
+        let [minutes, seconds] = timer.split(':')
+
+        const n = parseInt(seconds) + 1
+        seconds = n >= 10 ? n : seconds.substring(0, 2) + n
+        timer = timer.substring(0, 1) + seconds
+        console.log(timer, minutes, n)
+    }
+    , 1000)
+}
+
 export {
     setState,
     createGame,
