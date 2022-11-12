@@ -1,4 +1,4 @@
-import { mapHeight, gameState } from './const.js'
+import { mapHeight, gameState, timeState } from './const.js'
 
 const setState = (map, stop, lose, flags, level) => {
     gameState.map = map
@@ -11,7 +11,7 @@ const setState = (map, stop, lose, flags, level) => {
 const setTime = element => {
     let timer = '00:00'
 
-    setInterval(() => {
+    const timeINterval = setInterval(() => {
         let [minutes, seconds] = timer.split(':')
 
         const s = parseInt(seconds) + 1
@@ -27,6 +27,8 @@ const setTime = element => {
         element.textContent = `⌛ ${timer}`
     }
     , 1000)
+
+    return timeINterval
 }
 
 const fillMap = size => {
@@ -172,7 +174,7 @@ const createGame = (gameBoard, options, mineSymbol) => {
     gameBoard.className = 'w-2/5 mx-auto'
     gameBoard.insertAdjacentElement('beforebegin', gameInfo)
     gameBoard.append(...rows, createPlayerOptions())
-    setTime(pTimer)
+    timeState.time = setTime(pTimer)
 
     return generateMap(options, mineSymbol)
 }

@@ -46,11 +46,14 @@ const gameState = {
     level: ''
 }
 
+const timeState = { timeInterval: undefined }
+
 export {
     levelSelect,
     symbols,
     mapHeight,
     mapIds,
     numberColors,
-    gameState
+    gameState,
+    timeState
 }

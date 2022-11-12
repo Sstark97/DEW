@@ -1,4 +1,4 @@
-import { gameState, levelSelect, symbols, numberColors } from './const.js'
+import { gameState, levelSelect, symbols, numberColors, timeState } from './const.js'
 import { setState } from './general.js'
 import { liberateSquaresRecursive } from './squares.js'
 
@@ -92,6 +92,7 @@ const resolveGame = (gameState, mines) => {
 
     if (res !== '') {
         gameResult.textContent = res
+        clearInterval(timeState.time)
     }
 }
 
