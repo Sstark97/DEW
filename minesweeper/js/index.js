@@ -1,5 +1,5 @@
 import { levelSelect, symbols, mapIds, numberColors, gameState } from './const.js'
-import { createGame, liberateSquares, resolveByBtn, resolveGame, setState, showMines } from './functions.js'
+import { createGame, liberateSquaresRecursive, resolveByBtn, resolveGame, setState, showMines } from './functions.js'
 
 const btnContainer = document.querySelector('#btn_container')
 const gameBoard = document.querySelector('#gameBoard')
@@ -36,9 +36,7 @@ gameBoard.addEventListener('click', e => {
         game.className = 'hidden'
         btnContainer.classList.remove('hidden')
         setState([], false, 0, '')
-    }
-
-    if (element.id === 'resolve' && !element.disabled) {
+    } else if (element.id === 'resolve' && !element.disabled) {
         const lose = resolveByBtn(gameState, symbols)
 
         if (lose) {
@@ -46,16 +44,15 @@ gameBoard.addEventListener('click', e => {
         }
         showMines(map, mine)
         resolve = true
-    }
-
-    if (mapIds.includes(element.id[0]) && !lose) {
+    } else if (mapIds.includes(element.id[0]) && !lose) {
         const [x, y] = element.id.split('-')
+        const { size } = levelSelect[level]
         const rowValue = parseInt(x)
         const colValue = parseInt(y)
         const mapValue = map[rowValue][colValue]
 
         if (mapValue === '-') {
-            liberateSquares(map, element, mine)
+            liberateSquaresRecursive(map, size, rowValue, colValue, mine)
         } else {
             element.textContent = mapValue
             element.className += ` bg-yellow-700 ${numberColors[mapValue] ?? ''}`
@@ -67,7 +64,7 @@ gameBoard.addEventListener('click', e => {
         }
     }
 
-    resolveGame(gameBoard, gameState, mines, resolve)
+    resolveGame(gameState, mines, resolve)
 })
 
 gameBoard.addEventListener('contextmenu', e => {

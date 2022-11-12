@@ -134,15 +134,20 @@ const createGame = (gameBoard, options, mineSymbol) => {
     const { size, mines, level } = options
 
     const gameInfo = document.createElement('section')
-    gameInfo.className = 'flex justify-between font-bold text-lg pt-2 pb-1 px-4'
+    gameInfo.className = 'flex justify-between items-center font-bold text-lg pt-2 pb-1'
 
     const pMines = document.createElement('p')
-    pMines.textContent = `Número de minas (${mineSymbol}): ${mines}`
+    pMines.textContent = `${mineSymbol}: ${mines}`
+
+    const gameResult = document.createElement('p')
+    gameResult.className = 'text-center text-3xl py-2 grow'
+    gameResult.id = 'gameResult'
+    gameResult.textContent = '🙂'
 
     const pTimer = document.createElement('p')
     pTimer.textContent = '⌛ 00:00'
 
-    gameInfo.append(pMines, pTimer)
+    gameInfo.append(pMines, gameResult, pTimer)
 
     for (let row = 0; row < size; row++) {
         const rowDiv = document.createElement('div')
@@ -186,6 +191,45 @@ const liberateSquares = (map, element, mineSymbol) => {
         initialRowLoop++
         initialColLoop = colValue !== 0 ? colValue - 1 : colValue
     }
+}
+
+const liberateSquaresRecursive = (map, size, row, col, mineSymbol) => {
+    const element = document.getElementById(`${row}-${col}`)
+
+    if (row < 0 || row >= size || col < 0 || col >= size) {
+        return
+    } else if (map[row][col] === mineSymbol) {
+        return
+    } else if (element.className.includes('bg-yellow-700')) {
+        return
+    }
+
+    if ([1, 2, 3, 4, 5, 6, 7, 8, 9].includes(map[row][col])) {
+        element.className += ` bg-yellow-700 ${numberColors[map[row][col]] ?? ''}`
+        element.textContent = map[row][col]
+
+        return
+    } else if (map[row][col] === '-') {
+        element.className += ' bg-yellow-700'
+        element.textContent = ''
+    }
+
+    const adjacentCells = [
+        [row - 1, col - 1],
+        [row - 1, col],
+        [row - 1, col + 1],
+        [row, col - 1],
+        [row, col + 1],
+        [row + 1, col - 1],
+        [row + 1, col],
+        [row + 1, col + 1]
+    ]
+
+    adjacentCells.forEach(cell => {
+        const [row, col] = cell
+
+        liberateSquaresRecursive(map, size, row, col, mineSymbol)
+    })
 }
 
 const getMines = (map, mineSymbol) => {
@@ -232,26 +276,24 @@ const resolveByBtn = (gameState, symbols) => {
     return lose
 }
 
-const resolveGame = (gameBoard, gameState, mines, resolve) => {
+const resolveGame = (gameState, mines, resolve) => {
     const { lose, flags } = gameState
+    const gameResult = document.querySelector('#gameResult')
     let res = ''
-    const h2 = document.createElement('h2')
-    const h2IfExist = document.querySelector('h2')
 
     const squares = [...document.querySelectorAll('.flex div')]
     const totalSquares = squares.length
     const emptySquares = squares.filter(text => text.className.includes('bg-yellow-700')).length
+    console.log(lose)
 
     if (lose) {
-        res += 'Has perdido 😢!'
+        res += '😢'
     } else if (totalSquares - emptySquares === mines || (flags === mines && resolve)) {
-        res += 'Has ganado 😊!'
+        res += '😊'
     }
 
-    if ((!h2IfExist) && res !== '') {
-        h2.textContent = res
-        h2.className = 'font-bold text-xl text-center py-8'
-        gameBoard.insertAdjacentElement('beforebegin', h2)
+    if (res !== '') {
+        gameResult.textContent = res
     }
 }
 
@@ -261,6 +303,7 @@ export {
     fillMap,
     generateMap,
     liberateSquares,
+    liberateSquaresRecursive,
     showMines,
     resolveByBtn,
     resolveGame
