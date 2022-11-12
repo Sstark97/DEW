@@ -1,7 +1,6 @@
-import { levelSelect, symbols, mapIds, numberColors, gameState } from './const.js'
+import { levelSelect, symbols, mapIds, gameState } from './const.js'
 import { createGame, setState } from './general.js'
-import { showMines, resolveByBtn, isWin, resolveGame, resetGame } from './actions.js'
-import { liberateSquaresRecursive } from './squares.js'
+import { resolveByBtn, resolveByClick, resolveGame, resetGame, isWin } from './actions.js'
 
 const btnContainer = document.querySelector('#btn_container')
 const gameBoard = document.querySelector('#gameBoard')
@@ -24,8 +23,7 @@ btnContainer.addEventListener('click', e => {
 
 gameBoard.addEventListener('click', e => {
     const element = e.target
-    const { map, stop, level, flags } = gameState
-    const { mine } = symbols
+    const { map, stop, flags, level } = gameState
     const { mines } = levelSelect[level]
 
     if (element.id === 'reset') {
@@ -36,29 +34,12 @@ gameBoard.addEventListener('click', e => {
         if (element.id === 'resolve' && !element.disabled) {
             const lose = resolveByBtn(gameState, symbols)
             setState(map, true, lose, flags, level)
-            showMines(map, mine)
-        } else if (mapIds.includes(element.id[0]) && !stop) {
-            const [x, y] = element.id.split('-')
-            const { size } = levelSelect[level]
-            const rowValue = parseInt(x)
-            const colValue = parseInt(y)
-            const mapValue = map[rowValue][colValue]
+        } else if (mapIds.includes(element.id[0])) {
+            resolveByClick(element)
+        }
 
-            if (mapValue === '-') {
-                liberateSquaresRecursive(map, size, rowValue, colValue, mine)
-            } else {
-                element.textContent = mapValue
-                element.className += ` bg-yellow-700 ${numberColors[mapValue] ?? ''}`
-            }
-
-            if (isWin(mines)) {
-                setState(map, true, false, flags, level)
-            }
-
-            if (mapValue === mine) {
-                setState(map, true, true, flags, level)
-                showMines(map, mine)
-            }
+        if (isWin(mines)) {
+            setState(map, true, false, flags, level)
         }
 
         resolveGame(gameState, mines)

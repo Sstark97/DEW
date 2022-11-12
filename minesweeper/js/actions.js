@@ -1,5 +1,6 @@
-import { levelSelect } from './const.js'
+import { gameState, levelSelect, symbols, numberColors } from './const.js'
 import { setState } from './general.js'
+import { liberateSquaresRecursive } from './squares.js'
 
 const getMines = (map, mineSymbol) => {
     const minesWithPos = []
@@ -28,7 +29,7 @@ const showMines = (map, mineSymbol) => {
     })
 }
 
-const resolveByBtn = (gameState, symbols) => {
+const resolveByBtn = (gameState, symbols, flags) => {
     const { map, level } = gameState
     const { mine, flag } = symbols
     const flagsList = [...document.querySelectorAll('.flex div')].filter(e => e.textContent === flag)
@@ -43,7 +44,9 @@ const resolveByBtn = (gameState, symbols) => {
         }
     })
 
-    return mines !== allMines
+    showMines(map, mine)
+
+    return allMines !== mines
 }
 
 const isWin = mines => {
@@ -52,6 +55,28 @@ const isWin = mines => {
     const emptySquares = squares.filter(text => text.className.includes('bg-yellow-700')).length
 
     return totalSquares - emptySquares === mines
+}
+
+const resolveByClick = (element, mines) => {
+    const { map, level, flags } = gameState
+    const { mine } = symbols
+    const [x, y] = element.id.split('-')
+    const { size } = levelSelect[level]
+    const rowValue = parseInt(x)
+    const colValue = parseInt(y)
+    const mapValue = map[rowValue][colValue]
+
+    if (mapValue === '-') {
+        liberateSquaresRecursive(map, size, rowValue, colValue, mine)
+    } else {
+        element.textContent = mapValue
+        element.className += ` bg-yellow-700 ${numberColors[mapValue] ?? ''}`
+    }
+
+    if (mapValue === mine) {
+        setState(map, true, true, flags, level)
+        showMines(map, mine)
+    }
 }
 
 const resolveGame = (gameState, mines) => {
@@ -87,5 +112,6 @@ export {
     resolveByBtn,
     isWin,
     resolveGame,
+    resolveByClick,
     resetGame
 }
