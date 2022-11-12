@@ -1,6 +1,6 @@
 import { levelSelect, symbols, mapIds, numberColors, gameState } from './const.js'
 import { createGame, setState } from './general.js'
-import { showMines, resolveByBtn, isWin, resolveGame } from './actions.js'
+import { showMines, resolveByBtn, isWin, resolveGame, resetGame } from './actions.js'
 import { liberateSquaresRecursive } from './squares.js'
 
 const btnContainer = document.querySelector('#btn_container')
@@ -16,6 +16,7 @@ btnContainer.addEventListener('click', e => {
     console.log(map)
     btnContainer.classList.add('hidden')
     gameText.textContent = `Nivel ${gameOptions.level}`
+
     game.append(gameBoard)
     game.className = ''
     setState(map, false, false, 0, element.value)
@@ -28,15 +29,7 @@ gameBoard.addEventListener('click', e => {
     const { mines } = levelSelect[level]
 
     if (element.id === 'reset') {
-        const info = document.querySelector('#game section')
-        if (info) {
-            game.removeChild(info)
-        }
-
-        gameBoard.innerHTML = ''
-        game.className = 'hidden'
-        btnContainer.classList.remove('hidden')
-        setState([], false, false, 0, '')
+        resetGame(game, gameBoard, btnContainer)
     }
 
     if (!stop) {

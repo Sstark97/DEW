@@ -1,4 +1,5 @@
 import { levelSelect } from './const.js'
+import { setState } from './general.js'
 
 const getMines = (map, mineSymbol) => {
     const minesWithPos = []
@@ -69,9 +70,22 @@ const resolveGame = (gameState, mines) => {
     }
 }
 
+const resetGame = (game, gameBoard, btnContainer) => {
+    const info = document.querySelector('#game section')
+    if (info) {
+        game.removeChild(info)
+    }
+
+    gameBoard.innerHTML = ''
+    game.className = 'hidden'
+    btnContainer.classList.remove('hidden')
+    setState([], false, false, 0, '')
+}
+
 export {
     showMines,
     resolveByBtn,
     isWin,
-    resolveGame
+    resolveGame,
+    resetGame
 }
