@@ -33,6 +33,7 @@ const showMines = (map, mineSymbol) => {
         const currentElement = document.getElementById(`${x}-${y}`)
         currentElement.textContent = mineSymbol
         currentElement.className += ' bg-yellow-700'
+        currentElement.classList.remove('bg-lime-400')
     })
 }
 

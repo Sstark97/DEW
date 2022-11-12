@@ -41,6 +41,7 @@ const changeSquare = (map, element, row, col) => {
         element.textContent = ''
     }
 
+    element.classList.remove('bg-lime-400')
     return stop
 }
 
