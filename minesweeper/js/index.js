@@ -1,6 +1,6 @@
 import { levelSelect, symbols, mapIds, gameState } from './const.js'
 import { createGame, setState } from './general.js'
-import { resolveByBtn, resolveByClick, resolveGame, resetGame, isWin } from './actions.js'
+import { getFlags, resolveByBtn, resolveByClick, resolveGame, resetGame, isWin } from './actions.js'
 
 const btnContainer = document.querySelector('#btn_container')
 const gameBoard = document.querySelector('#gameBoard')
@@ -62,7 +62,7 @@ gameBoard.addEventListener('contextmenu', e => {
             element.textContent = flag
         }
 
-        const currentFlags = [...document.querySelectorAll('.flex div')].filter(e => e.textContent === flag).length
+        const currentFlags = getFlags(flag).length
         btnResolve.disabled = currentFlags === mines ? undefined : true
         setState(map, stop, false, currentFlags, level)
     }

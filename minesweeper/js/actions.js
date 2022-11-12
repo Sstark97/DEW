@@ -17,6 +17,10 @@ const getMines = (map, mineSymbol) => {
     return minesWithPos
 }
 
+const getFlags = flag => (
+    [...document.querySelectorAll('.flex div')].filter(e => e.textContent === flag)
+)
+
 const showMines = (map, mineSymbol) => {
     const minesWithPos = getMines(map, mineSymbol)
 
@@ -29,10 +33,10 @@ const showMines = (map, mineSymbol) => {
     })
 }
 
-const resolveByBtn = (gameState, symbols, flags) => {
+const resolveByBtn = (gameState, symbols) => {
     const { map, level } = gameState
     const { mine, flag } = symbols
-    const flagsList = [...document.querySelectorAll('.flex div')].filter(e => e.textContent === flag)
+    const flagsList = getFlags(flag)
     const { mines: allMines } = levelSelect[level]
     let mines = 0
 
@@ -110,6 +114,7 @@ const resetGame = (game, gameBoard, btnContainer) => {
 
 export {
     showMines,
+    getFlags,
     resolveByBtn,
     isWin,
     resolveGame,
