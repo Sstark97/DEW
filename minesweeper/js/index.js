@@ -7,6 +7,7 @@ const gameBoard = document.querySelector('#gameBoard')
 const gameText = document.querySelector('h1')
 const game = document.querySelector('#game')
 
+// Evento que genera el mapa
 btnContainer.addEventListener('click', e => {
     const element = e.target
     const gameOptions = levelSelect[element.value]
@@ -21,6 +22,7 @@ btnContainer.addEventListener('click', e => {
     setState(map, false, false, 0, element.value)
 })
 
+// Evento que controla el click dentro del mapa
 gameBoard.addEventListener('click', e => {
     const element = e.target
     const { map, stop, flags, level } = gameState
@@ -46,6 +48,7 @@ gameBoard.addEventListener('click', e => {
     }
 })
 
+// Evento que controla el colocar una bandera
 gameBoard.addEventListener('contextmenu', e => {
     const element = e.target
     const { flag } = symbols

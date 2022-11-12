@@ -1,5 +1,6 @@
 import { mapHeight, gameState, timeState } from './const.js'
 
+// Función para manejar el estado del juego
 const setState = (map, stop, lose, flags, level) => {
     gameState.map = map
     gameState.stop = stop
@@ -8,6 +9,7 @@ const setState = (map, stop, lose, flags, level) => {
     gameState.level = level
 }
 
+// Función que establece el temporizador del juego
 const setTime = element => {
     let timer = '00:00'
 
@@ -31,6 +33,7 @@ const setTime = element => {
     return timeINterval
 }
 
+// Creación del mapa vacío
 const fillMap = size => {
     const map = []
 
@@ -41,6 +44,7 @@ const fillMap = size => {
     return map
 }
 
+// Le añadimos al mapa los números que indican las minas más cercanas
 const countMines = (mapMines, mineSymbol) => {
     const mapWithCountMines = []
     let rowMines = []
@@ -92,6 +96,7 @@ const countMines = (mapMines, mineSymbol) => {
     return mapWithCountMines
 }
 
+// Generamos el Mapa completo
 const generateMap = (options, mineSymbol) => {
     const { size, mines } = options
     const mapFilled = fillMap(size)
@@ -110,6 +115,7 @@ const generateMap = (options, mineSymbol) => {
     return countMines(mapFilled, mineSymbol)
 }
 
+// Creamos los botones de acción del Juagador
 const createPlayerOptions = () => {
     const optionsContainer = document.createElement('div')
     optionsContainer.className = 'flex items-center w-full h-20'
@@ -131,6 +137,7 @@ const createPlayerOptions = () => {
     return optionsContainer
 }
 
+// Creamos la sección de información acerca del juego
 const createGameInfo = (mineSymbol, mines) => {
     const gameInfo = document.createElement('section')
     gameInfo.className = 'w-2/5 mx-auto flex justify-between items-center font-bold text-lg pt-2 pb-1'
@@ -150,6 +157,7 @@ const createGameInfo = (mineSymbol, mines) => {
     return [gameInfo, pTimer]
 }
 
+// Creamos el tablero de juego completo
 const createGame = (gameBoard, options, mineSymbol) => {
     const rows = []
     let cols = []

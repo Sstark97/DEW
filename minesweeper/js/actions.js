@@ -2,6 +2,7 @@ import { gameState, levelSelect, symbols, numberColors, timeState } from './cons
 import { setState } from './general.js'
 import { liberateSquaresRecursive } from './squares.js'
 
+// Función que nos devuelve un array con la posición de cada mina en el mapa
 const getMines = (map, mineSymbol) => {
     const minesWithPos = []
 
@@ -17,10 +18,12 @@ const getMines = (map, mineSymbol) => {
     return minesWithPos
 }
 
+// Función que nos devuelve las casillas que tienen banderas
 const getFlags = flag => (
     [...document.querySelectorAll('.flex div')].filter(e => e.textContent === flag)
 )
 
+// Función que revela la posición de las minas en el mapa
 const showMines = (map, mineSymbol) => {
     const minesWithPos = getMines(map, mineSymbol)
 
@@ -33,6 +36,16 @@ const showMines = (map, mineSymbol) => {
     })
 }
 
+// Función que comprueba si el jugador ha ganado la partida
+const isWin = mines => {
+    const squares = [...document.querySelectorAll('.flex div')]
+    const totalSquares = squares.length
+    const emptySquares = squares.filter(text => text.className.includes('bg-yellow-700')).length
+
+    return totalSquares - emptySquares === mines
+}
+
+// Función que resulve el juego a través del botón de resolver
 const resolveByBtn = (gameState, symbols) => {
     const { map, level } = gameState
     const { mine, flag } = symbols
@@ -53,14 +66,7 @@ const resolveByBtn = (gameState, symbols) => {
     return allMines !== mines
 }
 
-const isWin = mines => {
-    const squares = [...document.querySelectorAll('.flex div')]
-    const totalSquares = squares.length
-    const emptySquares = squares.filter(text => text.className.includes('bg-yellow-700')).length
-
-    return totalSquares - emptySquares === mines
-}
-
+// Función que gestiona el juego si clickas en una casilla
 const resolveByClick = (element, mines) => {
     const { map, level, flags } = gameState
     const { mine } = symbols
@@ -83,6 +89,7 @@ const resolveByClick = (element, mines) => {
     }
 }
 
+// Función que controla si el juego ha acabado
 const resolveGame = (gameState, mines) => {
     const { stop, lose, flags } = gameState
     const gameResult = document.querySelector('#gameResult')
@@ -100,6 +107,10 @@ const resolveGame = (gameState, mines) => {
     }
 }
 
+/*
+    Función que resetea el juego y devuelve a el
+    jugador al menú de selecciópn de dificultad
+*/
 const resetGame = (game, gameBoard, btnContainer) => {
     const info = document.querySelector('#game section')
     if (info) {

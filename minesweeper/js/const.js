@@ -1,3 +1,4 @@
+// Niveles del juego
 const levelSelect = {
     easy: {
         size: 8,
@@ -16,19 +17,23 @@ const levelSelect = {
     }
 }
 
+// Simbolos del juego
 const symbols = {
     mine: '💣',
     flag: '🚩'
 }
 
+// Diferentes alturas según el mapa
 const mapHeight = {
     Fácil: 'h-14',
     Intermedio: 'h-10',
     Díficil: 'h-8'
 }
 
+// Los posibles números que hay en el mapa
 const mapIds = '1234567890'
 
+// Colores de los números
 const numberColors = {
     1: 'text-blue-500',
     2: 'text-lime-500',
@@ -38,6 +43,7 @@ const numberColors = {
     6: 'text-teal-500'
 }
 
+// Estado del juego
 const gameState = {
     map: [],
     stop: false,
@@ -46,6 +52,7 @@ const gameState = {
     level: ''
 }
 
+// Estado del Temporizador
 const timeState = { timeInterval: undefined }
 
 export {

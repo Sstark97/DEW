@@ -24,9 +24,11 @@ const liberateSquares = (map, element, mineSymbol) => {
     }
 }
 
+// Condición de parada de la función recursiva
 const stopCondition = (map, size, element, row, col, mineSymbol) => (row < 0 || row >= size || col < 0 || col >= size) ||
 (map[row][col] === mineSymbol) || (element.className.includes('bg-yellow-700'))
 
+// Función que cambia cada casilla
 const changeSquare = (map, element, row, col) => {
     let stop = false
     if ([1, 2, 3, 4, 5, 6, 7, 8, 9].includes(map[row][col])) {
@@ -42,6 +44,10 @@ const changeSquare = (map, element, row, col) => {
     return stop
 }
 
+/*
+    Función que genera una matriz con
+    las posiciones adyacentes a una casilla
+*/
 const createAdjacentPos = (row, col) => (
     [
         [row - 1, col - 1],
@@ -55,6 +61,7 @@ const createAdjacentPos = (row, col) => (
     ]
 )
 
+// Función recursiva que nos libera las casillas
 const liberateSquaresRecursive = (map, size, row, col, mineSymbol) => {
     const element = document.getElementById(`${row}-${col}`)
 
