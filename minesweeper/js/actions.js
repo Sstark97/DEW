@@ -82,6 +82,7 @@ const resolveByClick = (element, mines) => {
     } else {
         element.textContent = mapValue
         element.className += ` bg-yellow-700 ${numberColors[mapValue] ?? ''}`
+        element.classList.remove('bg-lime-400')
     }
 
     if (mapValue === mine) {

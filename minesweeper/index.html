@@ -12,13 +12,13 @@
 <body class="min-h-screen">
 
     <h1 class="font-bold text-3xl text-center py-6">Selecciona el nivel de Dificultad</h1>
-    <section id="btn_container" class="flex flex-col justify-between items-center mx-auto w-1/4 h-36">
+    <section id="btn_container" class="flex flex-col justify-between items-center mx-auto md:w-2/4 xl:w-1/4 h-36">
         <button class="w-1/4 bg-green-500 p-2 rounded-md" value="easy">Principiante</button>
         <button class="w-1/4 bg-amber-500 p-2 rounded-md" value="medium">Intermedio</button>
         <button class="w-1/4 bg-red-500 p-2 rounded-md" value="hard">Avanzado</button>
     </section>
     <section id="game" class="hidden">
-        <article id="gameBoard"></article>
+        <article class="w-9/12 md:w-8/12 lg:w-7/12 xl:w-2/5 mx-auto" id="gameBoard"></article>
     </section>
     <script src="./js/index.js" type="module"></script>
 </body>

@@ -140,7 +140,7 @@ const createPlayerOptions = () => {
 // Creamos la sección de información acerca del juego
 const createGameInfo = (mineSymbol, mines) => {
     const gameInfo = document.createElement('section')
-    gameInfo.className = 'w-2/5 mx-auto flex justify-between items-center font-bold text-lg pt-2 pb-1'
+    gameInfo.className = 'w-9/12 md:w-8/12 lg:w-7/12 xl:w-2/5 mx-auto flex justify-between items-center font-bold text-lg pt-2 pb-1'
 
     const pMines = document.createElement('p')
     pMines.textContent = `${mineSymbol}: ${mines}`
@@ -167,10 +167,10 @@ const createGame = (gameBoard, options, mineSymbol) => {
 
     for (let row = 0; row < size; row++) {
         const rowDiv = document.createElement('div')
-        rowDiv.className = 'flex'
+        rowDiv.className = 'flex w-full'
         for (let col = 0; col < size; col++) {
             const square = document.createElement('div')
-            square.className = `w-24 ${mapHeight[level]} bg-lime-400 border-solid border-2 border-gray-900 flex items-center justify-center text-lg font-bold`
+            square.className = `w-3/12 ${mapHeight[level]} bg-lime-400 border-solid border-2 border-gray-900 flex items-center justify-center text-lg font-bold`
             square.id = `${row}-${col}`
             cols.push(square)
         }
@@ -179,7 +179,6 @@ const createGame = (gameBoard, options, mineSymbol) => {
         cols = []
     }
 
-    gameBoard.className = 'w-2/5 mx-auto'
     gameBoard.insertAdjacentElement('beforebegin', gameInfo)
     gameBoard.append(...rows, createPlayerOptions())
     timeState.time = setTime(pTimer)
