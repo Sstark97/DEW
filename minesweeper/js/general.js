@@ -1,4 +1,4 @@
-import { mapHeight, numberColors, gameState, levelSelect } from './const.js'
+import { mapHeight, gameState } from './const.js'
 
 const setState = (map, stop, lose, flags, level) => {
     gameState.map = map
@@ -129,11 +129,7 @@ const createPlayerOptions = () => {
     return optionsContainer
 }
 
-const createGame = (gameBoard, options, mineSymbol) => {
-    const rows = []
-    let cols = []
-    const { size, mines, level } = options
-
+const createGameInfo = (mineSymbol, mines) => {
     const gameInfo = document.createElement('section')
     gameInfo.className = 'w-2/5 mx-auto flex justify-between items-center font-bold text-lg pt-2 pb-1'
 
@@ -149,6 +145,15 @@ const createGame = (gameBoard, options, mineSymbol) => {
     pTimer.textContent = '⌛ 00:00'
 
     gameInfo.append(pMines, gameResult, pTimer)
+    return [gameInfo, pTimer]
+}
+
+const createGame = (gameBoard, options, mineSymbol) => {
+    const rows = []
+    let cols = []
+    const { size, mines, level } = options
+
+    const [gameInfo, pTimer] = createGameInfo(mineSymbol, mines)
 
     for (let row = 0; row < size; row++) {
         const rowDiv = document.createElement('div')
@@ -172,146 +177,9 @@ const createGame = (gameBoard, options, mineSymbol) => {
     return generateMap(options, mineSymbol)
 }
 
-const liberateSquares = (map, element, mineSymbol) => {
-    const [x, y] = element.id.split('-')
-    const rowValue = parseInt(x)
-    const colValue = parseInt(y)
-    let initialRowLoop = rowValue !== 0 ? rowValue - 1 : rowValue
-    let initialColLoop = colValue !== 0 ? colValue - 1 : colValue
-
-    for (let row = 0; row < 3; row++) {
-        for (let col = 0; col < 3; col++) {
-            const currentElement = document.getElementById(`${initialRowLoop}-${initialColLoop}`)
-
-            if (currentElement && map[initialRowLoop] && map[initialColLoop] && map[initialRowLoop][initialColLoop] !== mineSymbol) {
-                const mapValue = map[initialRowLoop][initialColLoop] === '-' ? '' : map[initialRowLoop][initialColLoop]
-                currentElement.textContent = mapValue
-                currentElement.className += ` bg-yellow-700 ${numberColors[mapValue] ?? ''}`
-            }
-            initialColLoop++
-        }
-        initialRowLoop++
-        initialColLoop = colValue !== 0 ? colValue - 1 : colValue
-    }
-}
-
-const liberateSquaresRecursive = (map, size, row, col, mineSymbol) => {
-    const element = document.getElementById(`${row}-${col}`)
-
-    if (row < 0 || row >= size || col < 0 || col >= size) {
-        return
-    } else if (map[row][col] === mineSymbol) {
-        return
-    } else if (element.className.includes('bg-yellow-700')) {
-        return
-    }
-
-    if ([1, 2, 3, 4, 5, 6, 7, 8, 9].includes(map[row][col])) {
-        element.className += ` bg-yellow-700 ${numberColors[map[row][col]] ?? ''}`
-        element.textContent = map[row][col]
-
-        return
-    } else if (map[row][col] === '-') {
-        element.className += ' bg-yellow-700'
-        element.textContent = ''
-    }
-
-    const adjacentCells = [
-        [row - 1, col - 1],
-        [row - 1, col],
-        [row - 1, col + 1],
-        [row, col - 1],
-        [row, col + 1],
-        [row + 1, col - 1],
-        [row + 1, col],
-        [row + 1, col + 1]
-    ]
-
-    adjacentCells.forEach(cell => {
-        const [row, col] = cell
-
-        liberateSquaresRecursive(map, size, row, col, mineSymbol)
-    })
-}
-
-const getMines = (map, mineSymbol) => {
-    const minesWithPos = []
-
-    map.forEach((element, rowIndex) => {
-        element.reduce((previous, current, colIndex) => {
-            if (current === mineSymbol) {
-                minesWithPos.push({ x: rowIndex, y: colIndex })
-            }
-            return previous
-        }, 0)
-    })
-
-    return minesWithPos
-}
-
-const showMines = (map, mineSymbol) => {
-    const minesWithPos = getMines(map, mineSymbol)
-
-    minesWithPos.forEach(element => {
-        const { x, y } = element
-
-        const currentElement = document.getElementById(`${x}-${y}`)
-        currentElement.textContent = mineSymbol
-        currentElement.className += ' bg-yellow-700'
-    })
-}
-
-const resolveByBtn = (gameState, symbols) => {
-    const { map, level } = gameState
-    const { mine, flag } = symbols
-    const flagsList = [...document.querySelectorAll('.flex div')].filter(e => e.textContent === flag)
-    const { mines: allMines } = levelSelect[level]
-    let mines = 0
-
-    flagsList.forEach(element => {
-        const [x, y] = element.id.split('-')
-
-        if (map[x][y] === mine) {
-            mines++
-        }
-    })
-
-    return mines !== allMines
-}
-
-const isWin = mines => {
-    const squares = [...document.querySelectorAll('.flex div')]
-    const totalSquares = squares.length
-    const emptySquares = squares.filter(text => text.className.includes('bg-yellow-700')).length
-
-    return totalSquares - emptySquares === mines
-}
-
-const resolveGame = (gameState, mines) => {
-    const { stop, lose, flags } = gameState
-    const gameResult = document.querySelector('#gameResult')
-    let res = ''
-
-    if (lose) {
-        res += '😢'
-    } else if (isWin(mines) || (flags === mines && stop)) {
-        res += '😊'
-    }
-
-    if (res !== '') {
-        gameResult.textContent = res
-    }
-}
-
 export {
     setState,
     createGame,
     fillMap,
-    generateMap,
-    liberateSquares,
-    liberateSquaresRecursive,
-    showMines,
-    resolveByBtn,
-    isWin,
-    resolveGame
+    generateMap
 }

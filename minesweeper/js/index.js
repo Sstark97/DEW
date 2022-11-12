@@ -1,5 +1,7 @@
 import { levelSelect, symbols, mapIds, numberColors, gameState } from './const.js'
-import { createGame, liberateSquaresRecursive, resolveByBtn, resolveGame, isWin, setState, showMines } from './functions.js'
+import { createGame, setState } from './general.js'
+import { showMines, resolveByBtn, isWin, resolveGame } from './actions.js'
+import { liberateSquaresRecursive } from './squares.js'
 
 const btnContainer = document.querySelector('#btn_container')
 const gameBoard = document.querySelector('#gameBoard')
