@@ -10,8 +10,8 @@ const game = document.querySelector('#game')
 btnContainer.addEventListener('click', e => {
     const element = e.target
     const gameOptions = levelSelect[element.value]
-
     const map = createGame(gameBoard, gameOptions, symbols.mine)
+
     console.log(map)
     btnContainer.classList.add('hidden')
     gameText.textContent = `Nivel ${gameOptions.level}`
@@ -56,14 +56,11 @@ gameBoard.addEventListener('contextmenu', e => {
     e.preventDefault()
 
     if (!stop) {
-        if (element.textContent === flag) {
-            element.textContent = ''
-        } else if (flags < mines) {
-            element.textContent = flag
-        }
+        element.textContent = element.textContent === flag || flags === mines ? '' : flag
 
         const currentFlags = getFlags(flag).length
         btnResolve.disabled = currentFlags === mines ? undefined : true
+
         setState(map, stop, false, currentFlags, level)
     }
 }, false)
