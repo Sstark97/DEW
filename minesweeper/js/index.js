@@ -13,7 +13,6 @@ btnContainer.addEventListener('click', e => {
     const gameOptions = levelSelect[element.value]
     const map = createGame(gameBoard, gameOptions, symbols.mine)
 
-    console.log(map)
     btnContainer.classList.add('hidden')
     gameText.textContent = `Nivel ${gameOptions.level}`
 
