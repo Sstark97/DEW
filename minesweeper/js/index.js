@@ -1,5 +1,5 @@
 import { levelSelect, symbols, mapIds, numberColors, gameState } from './const.js'
-import { createGame, liberateSquaresRecursive, resolveByBtn, resolveGame, setState, showMines } from './functions.js'
+import { createGame, liberateSquaresRecursive, resolveByBtn, resolveGame, isWin, setState, showMines } from './functions.js'
 
 const btnContainer = document.querySelector('#btn_container')
 const gameBoard = document.querySelector('#gameBoard')
@@ -16,67 +16,70 @@ btnContainer.addEventListener('click', e => {
     gameText.textContent = `Nivel ${gameOptions.level}`
     game.append(gameBoard)
     game.className = ''
-    setState(map, false, 0, element.value)
+    setState(map, false, false, 0, element.value)
 })
 
 gameBoard.addEventListener('click', e => {
     const element = e.target
-    const { map, lose, level, flags } = gameState
+    const { map, stop, level, flags } = gameState
     const { mine } = symbols
     const { mines } = levelSelect[level]
-    let resolve = false
 
     if (element.id === 'reset') {
-        const finalMessage = document.querySelector('h2')
-        if (finalMessage) {
-            game.removeChild(finalMessage)
+        const info = document.querySelector('#game section')
+        if (info) {
+            game.removeChild(info)
         }
 
         gameBoard.innerHTML = ''
         game.className = 'hidden'
         btnContainer.classList.remove('hidden')
-        setState([], false, 0, '')
-    } else if (element.id === 'resolve' && !element.disabled) {
-        const lose = resolveByBtn(gameState, symbols)
-
-        if (lose) {
-            setState(map, lose, flags, level)
-        }
-        showMines(map, mine)
-        resolve = true
-    } else if (mapIds.includes(element.id[0]) && !lose) {
-        const [x, y] = element.id.split('-')
-        const { size } = levelSelect[level]
-        const rowValue = parseInt(x)
-        const colValue = parseInt(y)
-        const mapValue = map[rowValue][colValue]
-
-        if (mapValue === '-') {
-            liberateSquaresRecursive(map, size, rowValue, colValue, mine)
-        } else {
-            element.textContent = mapValue
-            element.className += ` bg-yellow-700 ${numberColors[mapValue] ?? ''}`
-        }
-
-        if (mapValue === mine) {
-            setState(map, true, flags, level)
-            showMines(map, mine)
-        }
+        setState([], false, false, 0, '')
     }
 
-    resolveGame(gameState, mines, resolve)
+    if (!stop) {
+        if (element.id === 'resolve' && !element.disabled) {
+            const lose = resolveByBtn(gameState, symbols)
+            setState(map, true, lose, flags, level)
+            showMines(map, mine)
+        } else if (mapIds.includes(element.id[0]) && !stop) {
+            const [x, y] = element.id.split('-')
+            const { size } = levelSelect[level]
+            const rowValue = parseInt(x)
+            const colValue = parseInt(y)
+            const mapValue = map[rowValue][colValue]
+
+            if (mapValue === '-') {
+                liberateSquaresRecursive(map, size, rowValue, colValue, mine)
+            } else {
+                element.textContent = mapValue
+                element.className += ` bg-yellow-700 ${numberColors[mapValue] ?? ''}`
+            }
+
+            if (isWin(mines)) {
+                setState(map, true, false, flags, level)
+            }
+
+            if (mapValue === mine) {
+                setState(map, true, true, flags, level)
+                showMines(map, mine)
+            }
+        }
+
+        resolveGame(gameState, mines)
+    }
 })
 
 gameBoard.addEventListener('contextmenu', e => {
     const element = e.target
     const { flag } = symbols
-    const { map, lose, level, flags } = gameState
+    const { map, stop, level, flags } = gameState
     const { mines } = levelSelect[level]
     const btnResolve = document.querySelector('#resolve')
 
     e.preventDefault()
 
-    if (!lose) {
+    if (!stop) {
         if (element.textContent === flag) {
             element.textContent = ''
         } else if (flags < mines) {
@@ -85,6 +88,6 @@ gameBoard.addEventListener('contextmenu', e => {
 
         const currentFlags = [...document.querySelectorAll('.flex div')].filter(e => e.textContent === flag).length
         btnResolve.disabled = currentFlags === mines ? undefined : true
-        setState(map, lose, currentFlags, level)
+        setState(map, stop, false, currentFlags, level)
     }
 }, false)

@@ -40,6 +40,7 @@ const numberColors = {
 
 const gameState = {
     map: [],
+    stop: false,
     lose: false,
     flags: 0,
     level: ''

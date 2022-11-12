@@ -1,7 +1,8 @@
-import { mapHeight, numberColors, gameState } from './const.js'
+import { mapHeight, numberColors, gameState, levelSelect } from './const.js'
 
-const setState = (map, lose, flags, level) => {
+const setState = (map, stop, lose, flags, level) => {
     gameState.map = map
+    gameState.stop = stop
     gameState.lose = lose
     gameState.flags = flags
     gameState.level = level
@@ -109,7 +110,7 @@ const generateMap = (options, mineSymbol) => {
 
 const createPlayerOptions = () => {
     const optionsContainer = document.createElement('div')
-    optionsContainer.className = 'flex items-center w-full h-24'
+    optionsContainer.className = 'flex items-center w-full h-20'
     optionsContainer.id = 'options'
 
     const reset = document.createElement('button')
@@ -134,7 +135,7 @@ const createGame = (gameBoard, options, mineSymbol) => {
     const { size, mines, level } = options
 
     const gameInfo = document.createElement('section')
-    gameInfo.className = 'flex justify-between items-center font-bold text-lg pt-2 pb-1'
+    gameInfo.className = 'w-2/5 mx-auto flex justify-between items-center font-bold text-lg pt-2 pb-1'
 
     const pMines = document.createElement('p')
     pMines.textContent = `${mineSymbol}: ${mines}`
@@ -164,7 +165,8 @@ const createGame = (gameBoard, options, mineSymbol) => {
     }
 
     gameBoard.className = 'w-2/5 mx-auto'
-    gameBoard.append(gameInfo, ...rows, createPlayerOptions())
+    gameBoard.insertAdjacentElement('beforebegin', gameInfo)
+    gameBoard.append(...rows, createPlayerOptions())
     setTime(pTimer)
 
     return generateMap(options, mineSymbol)
@@ -260,35 +262,39 @@ const showMines = (map, mineSymbol) => {
 }
 
 const resolveByBtn = (gameState, symbols) => {
-    const { map } = gameState
+    const { map, level } = gameState
     const { mine, flag } = symbols
     const flagsList = [...document.querySelectorAll('.flex div')].filter(e => e.textContent === flag)
-    let lose = false
+    const { mines: allMines } = levelSelect[level]
+    let mines = 0
 
     flagsList.forEach(element => {
         const [x, y] = element.id.split('-')
 
-        if (map[x][y] !== mine) {
-            lose = true
+        if (map[x][y] === mine) {
+            mines++
         }
     })
 
-    return lose
+    return mines !== allMines
 }
 
-const resolveGame = (gameState, mines, resolve) => {
-    const { lose, flags } = gameState
-    const gameResult = document.querySelector('#gameResult')
-    let res = ''
-
+const isWin = mines => {
     const squares = [...document.querySelectorAll('.flex div')]
     const totalSquares = squares.length
     const emptySquares = squares.filter(text => text.className.includes('bg-yellow-700')).length
-    console.log(lose)
+
+    return totalSquares - emptySquares === mines
+}
+
+const resolveGame = (gameState, mines) => {
+    const { stop, lose, flags } = gameState
+    const gameResult = document.querySelector('#gameResult')
+    let res = ''
 
     if (lose) {
         res += '😢'
-    } else if (totalSquares - emptySquares === mines || (flags === mines && resolve)) {
+    } else if (isWin(mines) || (flags === mines && stop)) {
         res += '😊'
     }
 
@@ -306,5 +312,6 @@ export {
     liberateSquaresRecursive,
     showMines,
     resolveByBtn,
+    isWin,
     resolveGame
 }
