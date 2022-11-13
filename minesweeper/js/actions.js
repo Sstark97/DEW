@@ -70,7 +70,7 @@ const resolveByBtn = (gameState, symbols) => {
 }
 
 // Función que gestiona el juego si clickas en una casilla
-const resolveByClick = (element, mines) => {
+const resolveByClick = element => {
     const { map, level, flags } = gameState
     const { mine } = symbols
     const [x, y] = element.id.split('-')
@@ -127,6 +127,7 @@ const resetGame = (game, gameBoard, btnContainer) => {
     game.className = 'hidden'
     h1.textContent = 'Selecciona el nivel de Dificultad'
     btnContainer.classList.remove('hidden')
+    symbols.currentSymbol = symbols.mine
     setState([], false, false, 0, '')
 }
 
