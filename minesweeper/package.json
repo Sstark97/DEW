@@ -8,8 +8,8 @@
     "build": "npx tailwindcss -i ./style/style.css -o ./style/output.css"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Sstark97",
+  "license": "MIT",
   "devDependencies": {
     "eslint": "^8.26.0",
     "eslint-config-standard": "^17.0.0",
