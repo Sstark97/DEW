@@ -117,12 +117,15 @@ const resolveGame = (gameState, mines) => {
 */
 const resetGame = (game, gameBoard, btnContainer) => {
     const info = document.querySelector('#game section')
+    const h1 = document.querySelector('h1')
+
     if (info) {
         game.removeChild(info)
     }
 
     gameBoard.innerHTML = ''
     game.className = 'hidden'
+    h1.textContent = 'Selecciona el nivel de Dificultad'
     btnContainer.classList.remove('hidden')
     setState([], false, false, 0, '')
 }
