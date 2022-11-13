@@ -33,9 +33,7 @@ gameBoard.addEventListener('click', e => {
     } else if (element.id === 'change') {
         element.textContent = element.textContent === mine ? flag : mine
         symbols.currentSymbol = element.textContent
-    }
-
-    if (!stop) {
+    } else if (!stop) {
         actions[currentSymbol](currentSymbol === mine ? element : e)
     }
 })
