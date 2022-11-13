@@ -48,7 +48,7 @@ const isWin = mines => {
 
 // Función que resulve el juego a través del botón de resolver
 const resolveByBtn = (gameState, symbols) => {
-    const { map, level } = gameState
+    const { map, level, flags } = gameState
     const { mine, flag } = symbols
     const flagsList = getFlags(flag)
     const { mines: allMines } = levelSelect[level]
@@ -64,7 +64,9 @@ const resolveByBtn = (gameState, symbols) => {
 
     showMines(map, mine)
 
-    return allMines !== mines
+    const lose = allMines !== mines
+    setState(map, true, lose, flags, level)
+    resolveGame(gameState, mines)
 }
 
 // Función que gestiona el juego si clickas en una casilla
@@ -129,10 +131,8 @@ const resetGame = (game, gameBoard, btnContainer) => {
 const clickGame = (element) => {
     const { map, flags, level } = gameState
     const { mines } = levelSelect[level]
-    if (element.id === 'resolve' && !element.disabled) {
-        const lose = resolveByBtn(gameState, symbols)
-        setState(map, true, lose, flags, level)
-    } else if (mapIds.includes(element.id[0])) {
+
+    if (mapIds.includes(element.id[0])) {
         resolveByClick(element)
     }
 
@@ -153,7 +153,7 @@ const setFlags = e => {
 
     e.preventDefault()
 
-    if (!stop) {
+    if (!stop && element.id.includes('-')) {
         element.textContent = element.textContent === flag || flags === mines ? '' : flag
 
         const currentFlags = getFlags(flag).length

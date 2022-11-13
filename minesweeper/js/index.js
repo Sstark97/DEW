@@ -1,6 +1,6 @@
 import { levelSelect, symbols, gameState, actions } from './const.js'
 import { createGame, setState } from './general.js'
-import { resetGame, setFlags } from './actions.js'
+import { resetGame, setFlags, resolveByBtn } from './actions.js'
 
 const btnContainer = document.querySelector('#btn_container')
 const gameBoard = document.querySelector('#gameBoard')
@@ -14,6 +14,7 @@ btnContainer.addEventListener('click', e => {
     if (element.nodeName === 'BUTTON') {
         const gameOptions = levelSelect[element.value]
         const map = createGame(gameBoard, gameOptions, symbols.mine)
+        console.log(map)
 
         btnContainer.classList.add('hidden')
         gameText.textContent = `Nivel ${gameOptions.level}`
@@ -35,6 +36,8 @@ gameBoard.addEventListener('click', e => {
     } else if (element.id === 'change') {
         element.textContent = element.textContent === mine ? flag : mine
         symbols.currentSymbol = element.textContent
+    } else if (element.id === 'resolve' && !element.disabled) {
+        resolveByBtn(gameState, symbols)
     } else if (!stop) {
         actions[currentSymbol](currentSymbol === mine ? element : e)
     }
