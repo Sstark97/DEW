@@ -153,7 +153,7 @@ const setFlags = e => {
 
     e.preventDefault()
 
-    if (!stop && element.id.includes('-')) {
+    if (!stop && element.className.includes('bg-lime-400')) {
         element.textContent = element.textContent === flag || flags === mines ? '' : flag
 
         const currentFlags = getFlags(flag).length
