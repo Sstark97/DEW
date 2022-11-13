@@ -7,6 +7,14 @@ const gameBoard = document.querySelector('#gameBoard')
 const gameText = document.querySelector('h1')
 const game = document.querySelector('#game')
 
+window.onload = () => {
+    'use strict'
+
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('../serviceworker.js')
+    }
+}
+
 // Evento que genera el mapa
 btnContainer.addEventListener('click', e => {
     const element = e.target
