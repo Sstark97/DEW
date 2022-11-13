@@ -1,5 +1,14 @@
 const cacheName = 'MinesWeeper'
-const filesToCache = ['/', '/index.html', '/style/output.css', '/js/index.js']
+const filesToCache = [
+    '/', 
+    '/index.html', 
+    '/style/output.css', 
+    '/js/index.js',
+    '/js/actions.js',
+    '/js/const.js',
+    '/js/general.js',
+    '/js/squares.js'
+]
 
 /* Start the service worker and cache all of the app's content */
 self.addEventListener('install', (e) => {
