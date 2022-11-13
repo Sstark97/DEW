@@ -10,16 +10,18 @@ const game = document.querySelector('#game')
 // Evento que genera el mapa
 btnContainer.addEventListener('click', e => {
     const element = e.target
-    const gameOptions = levelSelect[element.value]
-    const map = createGame(gameBoard, gameOptions, symbols.mine)
-    console.log(map)
 
-    btnContainer.classList.add('hidden')
-    gameText.textContent = `Nivel ${gameOptions.level}`
+    if (element.nodeName === 'BUTTON') {
+        const gameOptions = levelSelect[element.value]
+        const map = createGame(gameBoard, gameOptions, symbols.mine)
 
-    game.append(gameBoard)
-    game.className = ''
-    setState(map, false, false, 0, element.value)
+        btnContainer.classList.add('hidden')
+        gameText.textContent = `Nivel ${gameOptions.level}`
+
+        game.append(gameBoard)
+        game.className = ''
+        setState(map, false, false, 0, element.value)
+    }
 })
 
 // Evento que controla el click dentro del mapa
