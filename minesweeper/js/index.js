@@ -1,6 +1,6 @@
-import { levelSelect, symbols, mapIds, gameState } from './const.js'
+import { levelSelect, symbols, gameState, actions } from './const.js'
 import { createGame, setState } from './general.js'
-import { getFlags, resolveByBtn, resolveByClick, resolveGame, resetGame, isWin } from './actions.js'
+import { resetGame, setFlags } from './actions.js'
 
 const btnContainer = document.querySelector('#btn_container')
 const gameBoard = document.querySelector('#gameBoard')
@@ -12,6 +12,7 @@ btnContainer.addEventListener('click', e => {
     const element = e.target
     const gameOptions = levelSelect[element.value]
     const map = createGame(gameBoard, gameOptions, symbols.mine)
+    console.log(map)
 
     btnContainer.classList.add('hidden')
     gameText.textContent = `Nivel ${gameOptions.level}`
@@ -24,45 +25,22 @@ btnContainer.addEventListener('click', e => {
 // Evento que controla el click dentro del mapa
 gameBoard.addEventListener('click', e => {
     const element = e.target
-    const { map, stop, flags, level } = gameState
-    const { mines } = levelSelect[level]
+    const { stop } = gameState
+    const { mine, flag, currentSymbol } = symbols
 
     if (element.id === 'reset') {
         resetGame(game, gameBoard, btnContainer)
+    } else if (element.id === 'change') {
+        element.textContent = element.textContent === mine ? flag : mine
+        symbols.currentSymbol = element.textContent
     }
 
     if (!stop) {
-        if (element.id === 'resolve' && !element.disabled) {
-            const lose = resolveByBtn(gameState, symbols)
-            setState(map, true, lose, flags, level)
-        } else if (mapIds.includes(element.id[0])) {
-            resolveByClick(element)
-        }
-
-        if (isWin(mines)) {
-            setState(map, true, false, flags, level)
-        }
-
-        resolveGame(gameState, mines)
+        actions[currentSymbol](currentSymbol === mine ? element : e)
     }
 })
 
 // Evento que controla el colocar una bandera
 gameBoard.addEventListener('contextmenu', e => {
-    const element = e.target
-    const { flag } = symbols
-    const { map, stop, level, flags } = gameState
-    const { mines } = levelSelect[level]
-    const btnResolve = document.querySelector('#resolve')
-
-    e.preventDefault()
-
-    if (!stop) {
-        element.textContent = element.textContent === flag || flags === mines ? '' : flag
-
-        const currentFlags = getFlags(flag).length
-        btnResolve.disabled = currentFlags === mines ? undefined : true
-
-        setState(map, stop, false, currentFlags, level)
-    }
+    setFlags(e)
 }, false)

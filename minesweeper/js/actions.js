@@ -1,4 +1,4 @@
-import { gameState, levelSelect, symbols, numberColors, timeState } from './const.js'
+import { gameState, levelSelect, symbols, numberColors, timeState, mapIds } from './const.js'
 import { setState } from './general.js'
 import { liberateSquaresRecursive } from './squares.js'
 
@@ -125,9 +125,47 @@ const resetGame = (game, gameBoard, btnContainer) => {
     setState([], false, false, 0, '')
 }
 
+const clickGame = (element) => {
+    const { map, flags, level } = gameState
+    const { mines } = levelSelect[level]
+    if (element.id === 'resolve' && !element.disabled) {
+        const lose = resolveByBtn(gameState, symbols)
+        setState(map, true, lose, flags, level)
+    } else if (mapIds.includes(element.id[0])) {
+        resolveByClick(element)
+    }
+
+    if (isWin(mines)) {
+        setState(map, true, false, flags, level)
+    }
+
+    resolveGame(gameState, mines)
+}
+
+const setFlags = e => {
+    const element = e.target
+    const { flag } = symbols
+    const { map, stop, level, flags } = gameState
+    const { mines } = levelSelect[level]
+    const btnResolve = document.querySelector('#resolve')
+
+    e.preventDefault()
+
+    if (!stop) {
+        element.textContent = element.textContent === flag || flags === mines ? '' : flag
+
+        const currentFlags = getFlags(flag).length
+        btnResolve.disabled = currentFlags === mines ? undefined : true
+
+        setState(map, stop, false, currentFlags, level)
+    }
+}
+
 export {
     showMines,
     getFlags,
+    clickGame,
+    setFlags,
     resolveByBtn,
     isWin,
     resolveGame,

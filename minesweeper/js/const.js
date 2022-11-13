@@ -1,3 +1,5 @@
+import { clickGame, setFlags } from './actions.js'
+
 // Niveles del juego
 const levelSelect = {
     easy: {
@@ -20,7 +22,13 @@ const levelSelect = {
 // Simbolos del juego
 const symbols = {
     mine: '💣',
-    flag: '🚩'
+    flag: '🚩',
+    currentSymbol: '💣'
+}
+
+const actions = {
+    '💣': element => clickGame(element),
+    '🚩': e => setFlags(e)
 }
 
 // Diferentes alturas según el mapa
@@ -62,5 +70,6 @@ export {
     mapIds,
     numberColors,
     gameState,
-    timeState
+    timeState,
+    actions
 }
