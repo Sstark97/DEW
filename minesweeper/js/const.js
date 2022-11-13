@@ -25,7 +25,7 @@ const symbols = {
 
 // Diferentes alturas según el mapa
 const mapHeight = {
-    Fácil: 'h-14',
+    Fácil: 'h-12 md:h-14 lg:h-16',
     Intermedio: 'h-10',
     Díficil: 'h-8'
 }

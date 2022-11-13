@@ -1,4 +1,4 @@
-import { mapHeight, gameState, timeState } from './const.js'
+import { mapHeight, gameState, timeState, symbols } from './const.js'
 
 // Función para manejar el estado del juego
 const setState = (map, stop, lose, flags, level) => {
@@ -117,14 +117,21 @@ const generateMap = (options, mineSymbol) => {
 
 // Creamos los botones de acción del Juagador
 const createPlayerOptions = () => {
+    const { mine } = symbols
+
     const optionsContainer = document.createElement('div')
-    optionsContainer.className = 'flex items-center w-full h-20'
+    optionsContainer.className = 'w-full lg:w-1/6 h-20 flex justify-between items-center pt-2 pb-1 px-1 lg:px-0'
     optionsContainer.id = 'options'
 
     const reset = document.createElement('button')
     reset.textContent = 'Resetear'
-    reset.className = 'w-1/8 bg-amber-500 p-2 mr-3 rounded-md'
+    reset.className = 'w-1/8 bg-amber-500 mr-2 p-2 rounded-md'
     reset.id = 'reset'
+
+    const change = document.createElement('button')
+    change.textContent = `${mine}`
+    change.className = 'w-1/6 md:w-1/12 lg:hidden bg-lime-600 p-2 rounded-md text-center text-xl p-2'
+    change.id = 'change'
 
     const resolve = document.createElement('button')
     resolve.textContent = 'Resolver'
@@ -132,7 +139,7 @@ const createPlayerOptions = () => {
     resolve.id = 'resolve'
     resolve.disabled = true
 
-    optionsContainer.append(reset, resolve)
+    optionsContainer.append(reset, change, resolve)
 
     return optionsContainer
 }
@@ -140,7 +147,7 @@ const createPlayerOptions = () => {
 // Creamos la sección de información acerca del juego
 const createGameInfo = (mineSymbol, mines) => {
     const gameInfo = document.createElement('section')
-    gameInfo.className = 'w-9/12 md:w-8/12 lg:w-7/12 xl:w-2/5 mx-auto flex justify-between items-center font-bold text-lg pt-2 pb-1'
+    gameInfo.className = 'w-5/6 md:w-8/12 lg:w-7/12 xl:w-2/5 mx-auto flex justify-between items-center font-bold text-lg pt-2 pb-1'
 
     const pMines = document.createElement('p')
     pMines.textContent = `${mineSymbol}: ${mines}`
@@ -167,7 +174,7 @@ const createGame = (gameBoard, options, mineSymbol) => {
 
     for (let row = 0; row < size; row++) {
         const rowDiv = document.createElement('div')
-        rowDiv.className = 'flex w-full'
+        rowDiv.className = 'flex w-full h-9/12'
         for (let col = 0; col < size; col++) {
             const square = document.createElement('div')
             square.className = `w-3/12 ${mapHeight[level]} bg-lime-400 border-solid border-2 border-gray-900 flex items-center justify-center text-lg font-bold`
