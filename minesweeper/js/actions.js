@@ -125,6 +125,7 @@ const resetGame = (game, gameBoard, btnContainer) => {
     setState([], false, false, 0, '')
 }
 
+// Función que realiza la acción del click
 const clickGame = (element) => {
     const { map, flags, level } = gameState
     const { mines } = levelSelect[level]
@@ -142,6 +143,7 @@ const clickGame = (element) => {
     resolveGame(gameState, mines)
 }
 
+// Función que coloca las banderas en el juego
 const setFlags = e => {
     const element = e.target
     const { flag } = symbols
