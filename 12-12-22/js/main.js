@@ -1,11 +1,11 @@
 import { validators } from "./const.js"
 import { validateRegex } from "./functions.js"
 
-const btnSubmit = document.querySelector('button')
 const regexSelect = document.querySelector('select')
 const result = document.querySelector('#result')
 const regexUsed = document.querySelector('#regex_used')
 const textInput = document.querySelector('input')
+const main = document.querySelector('main')
 
 window.addEventListener('load', () => {
     const regexSpan = document.createElement('span')
@@ -16,11 +16,15 @@ window.addEventListener('load', () => {
     regexUsed.append(regexSpan)
 })
 
-btnSubmit.addEventListener('click', () => {
+main.addEventListener('click', e => {
+    const element = e.target
     const regex = validators[regexSelect.value]
     const text = textInput.value
     const regexSpan = document.querySelector('#regex_span')
+
+    if(element.nodeName === 'BUTTON') {
+        result.textContent = validateRegex(text, regex)
+    }
     regexSpan.textContent = regex
 
-    result.textContent = validateRegex(text, regex)
 })
