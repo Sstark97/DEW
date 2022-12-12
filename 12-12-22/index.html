@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Regex</title>
+</head>
+<body>
+    <h1 class="text-3xl font-bold text-center my-2">Validador de Expresiones Regulares</h1>
+
+    <h2 id="regex_used" class="text-xl text-center my-2">Expresión usada: </h2>
+    <main class="w-10/12 mx-auto flex justify-center mt-4">
+        <input class="mr-3" id="text" type="text" >
+        <select class="mr-3" name="regex" id="regex">
+            <option value="numbers">Solo números</option>
+            <option value="letters">Solo letras</option>
+            <option value="spaces">Letras con espacios</option>
+            <option value="name_surname">Nombre y Apellidos</option>
+            <option value="price">Precio</option>
+            <option value="int_and_dec">Números enteros y decimales</option>
+            <option value="pos_and_neg">Numeros enteros positivos y negativos</option>
+            <option value="miles_and_dec">Separador de miles y decimales</option>
+            <option value="date">Fecha</option>
+            <option value="hour_12">Horario (12 Horas) </option>
+            <option value="hour_24">Horario (24 Horas) </option>
+            <option value="password">Contraseña de Usuario (Fuerte) </option>
+            <option value="users">Nombre de Usuario</option>
+            <option value="email">Email</option>
+            <option value="uri">Dirección url</option>
+            <option value="ipv4">Dirección IPv4</option>
+            <option value="colors">Colores en Hexadecimal</option>
+        </select>
+        <button class="bg-purple-500 rounded py-1 px-2">Enviar</button>
+    </main>
+
+    <div id="result"></div>
+
+
+    <script src="./js/main.js" type="module"></script>
+</body>
+</html>
