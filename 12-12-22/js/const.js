@@ -18,6 +18,11 @@ const validators = {
     colors: /^#[a-fA-F\d]{3,6}$/
 }
 
+const colors = {
+    okey: 'bg-green-400 text-green-900',
+    error: 'bg-red-400 text-red-900'
+}
+
 /**
  * 
  * Contraseña de usuario (fuerte): una letra minúscula, 
@@ -26,5 +31,6 @@ const validators = {
  */
 
 export {
-    validators
+    validators, 
+    colors
 }

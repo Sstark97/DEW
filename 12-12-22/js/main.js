@@ -1,4 +1,4 @@
-import { validators } from "./const.js"
+import { validators, colors } from "./const.js"
 import { validateRegex } from "./functions.js"
 
 const regexSelect = document.querySelector('select')
@@ -23,7 +23,16 @@ main.addEventListener('click', e => {
     const regexSpan = document.querySelector('#regex_span')
 
     if(element.nodeName === 'BUTTON') {
-        result.textContent = validateRegex(text, regex)
+        const validate = regex.test(text)
+        result.textContent = validate ? `El texto ${text} ha pasado la validación` : `El texto ${text} no ha pasado la validación`
+
+        if(validate && result.className.includes(colors.error)) {
+            result.className = result.className.replace(colors.error, "")
+        } else if (!validate && result.className.includes(colors.okey)){
+            result.className = result.className.replace(colors.okey, "")
+        }
+
+        result.className += validate ? colors.okey : colors.error
     }
     regexSpan.textContent = regex
 
