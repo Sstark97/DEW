@@ -11,8 +11,19 @@ const validators = {
     hour_12: /^([0][1-9]|[1][1-2])[:]([0][1-9]|[1-5][0-9])$/,
     hour_24: /^([0]\d|[1]\d|[2][0-3])[:]([0]\d|[1-5][0-9])$/,
     users: /^([a-z]|\d|[_]|[-]){3,16}$/,
-    email: /^([a-z]|\d|[_]|[-])+[@][a-zA-Z]+[.](com|es|org)$/
+    password: /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[~@#_^*%\/.+:;=])[A-Za-z\d~@#_^*%\/.+:;=]{10,}$/,
+    email: /^([a-z]|\d|[_]|[-])+[@][a-zA-Z]+[.](com|es|org)$/,
+    url: /^http[s]?:\/{2}(www.)?([a-z]|\d)+[.][a-z]{2,3}\/?$/,
+    ipv4: /^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/,
+    colors: /^#[a-fA-F\d]{3,6}$/
 }
+
+/**
+ * 
+ * Contraseña de usuario (fuerte): una letra minúscula, 
+ * una letra mayúscula, un número, un carácter especial 
+ * y mínimo 10 caracteres. 
+ */
 
 export {
     validators
