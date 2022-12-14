@@ -28,11 +28,13 @@ main.addEventListener('click', e => {
 
         if(validate && result.className.includes(colors.error)) {
             result.className = result.className.replace(colors.error, "")
+            result.className += colors.okey
         } else if (!validate && result.className.includes(colors.okey)){
             result.className = result.className.replace(colors.okey, "")
+            result.className += colors.error
+        } else {
+            result.className += validate ? colors.okey : colors.error
         }
-
-        result.className += validate ? colors.okey : colors.error
     }
     regexSpan.textContent = regex
 
