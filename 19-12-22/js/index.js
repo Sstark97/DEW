@@ -20,6 +20,7 @@ main.addEventListener("click", e => {
             values.push(input.value);
             document.cookie = `values=[${values}]`;
 
+            input.value = ""
             createTable(values, container)
         }
         
@@ -27,10 +28,10 @@ main.addEventListener("click", e => {
         const pos = parseInt(element.id)
 
         values = values.filter((e, index) => index !== pos)
-        document.cookie = `values=[${values}]`;
+        document.cookie = values.length !== 0 ? `values=[${values}]` : 'values= ;max-age=0';
+        container.className = values.length !== 0 ? container.className : container.className.replace("border border-slate-200", "");
 
         createTable(values, container)
     }
-
 })
 
