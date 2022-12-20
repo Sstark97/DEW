@@ -1,5 +1,4 @@
 import { validators, colors } from "./const.js"
-import { validateRegex } from "./functions.js"
 
 const regexSelect = document.querySelector('select')
 const result = document.querySelector('#result')
