@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./dist/style.css">
+    <title>Local Storage</title>
+</head>
+<body class="w-screen h-screen overflow-x-hidden">
+    <h1 class="text-center text-2xl pt-2 mb-3">Preferencias</h1>
+    <main class="w-full">
+        <form id="preferences" class="w-1/2 h-40 flex flex-col items-center justify-evenly mx-auto" action="">
+            <div class="w-1/3 flex justify-between">
+                <label for="name">Nombre</label>
+                <input class="border border-slate-200" type="text" name="name" required>
+            </div>
+            <div class="w-1/3 flex justify-between">
+                <label for="font_color">Color de Fuente</label>
+                <input type="color" name="font_color">
+            </div>
+            <div class="w-1/3 flex justify-between">
+                <label for="background_color">Color de Fondo</label>
+                <input type="color" name="background_color">
+            </div>
+
+            <button class="text-white bg-sky-500 px-3 py-2 border border-slate-200 rounded">Guardar</button>
+        </form>
+
+        <h2 class="text-center my-2"></h2>
+        <form id="delete_preferences" class="w-1/2 h-40 hidden flex-col items-center justify-evenly mx-auto">
+            <button class="bg-red-500 px-3 py-2 border border-slate-200 rounded">Borrar</button>
+        </form>
+    </main>
+
+    <script src="./js/main.js"></script>
+</body>
+</html>
