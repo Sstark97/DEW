@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <h1>Web Sql</h1>
+
+    <button type="button" onclick="dbCreate()">Crear Base de datos</button> 
+
+    <button type="button" onclick="dbCreateTable()">Crear Tabla e insertar datos</button> 
+
+    <button type="button" onclick="dbInsertDataTable()">Insertar Datos pasados por parámetros</button> 
+
+    <button type="button" onclick="dbReadDataTable()">Lectura de Datos</button> 
+
+
+    <h1>Datos</h1>
+
+    <div id="dataTable">
+    </div>
+
+</body>
+
+<script type="text/javascript">
+
+    var dbInstance;
+     
+    function dbInsertDataTable() {
+
+        console.log("Defino los parámetros")
+
+        var name = "Luis";
+            var id = "4";
+            var MailID = "asanreyl@canariaseducacion.com";
+
+ 
+        dbInstance.transaction(function (tran) {
+        
+            console.log ("Inserto los datos en la tabla")
+            tran.executeSql('insert into Users (id, Name, MailID) values (?,?,?)',[id,name,MailID]);
+
+        });
+    }      
+
+    function dbReadDataTable(){
+        var d = document.getElementById("dataTable"); 
+        dbInstance.transaction(function (tran) {
+               var html = '<table><thead><th>Mail ID </th><th>ID</th><th>Name </th></thead><tbody>';
+               tran.executeSql('SELECT * FROM Users', [], function (tran, data) {
+                   for (i = 0; i < data.rows.length; i++) {
+                       html += '<tr><td>'
+                           + '<a ' + 'href="mailto:' + data.rows[i].MailID + '">' + data.rows[0].MailID + '</a>' +
+                       '</td><td>' + data.rows[i].id + '</td><td>' + data.rows[i].Name + '</td></tr>';
+                   };
+                   html += '</tbody></table>';
+                   console.log(html);
+                   d.innerHTML = html;
+               });
+           });
+    }
+
+    function dbCreateTable() {
+
+        console.log ("Voy a la transacción ... ")
+            dbInstance.transaction(function (tran) {
+            console.log ("Creo la tabla")
+            tran.executeSql('CREATE TABLE IF NOT EXISTS Users (id unique, Name, MailID)');
+            
+            console.log("Inserto los datos en la base")
+            tran.executeSql('insert into Users (id, Name, MailID) values (1,"Jose Antonio Martin Medina","jantmarm@gmail.com")');
+            tran.executeSql('insert into Users (id, Name, MailID) values (2, "Jesus Manuel Medina Cantalejo", "jmanmedc@canariaseducacion.com")');
+            tran.executeSql('insert into Users (id, Name, MailID) values (3, "Ansu Fati Barsa Catalan","ansu.barcelona@gmail.com")');
+        });
+    }
+
+    function dbCreate() {
+        dbInstance = openDatabase('dbDewClass', '1.0', 'Dew class database', 2 * 1024 * 1024);
+    }
+
+</script>
+</html>
