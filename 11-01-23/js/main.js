@@ -1,7 +1,5 @@
-import { createDatabase } from "./db.js"
+import { createCarForm } from "./car.js"
 
 const createBtn = document.querySelector("#create")
 
-
-
-createBtn.addEventListener("click", createDatabase)
+createBtn.addEventListener("click", createCarForm )

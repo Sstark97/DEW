@@ -26,8 +26,19 @@ const RENT_CAR_TABLE = `
     );
 `
 
+const carForm = [
+    {name: "Id", type: "number"},
+    {name: "Matrícula", type: "text"},
+    {name: "Marca", type: "text"},
+    {name: "Modelo", type: "text"},
+]
+
+const carSelect = ["Libre", "Alquilado"]
+
 export {
     CAR_TABLE,
     USER_TABLE,
-    RENT_CAR_TABLE
+    RENT_CAR_TABLE,
+    carForm,
+    carSelect
 }
