@@ -1,5 +1,7 @@
+import { createCarForm, addCarForm } from "./car.js";
+
 const CAR_TABLE = `
-    CREATE TABLE IF NOT EXIST Car (
+    CREATE TABLE IF NOT EXISTS Car (
         carId unique,
         license,
         brand,
@@ -9,7 +11,7 @@ const CAR_TABLE = `
 `;
 
 const USER_TABLE = `
-    CREATE TABLE TABLE IF NOT EXIST User (
+    CREATE TABLE IF NOT EXISTS User (
         userId unique,
         userName,
         dni,
@@ -18,7 +20,7 @@ const USER_TABLE = `
 `;
 
 const RENT_CAR_TABLE = `
-    CREATE TABLE TABLE IF NOT EXIST RentCar (
+    CREATE TABLE IF NOT EXISTS RentCar (
         carId unique,
         userId unique,
         startDate,
@@ -35,10 +37,16 @@ const carForm = [
 
 const carSelect = ["Libre", "Alquilado"]
 
+const mainActions = {
+    createCarForm: () => createCarForm(carForm, carSelect),
+    addCar: () => addCarForm()
+}
+
 export {
     CAR_TABLE,
     USER_TABLE,
     RENT_CAR_TABLE,
     carForm,
-    carSelect
+    carSelect,
+    mainActions
 }

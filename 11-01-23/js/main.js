@@ -1,5 +1,17 @@
-import { createCarForm } from "./car.js"
+import { mainActions } from "./const.js";
+import { tableCar } from "./car.js";
+import { createDatabase } from "./db.js";
 
-const createBtn = document.querySelector("#create")
+const main = document.querySelector("main");
+createDatabase()
 
-createBtn.addEventListener("click", createCarForm )
+main.addEventListener("click", (e) => {
+//   e.preventDefault();
+
+  tableCar()
+  const element = e.target;
+
+  if (mainActions[element.id]) {
+    mainActions[element.id]();
+  }
+});
