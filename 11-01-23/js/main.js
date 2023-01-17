@@ -1,14 +1,14 @@
-import { mainActions } from "./const.js";
-import { tableCar } from "./car.js";
-import { createDatabase } from "./db.js";
+import { mainActions, CAR_FIELDS } from "./const.js";
+import { createDatabase, createDbTableInHtml } from "./db.js";
 
 const main = document.querySelector("main");
 createDatabase()
 
-main.addEventListener("click", (e) => {
-//   e.preventDefault();
+window.addEventListener("load", () => {
+  main.append(createDbTableInHtml(CAR_FIELDS, "Car", true))
+})
 
-  tableCar()
+main.addEventListener("click", (e) => {
   const element = e.target;
 
   if (mainActions[element.id]) {

@@ -36,6 +36,7 @@ const carForm = [
 ]
 
 const carSelect = ["Libre", "Alquilado"]
+const CAR_FIELDS = ["Id", "Matrícula", "Marca", "Modelo", "Estado", "Acciones"]
 
 const mainActions = {
     createCarForm: () => createCarForm(carForm, carSelect),
@@ -46,6 +47,7 @@ export {
     CAR_TABLE,
     USER_TABLE,
     RENT_CAR_TABLE,
+    CAR_FIELDS,
     carForm,
     carSelect,
     mainActions
