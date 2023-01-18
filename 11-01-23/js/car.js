@@ -54,7 +54,7 @@ const addCarForm = () => {
   }
 };
 
-const addCar = (car) => {
+const addCar = car => {
   const dbInstance = getDatabase();
 
   dbInstance.transaction((tran) => {
@@ -65,4 +65,15 @@ const addCar = (car) => {
   });
 };
 
-export { addCar, addCarForm, createCarForm };
+const deleteCar = id => {
+  const dbInstance = getDatabase();
+
+  dbInstance.transaction((tran) => {
+    tran.executeSql(
+      'delete from Car where carId = ?',
+      [id]
+    );
+  });
+};
+
+export { addCar, deleteCar, addCarForm, createCarForm };

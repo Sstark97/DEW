@@ -1,5 +1,6 @@
 import { mainActions, CAR_FIELDS } from "./const.js";
 import { createDatabase, createDbTableInHtml } from "./db.js";
+import { deleteCar } from "./car.js";
 
 const main = document.querySelector("main");
 createDatabase()
@@ -13,5 +14,8 @@ main.addEventListener("click", (e) => {
 
   if (mainActions[element.id]) {
     mainActions[element.id]();
+  } else if (element.nodeName === "I") {
+    deleteCar(element.id)
+    main.append(createDbTableInHtml(CAR_FIELDS, "Car", true))
   }
 });

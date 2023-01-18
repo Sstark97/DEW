@@ -29,6 +29,8 @@ const getDatabase = () => {
 }
 
 const createDbTableInHtml = (fields, sqlTable, isDelete = false) => {
+  deleteSqlTableInHtml();
+  
   const table = document.createElement("table");
   const thead = document.createElement("thead");
   const tr1 = document.createElement("tr");
@@ -69,6 +71,7 @@ const createDbTableInHtml = (fields, sqlTable, isDelete = false) => {
 
           deleteTd.className = "text-red-500 hover:cursor-pointer"
           icon.className = "bx bxs-trash-alt"
+          icon.id = car.carId
 
           deleteTd.append(icon)
           tds.push(deleteTd)
