@@ -1,4 +1,6 @@
-import { getDatabase, deleteSqlTableInHtml } from "./db.js";
+import { getDatabase } from "./db.js";
+import { CAR_FIELDS } from "./const.js";
+import { deleteSqlTableInHtml, resetBtn } from "./functions.js";
 
 const createCarForm = (carForm) => {
   const existForm = document.querySelector("#createCar");
@@ -51,10 +53,11 @@ const addCarForm = () => {
 
   if (!carMappedValues.some((carInput) => carInput === "")) {
     addCar(carMappedValues);
+    resetBtn("Car", "Coche", CAR_FIELDS, true);
   }
 };
 
-const addCar = car => {
+const addCar = (car) => {
   const dbInstance = getDatabase();
 
   dbInstance.transaction((tran) => {
@@ -65,14 +68,11 @@ const addCar = car => {
   });
 };
 
-const deleteCar = id => {
+const deleteCar = (id) => {
   const dbInstance = getDatabase();
 
   dbInstance.transaction((tran) => {
-    tran.executeSql(
-      'delete from Car where carId = ?',
-      [id]
-    );
+    tran.executeSql("delete from Car where carId = ?", [id]);
   });
 };
 

@@ -1,4 +1,5 @@
 import { CAR_TABLE, USER_TABLE, RENT_CAR_TABLE } from "./const.js";
+import { deleteSqlTableInHtml } from "./functions.js";
 
 const createDatabase = () => {
   const dbInstance = openDatabase(
@@ -25,28 +26,29 @@ const getDatabase = () => {
     2 * 1024 * 1024
   );
 
-  return dbInstance
-}
+  return dbInstance;
+};
 
 const createDbTableInHtml = (fields, sqlTable, isDelete = false) => {
   deleteSqlTableInHtml();
-  
+
   const table = document.createElement("table");
   const thead = document.createElement("thead");
   const tr1 = document.createElement("tr");
   const tbody = document.createElement("tbody");
 
   table.classList = "w-1/3 mx-auto mt-10 border border-slate-200 rounded";
-  thead.classList = "w-full font-light border border-slate-200 bg-sky-800 text-white";
+  thead.classList =
+    "w-full font-light border border-slate-200 bg-sky-800 text-white";
   tr1.classList = "flex justify-around w-full py-2";
   tbody.classList = "w-full";
 
-  fields.forEach(element => {
+  fields.forEach((element) => {
     const th = document.createElement("th");
     th.textContent = element;
 
     tr1.append(th);
-  })
+  });
 
   thead.append(tr1);
 
@@ -54,51 +56,38 @@ const createDbTableInHtml = (fields, sqlTable, isDelete = false) => {
 
   dbInstance.transaction(function (tran) {
     tran.executeSql(`SELECT * FROM ${sqlTable}`, [], (tran, data) => {
-      [...data.rows].forEach(car => {
+      [...data.rows].forEach((car) => {
         const tr = document.createElement("tr");
         tr.className = "flex justify-around w-full text-center py-2";
 
-        const tds = Object.values(car).map(value => {
+        const tds = Object.values(car).map((value) => {
           const td = document.createElement("td");
           td.textContent = value;
 
           return td;
-        })
+        });
 
         if (isDelete) {
-          const deleteTd = document.createElement("td")
-          const icon = document.createElement("i")
+          const deleteTd = document.createElement("td");
+          const icon = document.createElement("i");
 
-          deleteTd.className = "text-red-500 hover:cursor-pointer"
-          icon.className = "bx bxs-trash-alt"
-          icon.id = car.carId
+          deleteTd.className = "text-red-500 hover:cursor-pointer";
+          icon.className = "bx bxs-trash-alt";
+          icon.id = car.carId;
 
-          deleteTd.append(icon)
-          tds.push(deleteTd)
+          deleteTd.append(icon);
+          tds.push(deleteTd);
         }
 
         tr.append(...tds);
-        tbody.append(tr)
-      })
+        tbody.append(tr);
+      });
     });
-});
+  });
 
   table.append(thead, tbody);
 
-  return table
-}
+  return table;
+};
 
-const deleteSqlTableInHtml = () => {
-  const tableExist = document.querySelector("table")
-
-  if(tableExist) {
-    tableExist.remove()
-  }
-}
-
-export {
-    createDatabase,
-    getDatabase,
-    createDbTableInHtml, 
-    deleteSqlTableInHtml
-}
+export { createDatabase, getDatabase, createDbTableInHtml };

@@ -1,4 +1,5 @@
 import { createCarForm, addCarForm } from "./car.js";
+import { resetBtn } from "./functions.js";
 
 const CAR_TABLE = `
     CREATE TABLE IF NOT EXISTS Car (
@@ -35,12 +36,34 @@ const carForm = [
     {name: "Modelo", type: "text"},
 ]
 
+const userForm = [
+    {name: "Id", type: "number"},
+    {name: "Nombre", type: "text"},
+    {name: "DNI", type: "text"},
+    {name: "Carnet de Conducir", type: "text"},
+]
+
+const rentForm = [
+    {name: "Id Usuario", type: "number"},
+    {name: "Id Coche", type: "number"},
+    {name: "Fecha Inicio", type: "date"},
+    {name: "Fecha Fin", type: "date"},
+]
+
 const carSelect = ["Libre", "Alquilado"]
 const CAR_FIELDS = ["Id", "Matrícula", "Marca", "Modelo", "Estado", "Acciones"]
+const USER_FIELDS = ["Id", "Nombre", "DNI", "Carnet de Conducir"];
+const RENT_FIELDS = ["Id Usuario", "Id Coche", "Fecha Inicio", "Fecha Fin"];
 
 const mainActions = {
     createCarForm: () => createCarForm(carForm, carSelect),
     addCar: () => addCarForm()
+}
+
+const renderNav = {
+    car: () => resetBtn("Car", "Coche", CAR_FIELDS, true),
+    user: () => resetBtn("User", "Usuario", USER_FIELDS, false),
+    rent: () => resetBtn("Rent", "Alquiler", RENT_FIELDS, false)
 }
 
 export {
@@ -48,7 +71,12 @@ export {
     USER_TABLE,
     RENT_CAR_TABLE,
     CAR_FIELDS,
+    USER_FIELDS,
+    RENT_FIELDS,
     carForm,
+    userForm,
+    rentForm,
     carSelect,
-    mainActions
+    mainActions, 
+    renderNav
 }
