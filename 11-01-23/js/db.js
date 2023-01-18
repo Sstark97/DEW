@@ -56,11 +56,11 @@ const createDbTableInHtml = (fields, sqlTable, isDelete = false) => {
 
   dbInstance.transaction(function (tran) {
     tran.executeSql(`SELECT * FROM ${sqlTable}`, [], (tran, data) => {
-      [...data.rows].forEach((car) => {
+      [...data.rows].forEach(element => {
         const tr = document.createElement("tr");
         tr.className = "flex justify-around w-full text-center py-2";
 
-        const tds = Object.values(car).map((value) => {
+        const tds = Object.values(element).map((value) => {
           const td = document.createElement("td");
           td.textContent = value;
 
@@ -73,7 +73,7 @@ const createDbTableInHtml = (fields, sqlTable, isDelete = false) => {
 
           deleteTd.className = "text-red-500 hover:cursor-pointer";
           icon.className = "bx bxs-trash-alt";
-          icon.id = car.carId;
+          icon.id = element.carId;
 
           deleteTd.append(icon);
           tds.push(deleteTd);

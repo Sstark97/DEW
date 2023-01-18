@@ -1,5 +1,6 @@
-import { createCarForm, addCarForm } from "./car.js";
-import { resetBtn } from "./functions.js";
+import { addCarForm } from "./car.js";
+import { resetBtn, createForm } from "./functions.js";
+import { addUserForm } from "./user.js";
 
 const CAR_TABLE = `
     CREATE TABLE IF NOT EXISTS Car (
@@ -56,8 +57,11 @@ const USER_FIELDS = ["Id", "Nombre", "DNI", "Carnet de Conducir"];
 const RENT_FIELDS = ["Id Usuario", "Id Coche", "Fecha Inicio", "Fecha Fin"];
 
 const mainActions = {
-    createCarForm: () => createCarForm(carForm, carSelect),
-    addCar: () => addCarForm()
+    createCarForm: () => createForm(carForm, "Car", "Coche"),
+    createUserForm: () => createForm(userForm, "User", "Usuario"),
+    createRentForm: () => createForm(rentForm, "Rent", "Alquiler"),
+    addCar: () => addCarForm(),
+    addUser: () => addUserForm()
 }
 
 const renderNav = {

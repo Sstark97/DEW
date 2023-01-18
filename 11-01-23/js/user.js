@@ -1,37 +1,28 @@
-import { createDatabase } from "./db.js";
-import { userForm } from "./const.js";
+import { getDatabase } from "./db.js";
+import { resetBtn } from "./functions.js";
+import { USER_FIELDS } from "./const.js";
 
-const createUserForm = () => {
-    const form = document.createElement("form");
-    const main = document.querySelector("main");
+const addUser = (user) => {
+  const dbInstance = getDatabase();
 
-    const inputs = userForm.map(element => {
-        const div = document.createElement("div")    
-        const label = document.createElement("label");
-        const input = document.createElement("input");
+  dbInstance.transaction((tran) => {
+    tran.executeSql(
+      "insert into User (userId, userName, dni, drivingLicense) values (?,?,?,?)",
+      user
+    );
+  });
+};
 
-        label.textContent = element.name;
-        input.type = element.type;
+const addUserForm = () => {
+  const userInputsNodeValues = document.querySelectorAll("#createUser input");
+  const userInputValues = [...userInputsNodeValues];
 
-        div.append(label, input)
+  const userMappedValues = userInputValues.map((userInput) => userInput.value);
 
-        return div 
-    });
+  if (!userMappedValues.some((userInput) => userInput === "")) {
+    addUser(userMappedValues);
+    resetBtn("User", "Usuario", USER_FIELDS);
+  }
+};
 
-    form.append(...inputs);
-    main.append(form);
-}
-
-const addUser = user => {
-    const dbInstance = createDatabase()
-
-    dbInstance.transaction(tran => {
-        
-        tran.executeSql('insert into User (userId, userName, dni, drivingLicense) values (?,?,?,?)',user);
-    });
-}
-
-export {
-    addUser,
-    createUserForm
-}
+export { addUser, addUserForm };
