@@ -1,37 +1,28 @@
+import { RENT_FIELDS } from "./const.js";
 import { createDatabase } from "./db.js";
-import { rentForm } from "./const.js";
+import { resetBtn } from "./functions.js";
 
-const createRentForm = () => {
-    const form = document.createElement("form");
-    const main = document.querySelector("main");
-
-    const inputs = rentForm.map(element => {
-        const div = document.createElement("div")    
-        const label = document.createElement("label");
-        const input = document.createElement("input");
-
-        label.textContent = element.name;
-        input.type = element.type;
-
-        div.append(label, input)
-
-        return div 
-    });
-
-    form.append(...inputs);
-    main.append(form);
-}
-
-const addRent = rent => {
-    const dbInstance = createDatabase()
+const addRentCar = rent => {
+    const dbInstance = createDatabase()    
 
     dbInstance.transaction(tran => {
-        
-        tran.executeSql('insert into RentCar (carId, userId, startDate, endDate) values (?,?,?,?)',rent);
+        tran.executeSql('insert into RentCar (carId, userId, startDate, endDate) values (?,?,?,?)', rent);
     });
 }
 
+const addRentCarForm = () => {
+    const rentInputsNodeValues = document.querySelectorAll("#createRentCar input");
+    const rentInputValues = [...rentInputsNodeValues];
+  
+    const rentMappedValues = rentInputValues.map((rentInput) => rentInput.value);
+  
+    if (!rentMappedValues.some((rentInput) => rentInput === "")) {
+      addRentCar(rentMappedValues);
+      resetBtn("RentCar", "Alquiler", RENT_FIELDS, false);
+    }
+  };
+
 export {
-    addRent,
-    createRentForm
+    addRentCar,
+    addRentCarForm
 }

@@ -39,7 +39,7 @@ const createDbTableInHtml = (fields, sqlTable, isDelete = false) => {
 
   table.classList = "w-1/3 mx-auto mt-10 border border-slate-200 rounded";
   thead.classList =
-    "w-full font-light border border-slate-200 bg-sky-800 text-white";
+    "w-full font-light border border-slate-200 bg-indigo-900 text-white";
   tr1.classList = "flex justify-around w-full py-2";
   tbody.classList = "w-full";
 

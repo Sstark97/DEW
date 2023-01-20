@@ -19,7 +19,6 @@ header.addEventListener("click", e => {
 
 })
 
-
 main.addEventListener("click", (e) => {
   const element = e.target;
   e.preventDefault()

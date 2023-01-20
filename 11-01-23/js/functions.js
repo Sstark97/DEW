@@ -47,7 +47,7 @@ const createForm = (tableForm, tableId, tableLabel) => {
   
     btnSubmit.id = `add${tableId}`;
     btnSubmit.className =
-      "bg-sky-500 border border-slate-200 rounded px-3 py-3 mt-4";
+      "bg-indigo-700 text-white border border-slate-200 rounded px-3 py-3 mt-4";
     btnSubmit.textContent = "Añadir";
   
     const inputs = tableForm.map((element) => {
