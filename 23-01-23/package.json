@@ -1,0 +1,17 @@
+{
+  "name": "23-01-23",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "tailwind:watch": "npx tailwindcss -i ./input.css -o ./dist/style.css --watch",
+    "tailwind": "npx tailwindcss -i ./input.css -o ./dist/style.css"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "devDependencies": {
+    "tailwindcss": "^3.2.4"
+  }
+}
