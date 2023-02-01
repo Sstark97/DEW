@@ -1,0 +1,21 @@
+{
+    "games": [
+        {"id":"1","name":"Persona 5","description":"Persona 5 es un videojuego de rol desarrollado por Atlus","genre":"JRPG","img":"assets\/images\/persona-5.jpg","price":"34.95","assesment":"4.95","release_date":"2016-09-16"},
+        {"id":"2","name":"Arkham Knight","description":"Batman: Arkham Knight es un juego desarrollado por Rocksteady Studios","genre":"Acción","img":"assets\/images\/arkham-knigh.jpg","price":"19.95","assesment":"4.95","release_date":"2015-06-23"},
+        {"id":"3","name":"Pokemon escarlata","description":"Desarrollados por Game Freak y publicados por Nintendo y The Pokémon Company","genre":"RPG","img":"assets\/images\/pkm-escarlata.jpg","price":"49.95","assesment":"5.95","release_date":"2022-11-16"},
+        {"id":"4","name":"Pokemon purpura","description":"Desarrollados por Game Freak y publicados por Nintendo y The Pokémon Company","genre":"RPG","img":"assets\/images\/pkm-purpura.jpg","price":"49.95","assesment":"5.95","release_date":"2022-11-16"},
+        {"id":"5","name":"Pokemon: Arceus","description":"Desarrollados por Game Freak y publicados por Nintendo y The Pokémon Company","genre":"Acción\/RPG","img":"assets\/images\/pkm-arceus.jpg","price":"49.95","assesment":"5.95","release_date":"2022-01-28"},
+        {"id":"6","name":"Elden Ring","description":"Desarrollado por FromSoftware y publicado por Bandai Namco Entertainment","genre":"Acción\/RPG","img":"assets\/images\/elden-ring.jpg","price":"54.95","assesment":"5.55","release_date":"2022-02-25"},
+        {"id":"7","name":"God of War: Ragnarok","description":"Juego de acción y aventuras desarrollado por Santa Monica Studio y publicado por Sony Interactive Entertainment","genre":"Acción","img":"assets\/images\/ragnarok.jpg","price":"69.95","assesment":"4.95","release_date":"2022-11-09"},
+        {"id":"8","name":"Gotham Knights","description":"Videojuego de acción y beat'em up basado en el universo de Batman","genre":"Acción","img":"assets\/images\/gotham-knights.jpg","price":"49.95","assesment":"4.55","release_date":"2022-10-21"},
+        {"id":"9","name":"Sonic Frontiers","description":"¡Disfruta de Sonic como nunca antes! ¡Dos mundos chocan en la nueva y vertiginosa aventura de Sonic the Hedgehog! ","genre":"Plataformas","img":"assets\/images\/sonic.jpg","price":"34.95","assesment":"3.95","release_date":"2022-11-08"},
+        {"id":"10","name":"Assassin's Creed: Valhalla","description":"Videojuego desarrollado por Ubisoft Montreal y publicado por Ubisoft","genre":"Acción\/RPG","img":"assets\/images\/valhalla.png","price":"34.95","assesment":"4.95","release_date":"2020-11-10"}
+    ],
+    "users": [
+        {"dni":"12345678A","name":"admin","surname":"admin","email":"admin@admin.com","password":"$2y$12$bXlfc2VjcmV0X2hhc2hfc.fr311XbNSPVLr6saiJaun6yRMIk7HtK","phone":"111111111","age":"99","is_admin":"1"},
+        {"dni":"45398037Q","name":"Aitor","surname":"Santana Cabrera","email":"aitorscinfo@gmail.com","password":"$2y$12$bXlfc2VjcmV0X2hhc2hfc.pPNnCK8LIQhEtFDMLHjazn0SeAal5Du","phone":"928642811","age":"25","is_admin":"0"}
+    ],
+    "whishList": [
+        {"dni":"45398037Q","gameId":"5"}
+    ]
+}
