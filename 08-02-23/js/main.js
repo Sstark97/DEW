@@ -1,4 +1,5 @@
-import { actions} from "./const.js"
+import { toggleJustyfy } from "./functions.js"
+import { actions } from "./const.js"
 
 const $ = document
 
@@ -10,9 +11,9 @@ action.addEventListener("click", async e => {
 
     if(actions[element.id]) {
         const res = await actions[element.id]()
+
+        toggleJustyfy()
+        root.innerHTML = ""
         root.append(...res)
     }
 })
-
-// const edwinData = await fetchData(API_EDWIN)
-// const saraData = await fetchData(API_SARA)
