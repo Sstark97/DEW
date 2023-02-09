@@ -1,12 +1,18 @@
-import { API_MIGUE, API_EDWIN, API_SARA } from "./const.js"
-import { fetchData, users} from "./functions.js"
+import { actions} from "./const.js"
 
 const $ = document
 
 const root = $.querySelector("#root")
+const action = $.querySelector("#action")
 
-const migueData = await fetchData(API_MIGUE)
-const edwinData = await fetchData(API_EDWIN)
-const saraData = await fetchData(API_SARA)
+action.addEventListener("click", async e => {
+    const element = e.target
 
-root.append(...users(migueData))
+    if(actions[element.id]) {
+        const res = await actions[element.id]()
+        root.append(...res)
+    }
+})
+
+// const edwinData = await fetchData(API_EDWIN)
+// const saraData = await fetchData(API_SARA)
